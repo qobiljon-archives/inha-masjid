@@ -9,6 +9,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(milliseconds: 1500),
+          () => SharedPreferences.getInstance().then((prefs) {
+            final firstTime = true; // prefs.getBool('firstTime') ?? true;
+            if (firstTime) {
+              Navigator.of(context).pushReplacementNamed('/splashscreen');
+            } else {
+              Navigator.of(context).pushReplacementNamed('/homepage');
+            }
+          })
+
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,20 +36,20 @@ class _SplashScreenState extends State<SplashScreen> {
         child: const Center(
           child: FractionallySizedBox(
             widthFactor: 0.43765903307,
-            child: Image(image: AssetImage('images/logo.png')),
+            child: Image(image: AssetImage('images/masjid_logo.png')),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Text('START'),
-        onPressed: () {
-          SharedPreferences.getInstance().then((prefs) {
-            prefs
-                .setBool('firstTime', false)
-                .then((_) => Navigator.of(context).pushReplacementNamed('/'));
-          });
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: const Text('START'),
+      //   onPressed: () {
+      //     SharedPreferences.getInstance().then((prefs) {
+      //       prefs
+      //           .setBool('firstTime', false)
+      //           .then((_) => Navigator.of(context).pushReplacementNamed('/'));
+      //     });
+      //   },
+      // ),
     );
   }
 }
