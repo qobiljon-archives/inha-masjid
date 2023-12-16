@@ -6,19 +6,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 // Local: UI screens
-import 'package:inha_masjid/src/ui/welcome_screen.dart';
-import 'package:inha_masjid/src/ui/home_screen.dart';
-import 'package:inha_masjid/src/ui/donate_screen.dart';
-import 'package:inha_masjid/src/ui/announcements_screen.dart';
-import 'package:inha_masjid/src/ui/prayer_times_screen.dart';
-import 'package:inha_masjid/src/ui/admin_login_screen.dart';
-import 'package:inha_masjid/src/ui/admin_panel_screen.dart';
+import 'package:inha_masjid/ui/welcome_screen.dart';
+import 'package:inha_masjid/ui/home_screen.dart';
+import 'package:inha_masjid/ui/donate_screen.dart';
+import 'package:inha_masjid/ui/announcements_screen.dart';
+import 'package:inha_masjid/ui/prayer_times_screen.dart';
+import 'package:inha_masjid/ui/admin_login_screen.dart';
+import 'package:inha_masjid/ui/admin_panel_screen.dart';
 
 // Local: utilities
-import 'package:inha_masjid/src/utils/colors.dart';
-import 'package:inha_masjid/src/utils/assets.dart';
-import 'package:inha_masjid/src/utils/dimensions.dart';
-import 'package:inha_masjid/src/utils/strings.dart';
+import 'package:inha_masjid/utils/colors.dart';
+import 'package:inha_masjid/utils/assets.dart';
+import 'package:inha_masjid/utils/dimensions.dart';
+import 'package:inha_masjid/utils/strings.dart';
 
 /// Entry point of the application
 void main() {

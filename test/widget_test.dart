@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // Local
-import 'package:inha_masjid/src/main.dart';
+import 'package:inha_masjid/main.dart';
 
 // TODO: thoroughly test the application here with unit tests
 //       (e.g. navigation, state, etc.)

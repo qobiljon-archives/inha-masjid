@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Local
-import 'package:inha_masjid/src/utils/assets.dart';
-import 'package:inha_masjid/src/utils/colors.dart';
-import 'package:inha_masjid/src/utils/dimensions.dart';
+import 'package:inha_masjid/utils/assets.dart';
+import 'package:inha_masjid/utils/colors.dart';
+import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Welcome screen shown when user opens the app for the first time.
@@ -66,7 +66,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     // Welcome screen 2 description
     '''
     Stay connected with daily prayer times
-    ensuring you\'re always updated with
+    ensuring you're always updated with
     the changing schedule at Inha Masjid.
     ''',
 
