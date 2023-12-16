@@ -9,23 +9,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
+
+    // Move to next screen after some delay
     Future.delayed(
       const Duration(milliseconds: 1500),
-          () => SharedPreferences.getInstance().then((prefs) {
-            final firstTime = true; // prefs.getBool('firstTime') ?? true;
-            if (firstTime) {
-              Navigator.of(context).pushReplacementNamed('/splashscreen');
-            } else {
-              Navigator.of(context).pushReplacementNamed('/homepage');
-            }
-          })
+      _getNextScreen,
+    ).then((route) => Navigator.pushReplacementNamed(context, route));
+  }
 
-    );
+  Future<String> _getNextScreen() async {
+    var prefs = await SharedPreferences.getInstance();
+    final firstTime = prefs.getBool('firstTime') ?? true;
 
+    // TODO test and remove '== false' part after finishing instructions
+    return firstTime == false ? '/splashscreen' : '/homepage';
   }
 
   @override
@@ -40,16 +40,6 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: const Text('START'),
-      //   onPressed: () {
-      //     SharedPreferences.getInstance().then((prefs) {
-      //       prefs
-      //           .setBool('firstTime', false)
-      //           .then((_) => Navigator.of(context).pushReplacementNamed('/'));
-      //     });
-      //   },
-      // ),
     );
   }
 }

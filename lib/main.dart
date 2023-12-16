@@ -13,33 +13,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        // initialRoute: '/',
-        home: AnimatedSplashScreen(
-          backgroundColor: Color(0xFF235668),
-          splash: Container(
-            child: const Center(
-              child: FractionallySizedBox(
-                widthFactor: 0.43765903307,
-                child: Image(image: AssetImage('images/masjid_logo.png')),
-              ),
-            ),
+      debugShowCheckedModeBanner: true,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: AnimatedSplashScreen(
+        backgroundColor: const Color(0xFF235668),
+        splash: const Center(
+          child: FractionallySizedBox(
+            widthFactor: 0.43765903307,
+            child: Image(image: AssetImage('images/masjid_logo.png')),
           ),
-          splashIconSize: double.infinity,
-          nextRoute: '/instruction1',
-          nextScreen: const InstructionOnePage(),
         ),
-        routes: {
-          '/splashscreen': (context) => const SplashScreen(),
-          '/homepage': (context) => const HomePage(),
-          '/instruction1': (context) => const InstructionOnePage(),
-        });
+        splashIconSize: double.infinity,
+        nextRoute: '/instruction1',
+        nextScreen: const InstructionOnePage(),
+      ),
+      routes: {
+        '/splashscreen': (context) => const SplashScreen(),
+        '/homepage': (context) => const HomePage(),
+        '/instruction1': (context) => const InstructionOnePage(),
+      },
+    );
   }
 }

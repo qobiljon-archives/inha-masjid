@@ -6,19 +6,33 @@ class InstructionOnePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
+      body: Align(
+        alignment: Alignment.center,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Spacer(flex: 2),
             FractionallySizedBox(
-              widthFactor: 0.1165394402,
+              widthFactor: 0.12417302799,
               child: Image(
                 image: AssetImage(
                   'images/logo_white.png',
                 ),
-
               ),
             ),
+            Spacer(),
+            FractionallySizedBox(
+              widthFactor: 0.5,
+              child: Image(
+                image: AssetImage(
+                  'images/logo_white.png',
+                ),
+              ),
+            ),
+            Spacer(),
+            Text('Welcome', style: TextStyle(fontWeight: FontWeight.bold)),
+            Spacer(flex: 2),
           ],
         ),
       ),
