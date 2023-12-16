@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // 3rd party
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 // Local: UI screens
 import 'package:inha_masjid/src/ui/welcome_screen.dart';
