@@ -37,6 +37,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      body: Column(
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Are you masjid administrator?'),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.close),
+                      )
+                    ],
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text('Go to admin page'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

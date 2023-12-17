@@ -12,6 +12,7 @@ class AppStrings {
 
   // Strings
   static const String appTitle = 'Inha Masjid';
+  static const String homeScreenTitle = 'Home screen';
 
   // String lists
   static const List<String> welcomeScreenTitles = [
