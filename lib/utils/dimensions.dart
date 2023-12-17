@@ -27,4 +27,8 @@ class AppDimensions {
   // Font sizes
   // Screen titles (app bar text)
   static const double screenTitleFontSize = 24;
+  static const double homeScreenCardFontSize = 16;
+
+  // Cards Elevation
+  static const double cardElevation = 0;
 }

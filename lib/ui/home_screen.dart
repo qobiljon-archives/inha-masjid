@@ -8,6 +8,7 @@
 // Stdlib
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
@@ -39,24 +40,48 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
+          // TODO finish this part
           Card(
+            margin: const EdgeInsets.all(15),
+            color: AppColors.cardBackgroundColor,
+            elevation: AppDimensions.cardElevation,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Are you masjid administrator?'),
+                      const Text(
+                        AppStrings.homeScreenCardQuestion,
+                        style: TextStyle(
+                          fontSize: AppDimensions.homeScreenCardFontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.close),
-                      )
+                        icon: const Icon(Icons.close),
+                      ),
                     ],
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: Text('Go to admin page'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 77,
+                        vertical: 17,
+                      ), // Adjust the padding values as needed
+                      textStyle: const TextStyle(
+                        fontSize: AppDimensions.homeScreenCardFontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      backgroundColor: AppColors.cardButtonBackgroundColor,
+                    ),
+                    child: const Text(
+                      AppStrings.homeScreenCardTextButton,
+                    ),
                   ),
                 ],
               ),

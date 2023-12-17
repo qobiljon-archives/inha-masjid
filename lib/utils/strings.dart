@@ -13,6 +13,8 @@ class AppStrings {
   // Strings
   static const String appTitle = 'Inha Masjid';
   static const String homeScreenTitle = 'Home screen';
+  static const String homeScreenCardQuestion = 'Are you masjid administrator?';
+  static const String homeScreenCardTextButton = 'GO TO ADMIN PAGE';
 
   // String lists
   static const List<String> welcomeScreenTitles = [
