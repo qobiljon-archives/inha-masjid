@@ -1,16 +1,25 @@
+// All colors used in the application are defined here. This is to ensure that
+// the colors are consistent throughout the application. This is also to ensure
+// that the colors are easily changed in the future.
+
+// Stdlib
 import 'package:flutter/widgets.dart';
 
+/// Class for streamlining the colors used in the app (for consistency).
 class AppColors {
   // Private constructor to prevent instances from this class
   AppColors._();
 
-  // Colors
-  static const Color colorPrimary = Color(0xFF235668); // business green
+  // General colors
   static const Color white = Color(0xFFFFFFFF); // white
-  static const Color welcomeScreenDot = Color(0xFF235668); // dark green
-  static const Color welcomeScreenButtonColor = Color(0xFF3685A1); // dark green
+  static const Color black = Color(0xFF000000); // black
 
-  // Text colors
+  // Widget theme colors
+  static const Color widgetPrimary = Color(0xFF235668); // business green
+  static const Color widgetSecondary = Color(0xFF235668); // dark green
+  static const Color widgetLightPrimary = Color(0xFF3685A1); // dark green
+
+  // Text theme colors
   static const Color textPrimary = Color(0xFF1A2E35); // dark business green
   static const Color textSecondary = Color(0xFFA3ABAE); // light gray
 }

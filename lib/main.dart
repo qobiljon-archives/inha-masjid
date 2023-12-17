@@ -47,16 +47,16 @@ class InhaMasjidApp extends StatelessWidget {
       debugShowCheckedModeBanner: true,
       title: AppStrings.appTitle,
       theme: ThemeData(
-        colorSchemeSeed: AppColors.colorPrimary,
+        colorSchemeSeed: AppColors.widgetPrimary,
         useMaterial3: true,
       ),
 
       // Splash screen
       home: AnimatedSplashScreen.withScreenRouteFunction(
-        backgroundColor: AppColors.colorPrimary,
+        backgroundColor: AppColors.widgetPrimary,
         splash: const Center(
           child: FractionallySizedBox(
-            widthFactor: AppDimensions.splashLogoFactor,
+            widthFactor: AppDimensions.imgSplashLogoFactor,
             child: Image(image: AssetImage(AppAssets.logoLight)),
           ),
         ),

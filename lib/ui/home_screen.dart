@@ -1,6 +1,9 @@
 // Home screen. This is the main screen of the application shown both to
-// regular users and admins. Admin users can redirect to admin panel from
-// this screen by clicking on the admin login button.
+// regular users and admins. Regular users can see the donation progress
+// bar, recent donations list, and other information about the masjid.
+// Admin users can also click on the admin login button to go to admin
+// panel, and regular users can click on the `x` button to hide the admin
+// login button.
 
 // Stdlib
 import 'package:flutter/material.dart';
