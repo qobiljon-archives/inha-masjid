@@ -29,6 +29,9 @@ class AppDimensions {
   static const double screenTitleFontSize = 24;
   static const double homeScreenCardFontSize = 16;
 
-  // Cards Elevation
+  // Card Text sizes
   static const double cardElevation = 0;
+  static const double cardAmountText = 10;
+  static const double RequiredTotalAmount = 32;
+  static const double CollectedAmount = 32;
 }

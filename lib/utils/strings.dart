@@ -15,6 +15,11 @@ class AppStrings {
   static const String homeScreenTitle = 'Home screen';
   static const String homeScreenCardQuestion = 'Are you masjid administrator?';
   static const String homeScreenCardTextButton = 'GO TO ADMIN PAGE';
+  static const String homeScreenRequiredAvarageAmount =
+      'Required average amount';
+  static const String homeScreenTotalAmount = '2.000.000 ₩';
+  static const String homeScreenCollectedAmountText = 'Colledted amount';
+  static const String homeScreenCollectedAmount = '700.000 ₩';
 
   // String lists
   static const List<String> welcomeScreenTitles = [

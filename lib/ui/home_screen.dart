@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.white,
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 77,
+                        horizontal: 82.6,
                         vertical: 17,
                       ), // Adjust the padding values as needed
                       textStyle: const TextStyle(
@@ -79,12 +79,135 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       backgroundColor: AppColors.cardButtonBackgroundColor,
                     ),
-                    child: const Text(
+                    child: Text(
                       AppStrings.homeScreenCardTextButton,
+                      style: GoogleFonts.manrope(
+                        textStyle: const TextStyle(
+                          fontSize: AppDimensions.homeScreenCardFontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                Card(
+                  margin: const EdgeInsets.all(15),
+                  elevation: AppDimensions.cardElevation,
+                  color: AppColors.cardBackgroundColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppStrings.homeScreenRequiredAvarageAmount,
+                              style: GoogleFonts.manrope(
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: AppDimensions.cardAmountText,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              AppStrings.homeScreenTotalAmount,
+                              style: GoogleFonts.manrope(
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: AppDimensions.RequiredTotalAmount,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppStrings.homeScreenCollectedAmountText,
+                              style: GoogleFonts.manrope(
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: AppDimensions.cardAmountText,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              AppStrings.homeScreenCollectedAmount,
+                              style: GoogleFonts.manrope(
+                                textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: AppDimensions.CollectedAmount,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        // Progress Bar
+                        LinearProgressIndicator(
+                          value: 0.5,
+                          backgroundColor: AppColors.white,
+                          color: AppColors.cardButtonBackgroundColor,
+                          minHeight: 16,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal:
+                                        16, // Adjust this value as needed
+                                    vertical: 17,
+                                  ),
+                                  backgroundColor:
+                                      AppColors.cardButtonBackgroundColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.monetization_on,
+                                      color: AppColors.white,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'RECORD MY DONATION',
+                                      style: GoogleFonts.manrope(
+                                        textStyle: const TextStyle(
+                                          color: AppColors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: AppDimensions
+                                              .homeScreenCardFontSize,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
