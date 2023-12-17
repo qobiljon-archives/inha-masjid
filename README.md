@@ -1,4 +1,4 @@
-# Inha Masjid mobile application
+# Open-source Inha Masjid mobile application
 
 <img src="lib/assets/images/logo/app_icon_dark.png" width="200">
 
