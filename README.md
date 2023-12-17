@@ -1,4 +1,4 @@
-# Inha Masjid mobile application
+# Open-source Inha Masjid mobile application
 
 <img src="lib/assets/images/logo/app_icon_dark.png" width="200">
 
@@ -26,10 +26,11 @@ Tailored application for Inha Masjid donations, including such features as
 4. Run `flutter run` to run the application.
 
 ## Contributing
-1. Fork the repository.
-2. Create a new branch from `main`.
-3. Make your changes.
-4. Create a pull request to `main`.
+1. View the [Figma UI draft](https://www.figma.com/file/sflifKnmkstz8j02emIXMS/Inha-Masjid-draft-(work-on-this)?type=design&node-id=0%3A1&mode=design&t=dO7IV5Er6j4JvdE2-1)
+2. Fork the repository.
+3. Create a new branch from `main`.
+4. Make your changes.
+5. Create a pull request to `main`.
 
 ## Documentation
 * Run `dart doc` to generate documentation for understanding the codebase.
