@@ -7,6 +7,9 @@
 
 // Stdlib
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:inha_masjid/utils/dimensions.dart';
+import 'package:inha_masjid/utils/strings.dart';
 
 /// Home screen shown to both regular and admin users.
 class HomeScreen extends StatefulWidget {
@@ -23,9 +26,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('TBD: home screen'),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text(
+          AppStrings.homeScreenTitle,
+          style: GoogleFonts.manrope(
+            fontSize: AppDimensions.screenTitleFontSize,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
