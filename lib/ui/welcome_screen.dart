@@ -1,4 +1,8 @@
-// Welcome screen shown when user opens the app for the first time.
+// Welcome screen shown when user opens the app for the first time. This screen
+// includes a welcome message, and three other tutorial screens with title,
+// description, and illustration image. The user can navigate through the
+// tutorial screens using the next and previous buttons, and can start using
+// the application by clicking the start button on the last tutorial screen.
 
 // Stdlib
 import 'package:flutter/material.dart';
@@ -8,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inha_masjid/utils/assets.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
+import 'package:inha_masjid/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Welcome screen shown when user opens the app for the first time.
@@ -24,85 +29,24 @@ class WelcomeScreen extends StatefulWidget {
 /// - Welcome screen 3: Announcements functionality.
 /// - Welcome screen 4: Masjid administration functionality.
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  // List of illustration images for each welcome screen.
-  final List<String> _illustrationImages = [
-    // Welcome screen 1 illustration
-    AppAssets.welcomeIllustration1,
+  // Index of current welcome screen contents in range [0, 3]
+  // The range is derived from `AppAssets.welcomeIllustrations.length`
+  int _curScreenIdx = 0;
 
-    // Welcome screen 2 illustration
-    AppAssets.welcomeIllustration2,
-
-    // Welcome screen 3 illustration
-    AppAssets.welcomeIllustration3,
-
-    // Welcome screen 4 illustration
-    AppAssets.welcomeIllustration4,
-  ];
-
-  // List of titles for each welcome screen.
-  final List<String> _titles = [
-    // Welcome screen 1 title
-    'Welcome',
-
-    // Welcome screen 2 title
-    'Prayer Times',
-
-    // Welcome screen 3 title
-    'Announcements',
-
-    // Welcome screen 4 title
-    'Masjid Administration',
-  ];
-
-  // List of descriptions for each welcome screen.
-  final List<String> _descriptions = [
-    // Welcome screen 1 description
-    '''
-    A digital space for our community, where
-    your donations contrib ute to essential
-    monthly expenses of 2 million.
-    ''',
-
-    // Welcome screen 2 description
-    '''
-    Stay connected with daily prayer times
-    ensuring you're always updated with
-    the changing schedule at Inha Masjid.
-    ''',
-
-    // Welcome screen 3 description
-    '''
-    Get the latest updates and key info
-    from Inha Masjid, staying informed and
-    connected with our community.
-    ''',
-
-    // Welcome screen 4 description
-    '''
-    Admin handles Masjid’s donation account,
-    prayer times, and announcement postings
-    in the app.
-    ''',
-  ];
-
-  // Screen index of the current welcome screen.
-  int _currentScreenIdx = 0;
-
-  // Navigation functions
-  void _previousClicked() {
-    setState(() {
-      _currentScreenIdx--;
-    });
+  /// Switches to previous welcome screen upon clicking the previous button.
+  void _previousClick() {
+    setState(() => _curScreenIdx--);
   }
 
-  void _nextClicked() {
-    if (_currentScreenIdx == _illustrationImages.length - 1) {
+  /// Switches to next welcome screen upon clicking the next button.
+  void _nextClick() {
+    if (_curScreenIdx == AppAssets.welcomeIllustrations.length - 1) {
       SharedPreferences.getInstance().then((prefs) {
         prefs.setBool('firstTime', false);
         Navigator.pushReplacementNamed(context, '/home');
       });
     } else {
-      setState(() => _currentScreenIdx++);
+      setState(() => _curScreenIdx++);
     }
   }
 
@@ -118,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
             // Logo at the top
             const FractionallySizedBox(
-              widthFactor: AppDimensions.welcomeLogoFactor,
+              widthFactor: AppDimensions.imgWelcomeLogoFactor,
               child: Image(image: AssetImage(AppAssets.logoDark)),
             ),
 
@@ -126,9 +70,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
             // Square image in the middle with illustration
             FractionallySizedBox(
-              widthFactor: AppDimensions.welcomeImageFactor,
+              widthFactor: AppDimensions.imgWelcomeIllustrationFactor,
               child: Image(
-                  image: AssetImage(_illustrationImages[_currentScreenIdx])),
+                image: AssetImage(
+                  AppAssets.welcomeIllustrations[_curScreenIdx],
+                ),
+              ),
             ),
 
             const Spacer(),
@@ -137,7 +84,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Text(
-                _titles[_currentScreenIdx],
+                AppStrings.welcomeScreenTitles[_curScreenIdx],
                 style: GoogleFonts.manrope(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
@@ -148,7 +95,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
             // Description of current welcome screen
             Text(
-              _descriptions[_currentScreenIdx],
+              AppStrings.welcomeScreenDescriptions[_curScreenIdx],
               style: GoogleFonts.manrope(
                 fontWeight: FontWeight.normal,
                 fontSize: 16,
@@ -164,16 +111,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (int i = 0; i < _illustrationImages.length; i++)
+                for (int i = 0; i < AppAssets.welcomeIllustrations.length; i++)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Container(
-                      width: i == _currentScreenIdx ? 12 : 8,
-                      height: i == _currentScreenIdx ? 12 : 8,
+                      width: i == _curScreenIdx ? 12 : 8,
+                      height: i == _curScreenIdx ? 12 : 8,
                       decoration: BoxDecoration(
-                        color: i == _currentScreenIdx
-                            ? AppColors.welcomeScreenDot
-                            : AppColors.welcomeScreenDot.withOpacity(0.1),
+                        color: i == _curScreenIdx
+                            ? AppColors.widgetSecondary
+                            : AppColors.widgetSecondary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
@@ -192,15 +139,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   maintainSize: true,
                   maintainAnimation: true,
                   maintainState: true,
-                  visible: _currentScreenIdx != 0,
+                  visible: _curScreenIdx != 0,
                   child: TextButton(
-                    onPressed: _previousClicked,
+                    onPressed: _previousClick,
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                           side: const BorderSide(
-                            color: AppColors.welcomeScreenButtonColor,
+                            color: AppColors.widgetLightPrimary,
                           ),
                         ),
                       ),
@@ -215,7 +162,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         style: GoogleFonts.manrope(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                          color: AppColors.welcomeScreenButtonColor,
+                          color: AppColors.widgetLightPrimary,
                         ),
                       ),
                     ),
@@ -224,18 +171,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                 // Next button
                 TextButton(
-                  onPressed: _nextClicked,
+                  onPressed: _nextClick,
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                         side: const BorderSide(
-                          color: AppColors.welcomeScreenButtonColor,
+                          color: AppColors.widgetLightPrimary,
                         ),
                       ),
                     ),
                     backgroundColor: const MaterialStatePropertyAll<Color>(
-                      AppColors.welcomeScreenButtonColor,
+                      AppColors.widgetLightPrimary,
                     ),
                   ),
                   child: Padding(
@@ -244,7 +191,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       vertical: 5,
                     ),
                     child: Text(
-                      _currentScreenIdx == _illustrationImages.length - 1
+                      _curScreenIdx == AppAssets.welcomeIllustrations.length - 1
                           ? 'Start'.toUpperCase()
                           : 'Next'.toUpperCase(),
                       style: GoogleFonts.manrope(
