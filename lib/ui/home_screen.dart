@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: GoogleFonts.manrope(
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: AppDimensions.RequiredTotalAmount,
+                                  fontSize: AppDimensions.requiredTotalAmount,
                                 ),
                               ),
                             ),
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: GoogleFonts.manrope(
                                 textStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: AppDimensions.CollectedAmount,
+                                  fontSize: AppDimensions.collectedAmount,
                                 ),
                               ),
                             ),
@@ -196,13 +196,152 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .homeScreenCardFontSize,
                                         ),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                           ],
-                        )
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.all(15),
+                  child: Text(
+                    'Recent Payment',
+                    style: GoogleFonts.manrope(
+                      textStyle: const TextStyle(
+                        fontSize: AppDimensions.homeScreenCardFontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  margin: const EdgeInsets.all(15),
+                  elevation: AppDimensions.cardElevation,
+                  color: AppColors.cardBackgroundColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: AppColors.widgetLightPrimary,
+                                borderRadius: BorderRadius.circular(
+                                  50,
+                                ), // Adjust the value as needed
+                              ),
+                              child: const Icon(
+                                Icons.person_2_outlined,
+                                color: AppColors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    AppStrings.transactionHistoryTitle,
+                                    style: GoogleFonts.manrope(
+                                      textStyle: const TextStyle(
+                                        fontSize: AppDimensions
+                                            .transactionHistoryNameFontSize,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    AppStrings.transactionHistoryDate,
+                                    style: GoogleFonts.manrope(
+                                      textStyle: const TextStyle(
+                                        fontSize: AppDimensions
+                                            .transactionHistoryDateFontSize,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              AppStrings.transactionHistoryTotalSent,
+                              style: GoogleFonts.manrope(
+                                textStyle: const TextStyle(
+                                  fontSize: AppDimensions
+                                      .transactionHistoryNameFontSize,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: AppColors.widgetLightPrimary,
+                                borderRadius: BorderRadius.circular(
+                                  50,
+                                ), // Adjust the value as needed
+                              ),
+                              child: const Icon(
+                                Icons.person_2_outlined,
+                                color: AppColors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    AppStrings.transactionHistoryTitle,
+                                    style: GoogleFonts.manrope(
+                                      textStyle: const TextStyle(
+                                        fontSize: AppDimensions
+                                            .transactionHistoryNameFontSize,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    AppStrings.transactionHistoryDate,
+                                    style: GoogleFonts.manrope(
+                                      textStyle: const TextStyle(
+                                        fontSize: AppDimensions
+                                            .transactionHistoryDateFontSize,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              AppStrings.transactionHistoryTotalSent,
+                              style: GoogleFonts.manrope(
+                                textStyle: const TextStyle(
+                                  fontSize: AppDimensions
+                                      .transactionHistoryNameFontSize,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ),

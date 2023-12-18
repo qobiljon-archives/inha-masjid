@@ -32,6 +32,8 @@ class AppDimensions {
   // Card Text sizes
   static const double cardElevation = 0;
   static const double cardAmountText = 10;
-  static const double RequiredTotalAmount = 32;
-  static const double CollectedAmount = 32;
+  static const double requiredTotalAmount = 32;
+  static const double collectedAmount = 24;
+  static const double transactionHistoryNameFontSize = 14;
+  static const double transactionHistoryDateFontSize = 12;
 }

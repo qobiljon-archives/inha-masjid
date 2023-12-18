@@ -20,6 +20,9 @@ class AppStrings {
   static const String homeScreenTotalAmount = '2.000.000 ₩';
   static const String homeScreenCollectedAmountText = 'Colledted amount';
   static const String homeScreenCollectedAmount = '700.000 ₩';
+  static const String transactionHistoryTitle = 'Ot****';
+  static const String transactionHistoryDate = 'Monday, 11 December';
+  static const String transactionHistoryTotalSent = '20.000 ₩';
 
   // String lists
   static const List<String> welcomeScreenTitles = [
