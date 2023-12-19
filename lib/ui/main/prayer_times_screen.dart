@@ -1,32 +1,30 @@
-// TODO: write documentation
+// Prayer times screen.
 
 // Stdlib
 import 'package:flutter/material.dart';
-
-// 3rd party
 import 'package:google_fonts/google_fonts.dart';
-
-// local
+import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
-/// TODO: write documentation
-class AnnouncementsScreen extends StatefulWidget {
-  const AnnouncementsScreen({super.key});
+/// TODO write documentation for prayer times screen.
+class PrayerTimesScreen extends StatefulWidget {
+  const PrayerTimesScreen({super.key});
 
   @override
-  State<AnnouncementsScreen> createState() => _AnnouncementsScreenState();
+  State<PrayerTimesScreen> createState() => _PrayerTimesScreenState();
 }
 
-/// TODO: write documentation
-class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
+/// TODO write documentation for prayer times screen state.
+class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: Text(
-          AppStrings.announcementsScreenTitle,
+          AppStrings.prayerTimesScreenTitle,
           style: GoogleFonts.manrope(
             fontSize: AppDimensions.screenTitleFontSize,
             fontWeight: FontWeight.bold,
@@ -34,7 +32,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
         ),
       ),
       body: const Center(
-        child: Text('TBD: announcements screen'),
+        child: Text('TBD: prayer times screen'),
       ),
     );
   }
