@@ -43,7 +43,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     if (_curScreenIdx == AppAssets.welcomeIllustrations.length - 1) {
       SharedPreferences.getInstance().then((prefs) {
         prefs.setBool('firstTime', false);
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/main');
       });
     } else {
       setState(() => _curScreenIdx++);

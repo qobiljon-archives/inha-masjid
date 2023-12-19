@@ -1,5 +1,6 @@
 // Stdlib
 import 'package:flutter/material.dart';
+import 'package:inha_masjid/ui/main/main_router.dart';
 
 // 3rd party
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,10 +8,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 // Local: UI screens
 import 'package:inha_masjid/ui/welcome_screen.dart';
-import 'package:inha_masjid/ui/home_screen.dart';
 import 'package:inha_masjid/ui/donate_screen.dart';
-import 'package:inha_masjid/ui/announcements_screen.dart';
-import 'package:inha_masjid/ui/prayer_times_screen.dart';
 import 'package:inha_masjid/ui/admin_login_screen.dart';
 import 'package:inha_masjid/ui/admin_panel_screen.dart';
 
@@ -36,7 +34,7 @@ class InhaMasjidApp extends StatelessWidget {
   Future<String> _splashScreenRouteFunction() async {
     var prefs = await SharedPreferences.getInstance();
     final firstTime = prefs.getBool('firstTime') ?? true;
-    return firstTime ? '/welcome' : '/home';
+    return firstTime ? '/welcome' : '/main';
   }
 
   /// Main build function of the application. This includes the application theme,
@@ -70,16 +68,10 @@ class InhaMasjidApp extends StatelessWidget {
         '/welcome': (context) => const WelcomeScreen(),
 
         // Home page, shown immediately after splash screen (or instructions on first time)
-        '/home': (context) => const HomeScreen(),
+        '/main': (context) => const MainRouterWidget(),
 
         // Donation recording Screen (regular user)
         '/donate': (context) => const DonateScreen(),
-
-        // Announcements Screen (regular user)
-        '/announcements': (context) => const AnnouncementsScreen(),
-
-        // Prayer times Screen (regular user)
-        '/prayer_times': (context) => const PrayerTimesScreen(),
 
         // Admin login Screen (admin user)
         '/admin_login': (context) => const AdminLoginScreen(),

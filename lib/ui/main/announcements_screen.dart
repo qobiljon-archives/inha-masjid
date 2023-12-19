@@ -1,16 +1,12 @@
-// TODO: write documentation
+// Announcements screen.
 
 // Stdlib
 import 'package:flutter/material.dart';
-
-// 3rd party
 import 'package:google_fonts/google_fonts.dart';
-
-// local
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
-/// TODO: write documentation
+/// TODO write documentation for announcements screen.
 class AnnouncementsScreen extends StatefulWidget {
   const AnnouncementsScreen({super.key});
 
@@ -18,7 +14,7 @@ class AnnouncementsScreen extends StatefulWidget {
   State<AnnouncementsScreen> createState() => _AnnouncementsScreenState();
 }
 
-/// TODO: write documentation
+/// TODO write documentation for announcements screen state.
 class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
   @override
   Widget build(BuildContext context) {

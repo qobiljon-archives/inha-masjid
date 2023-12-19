@@ -42,6 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           // TODO finish this part
+
+          // Admin login button
           Card(
             margin: const EdgeInsets.all(15),
             color: AppColors.cardBackgroundColor,
@@ -94,6 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+
+          // Donation progress and log (history)
           Expanded(
             child: ListView(
               children: [
@@ -129,7 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
+
                         const SizedBox(height: 20),
+
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -153,7 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
+
                         const SizedBox(height: 20),
+
                         // Progress Bar
                         LinearProgressIndicator(
                           value: 0.5,
@@ -164,6 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
 
                         const SizedBox(height: 20),
+
                         Row(
                           children: [
                             Expanded(
@@ -188,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
-                                      'RECORD MY DONATION',
+                                      AppStrings.homeScreenRecordDonation,
                                       style: GoogleFonts.manrope(
                                         textStyle: const TextStyle(
                                           color: AppColors.white,
@@ -243,9 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: AppColors.white,
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,9 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Row(
                           children: [
                             Container(
@@ -350,59 +355,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 0, left: 29, right: 28, bottom: 16),
-            decoration: BoxDecoration(
-              color: AppColors.widgetLightPrimary,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.only(top: 4, left: 29, right: 28, bottom: 4),
-              child: GNav(
-                backgroundColor: AppColors.widgetLightPrimary,
-                color: AppColors.white,
-                activeColor: AppColors.widgetLightPrimary,
-                tabBackgroundColor: AppColors.white,
-                iconSize: AppDimensions.bottomNavigationBarIconSize,
-                tabs: [
-                  GButton(
-                    icon: Icons.timer,
-                  ),
-                  GButton(
-                    icon: Icons.home,
-                  ),
-                  GButton(
-                    icon: Icons.notification_important,
-                  ),
-                ],
-              ),
-            ),
-          )
-          // Container(
-          //   margin:
-          //       const EdgeInsets.only(top: 0, left: 29, right: 28, bottom: 16),
-          //   child: ClipRRect(
-          //     borderRadius: BorderRadius.circular(50),
-          //     child: BottomNavigationBar(
-          //       iconSize: 24,
-          //       backgroundColor: AppColors.widgetLightPrimary,
-          //       items: const <BottomNavigationBarItem>[
-          //         BottomNavigationBarItem(
-          //           icon: Icon(Icons.timer),
-          //           label: '',
-          //         ),
-          //         BottomNavigationBarItem(
-          //           icon: Icon(Icons.home),
-          //           label: '',
-          //         ),
-          //         BottomNavigationBarItem(
-          //           icon: Icon(Icons.alarm),
-          //           label: '',
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
