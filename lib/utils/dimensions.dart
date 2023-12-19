@@ -36,4 +36,5 @@ class AppDimensions {
   static const double collectedAmount = 24;
   static const double transactionHistoryNameFontSize = 14;
   static const double transactionHistoryDateFontSize = 12;
+  static const double bottomNavigationBarIconSize = 24;
 }

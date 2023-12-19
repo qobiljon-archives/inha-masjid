@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 /// Home screen shown to both regular and admin users.
 class HomeScreen extends StatefulWidget {
@@ -349,6 +350,59 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          Container(
+            margin: EdgeInsets.only(top: 0, left: 29, right: 28, bottom: 16),
+            decoration: BoxDecoration(
+              color: AppColors.widgetLightPrimary,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.only(top: 4, left: 29, right: 28, bottom: 4),
+              child: GNav(
+                backgroundColor: AppColors.widgetLightPrimary,
+                color: AppColors.white,
+                activeColor: AppColors.widgetLightPrimary,
+                tabBackgroundColor: AppColors.white,
+                iconSize: AppDimensions.bottomNavigationBarIconSize,
+                tabs: [
+                  GButton(
+                    icon: Icons.timer,
+                  ),
+                  GButton(
+                    icon: Icons.home,
+                  ),
+                  GButton(
+                    icon: Icons.notification_important,
+                  ),
+                ],
+              ),
+            ),
+          )
+          // Container(
+          //   margin:
+          //       const EdgeInsets.only(top: 0, left: 29, right: 28, bottom: 16),
+          //   child: ClipRRect(
+          //     borderRadius: BorderRadius.circular(50),
+          //     child: BottomNavigationBar(
+          //       iconSize: 24,
+          //       backgroundColor: AppColors.widgetLightPrimary,
+          //       items: const <BottomNavigationBarItem>[
+          //         BottomNavigationBarItem(
+          //           icon: Icon(Icons.timer),
+          //           label: '',
+          //         ),
+          //         BottomNavigationBarItem(
+          //           icon: Icon(Icons.home),
+          //           label: '',
+          //         ),
+          //         BottomNavigationBarItem(
+          //           icon: Icon(Icons.alarm),
+          //           label: '',
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
