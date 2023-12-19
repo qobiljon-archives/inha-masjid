@@ -22,4 +22,8 @@ class AppColors {
   // Text theme colors
   static const Color textPrimary = Color(0xFF1A2E35); // dark business green
   static const Color textSecondary = Color(0xFFA3ABAE); // light gray
+
+  // Card colors
+  static Color cardBackgroundColor = Color(0xFF235668).withOpacity(0.1);
+  static const Color cardButtonBackgroundColor = Color(0xFFFF735C);
 }

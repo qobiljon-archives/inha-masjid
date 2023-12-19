@@ -23,4 +23,18 @@ class AppDimensions {
   // ref Figma prototype: 168x56 button in 393x852 container
   static const double btnWelcomeNavWidthFactor = 168 / 393;
   static const double btnWelcomeNavHeightFactor = 56 / 852;
+
+  // Font sizes
+  // Screen titles (app bar text)
+  static const double screenTitleFontSize = 24;
+  static const double homeScreenCardFontSize = 16;
+
+  // Card Text sizes
+  static const double cardElevation = 0;
+  static const double cardAmountText = 10;
+  static const double requiredTotalAmount = 32;
+  static const double collectedAmount = 24;
+  static const double transactionHistoryNameFontSize = 14;
+  static const double transactionHistoryDateFontSize = 12;
+  static const double bottomNavigationBarIconSize = 24;
 }
