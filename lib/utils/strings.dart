@@ -67,4 +67,15 @@ class AppStrings {
     in the app.
     ''',
   ];
+  // announcements screen default data
+  static final List<Map<String, dynamic>> items = List.generate(
+    3,
+    (index) => {
+      "id": index,
+      "title": "Item $index",
+      "content":
+          "We regularly update you with Masjid's latest news, programs and other related announcements in this page",
+      "date": "2023-12-20", // Replace with your actual date
+    },
+  );
 }
