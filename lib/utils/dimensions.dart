@@ -37,4 +37,7 @@ class AppDimensions {
   static const double transactionHistoryNameFontSize = 14;
   static const double transactionHistoryDateFontSize = 12;
   static const double bottomNavigationBarIconSize = 24;
+
+  // announcements page card font sizes
+  static const double announcementsPageDateFontSize = 14;
 }

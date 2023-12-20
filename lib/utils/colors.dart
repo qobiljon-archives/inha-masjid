@@ -26,4 +26,5 @@ class AppColors {
   // Card colors
   static Color cardBackgroundColor = Color(0xFF235668).withOpacity(0.1);
   static const Color cardButtonBackgroundColor = Color(0xFFFF735C);
+  static final Color cardTextColor = Color(0xFF1A2E35).withOpacity(0.6);
 }

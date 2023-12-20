@@ -50,6 +50,9 @@ dependencies:
   # A modern google style nav bar for flutter.
   google_nav_bar: ^5.0.6
 
+  #An "expansion" on the Flutter SDK's standard ExpansionTile, to create a Google Material Theme inspired raised widget, ExpansionTileCard, instead.
+  expansion_tile_card: ^3.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
