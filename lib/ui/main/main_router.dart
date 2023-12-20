@@ -27,16 +27,37 @@ class MainRouterWidget extends StatefulWidget {
 /// are stored in a list of widgets, and referred to by index in build() method.
 class _MainRouterWidgetState extends State<MainRouterWidget> {
   // Variables
-  final List<Widget> _tabs = <Widget>[
-    const PrayerTimesScreen(), // Prayer times screen (left tab)
-    const HomeScreen(), // Home screen (center tab)
-    const AnnouncementsScreen(), // Announcements screen (right tab)
-  ];
-  int _currentTabIdx = 1; // Default to home screen
+  late List<Widget> _tabs;
+  late int _currentTabIdx;
 
-  // Methods
+  // Functions
   void _onTabChange(int index) {
     setState(() => _currentTabIdx = index);
+  }
+
+  void _onBackButtonPressed() {
+    _onTabChange(1); // Go to home screen (center tab, default)
+  }
+
+  // Overrides
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize tabs
+    _tabs = <Widget>[
+      // Prayer times screen (left tab)
+      PrayerTimesScreen(onBackButtonPressed: _onBackButtonPressed),
+
+      // Home screen (center tab)
+      HomeScreen(onBackButtonPressed: _onBackButtonPressed),
+
+      // Announcements screen (right tab)
+      AnnouncementsScreen(onBackButtonPressed: _onBackButtonPressed),
+    ];
+
+    // Initialize current tab index
+    _currentTabIdx = 1; // Default to home screen (center tab)
   }
 
   @override

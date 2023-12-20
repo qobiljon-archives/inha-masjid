@@ -11,12 +11,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 /// Home screen shown to both regular and admin users.
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  // Variables
+  final VoidCallback onBackButtonPressed;
 
+  // Constructor
+  const HomeScreen({
+    super.key,
+    required this.onBackButtonPressed,
+  });
+
+  // Overrides
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
