@@ -78,4 +78,14 @@ class AppStrings {
       "date": "2023-12-20", // Replace with your actual date
     },
   );
+
+  // prayer times list
+  static final List<Map<String, String>> prayerTimes = [
+    {'name': 'Fajr', 'time': '06:45'},
+    {'name': 'Sunrise', 'time': '7:39'},
+    {'name': 'Dhuhr', 'time': '1:15'},
+    {'name': 'Asr', 'time': '15:45'},
+    {'name': 'Maghrib', 'time': '17:22'},
+    {'name': 'Isha', 'time': '20:00'},
+  ];
 }

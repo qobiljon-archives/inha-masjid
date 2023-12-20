@@ -40,4 +40,9 @@ class AppDimensions {
 
   // announcements page card font sizes
   static const double announcementsPageDateFontSize = 14;
+
+  // prayer times font sizes
+
+  static const double prayerTimesTextFontSize = 16;
+  static const double prayerTimesFontSize = 32;
 }
