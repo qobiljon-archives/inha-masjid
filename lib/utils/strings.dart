@@ -30,6 +30,12 @@ class AppStrings {
   // Prayer times screen strings
   static const String prayerTimesScreenTitle = 'Prayer times';
   static const String announcementsScreenTitle = 'Announcements';
+  // Admin Login Screen
+  static const String adminLoginScreenTitle = 'Inha Masjid Admin';
+  static const String adminLoginTitle = 'Great to have you back! Login';
+  static const String adminLoginHintText = 'Username';
+  static const String adminPasswordHintText = 'Password';
+  static final String adminLoginButtonText = 'Login'.toUpperCase();
 
   // String lists
   static const List<String> welcomeScreenTitles = [
