@@ -1,6 +1,11 @@
 # Open-source Inha Masjid mobile application
 
-<img src="lib/assets/images/logo/app_icon_dark.png" width="200">
+<img src="lib/assets/images/logo/logo_light.png" width="100">
+
+Android (app icon) | Android (app screenshot) | iOS (app icon) | iOS (app screenshot)
+:-:|:-:|:-:|:-:
+<img width="280" alt="android_1" src="https://github.com/uz-devs/inha-masjid/assets/22251322/c708dc15-8e36-42db-a241-05001013b99e"> | <img width="270" alt="android_2" src="https://github.com/uz-devs/inha-masjid/assets/22251322/e905b4be-3eb1-4ffb-b45b-51abbeb48a7a"> | <img width="295" alt="ios_1" src="https://github.com/uz-devs/inha-masjid/assets/22251322/d1ce4fab-adb9-41c2-8c33-2b8341e39051"> | <img width="275" alt="ios_2" src="https://github.com/uz-devs/inha-masjid/assets/22251322/12d474f4-998c-4be8-a31a-a51f7187d499">
+
 
 Tailored application for Inha Masjid donations, including such features as
 
