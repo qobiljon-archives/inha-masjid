@@ -7,6 +7,7 @@ import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
+/// TODO write documentation for prayer times screen.
 class PrayerTimesScreen extends StatefulWidget {
   // Variables
   final VoidCallback onBackButtonPressed;

@@ -3,6 +3,7 @@
 // Stdlib
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inha_masjid/ui/admin_panel_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
@@ -111,7 +112,14 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AdminPanelScreen(),
+                    ),
+                  );
+                },
                 style: TextButton.styleFrom(
                   padding: const EdgeInsets.all(18.0), // Add padding
                   backgroundColor: AppColors

@@ -49,4 +49,8 @@ class AppDimensions {
   // Admin login
   static const double adminLoginIconFontSize = 100;
   static const double adminLoginButtonTextSize = 16;
+
+  // Admin panel
+  static const double adminPanelUpdateFontSize = 18;
+  static const double adminPanelMonthlyExpenseAmountFontSize = 32;
 }
