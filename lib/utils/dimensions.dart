@@ -40,4 +40,17 @@ class AppDimensions {
 
   // announcements page card font sizes
   static const double announcementsPageDateFontSize = 14;
+
+  // prayer times font sizes
+
+  static const double prayerTimesTextFontSize = 16;
+  static const double prayerTimesFontSize = 32;
+
+  // Admin login
+  static const double adminLoginIconFontSize = 100;
+  static const double adminLoginButtonTextSize = 16;
+
+  // Admin panel
+  static const double adminPanelUpdateFontSize = 18;
+  static const double adminPanelMonthlyExpenseAmountFontSize = 32;
 }

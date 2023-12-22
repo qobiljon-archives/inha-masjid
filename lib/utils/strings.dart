@@ -30,6 +30,24 @@ class AppStrings {
   // Prayer times screen strings
   static const String prayerTimesScreenTitle = 'Prayer times';
   static const String announcementsScreenTitle = 'Announcements';
+  // Admin Login Screen
+  static const String adminLoginScreenTitle = 'Inha Masjid Admin';
+  static const String adminLoginTitle = 'Great to have you back! Login';
+  static const String adminLoginHintText = 'Username';
+  static const String adminPasswordHintText = 'Password';
+  static final String adminLoginButtonText = 'Login'.toUpperCase();
+
+  // Admin Panel Screen
+  static const String adminPanelScreenAppBarTitle = 'Inha Masjid Admin';
+  static const String adminPanelUpdateMonthlyText =
+      'Update Masjid’s monthly expenses';
+  static const String adminPanelUpdatePrayerTimesText = 'Update prayer times';
+  static const String adminPanelUpdateMonthlyExpenseAmount = '2.000.000';
+  static const String adminPanelUpdateMonthlyExpenseWonText = '₩';
+  static final String adminPanelButtonText = 'Update'.toUpperCase();
+  static const String adminPanelUpdatePostText = 'Post new announcement';
+  static final String adminPanelUpdatePostButtonText = 'Post'.toUpperCase();
+  static final String adminPanelUpdateExitButtonText = 'Exit'.toUpperCase();
 
   // String lists
   static const List<String> welcomeScreenTitles = [
@@ -78,4 +96,14 @@ class AppStrings {
       "date": "2023-12-20", // Replace with your actual date
     },
   );
+
+  // prayer times list
+  static final List<Map<String, String>> prayerTimes = [
+    {'name': 'Fajr', 'time': '06:45'},
+    {'name': 'Sunrise', 'time': '7:39'},
+    {'name': 'Dhuhr', 'time': '1:15'},
+    {'name': 'Asr', 'time': '15:45'},
+    {'name': 'Maghrib', 'time': '17:22'},
+    {'name': 'Isha', 'time': '20:00'},
+  ];
 }

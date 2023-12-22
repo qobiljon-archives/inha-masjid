@@ -3,6 +3,7 @@
 // Stdlib
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
@@ -22,13 +23,15 @@ class PrayerTimesScreen extends StatefulWidget {
   State<PrayerTimesScreen> createState() => _PrayerTimesScreenState();
 }
 
-/// TODO write documentation for prayer times screen state.
 class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
+        leading: BackButton(
+          onPressed: widget.onBackButtonPressed,
+        ),
         title: Text(
           AppStrings.prayerTimesScreenTitle,
           style: GoogleFonts.manrope(
@@ -37,8 +40,46 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
           ),
         ),
       ),
-      body: const Center(
-        child: Text('TBD: prayer times screen'),
+      body: Container(
+        margin: const EdgeInsets.all(16),
+        child: Wrap(
+          spacing: 22, // Adjust the spacing between prayer times
+          runSpacing: 22, // Adjust the spacing between lines
+          children: [
+            for (var prayerTime in AppStrings.prayerTimes)
+              Column(
+                children: [
+                  Text(
+                    prayerTime['name']!,
+                    style: GoogleFonts.manrope(
+                      fontSize: AppDimensions.prayerTimesTextFontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: 160,
+                    height: 88,
+                    decoration: BoxDecoration(
+                      color: AppColors.cardBackgroundColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Center(
+                      child: Text(
+                        prayerTime['time']!,
+                        style: GoogleFonts.manrope(
+                          textStyle: const TextStyle(
+                            fontSize: AppDimensions.prayerTimesFontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
