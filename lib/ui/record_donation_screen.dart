@@ -4,15 +4,15 @@
 import 'package:flutter/material.dart';
 
 /// TODO: write documentation
-class DonateScreen extends StatefulWidget {
-  const DonateScreen({super.key});
+class RecordDonationScreen extends StatefulWidget {
+  const RecordDonationScreen({super.key});
 
   @override
-  State<DonateScreen> createState() => _DonateScreenState();
+  State<RecordDonationScreen> createState() => _RecordDonationScreenState();
 }
 
 /// TODO: write documentation
-class _DonateScreenState extends State<DonateScreen> {
+class _RecordDonationScreenState extends State<RecordDonationScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

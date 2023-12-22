@@ -8,8 +8,8 @@
 // Stdlib
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inha_masjid/ui/admin_login_screen.dart';
-import 'package:inha_masjid/ui/donate_screen.dart';
+import 'package:inha_masjid/ui/admin/admin_login_screen.dart';
+import 'package:inha_masjid/ui/record_donation_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const DonateScreen(),
+                                          const RecordDonationScreen(),
                                     ),
                                   );
                                 },
