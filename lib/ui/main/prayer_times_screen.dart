@@ -2,7 +2,11 @@
 
 // Stdlib
 import 'package:flutter/material.dart';
+
+// 3rd party
 import 'package:google_fonts/google_fonts.dart';
+
+// Local
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';

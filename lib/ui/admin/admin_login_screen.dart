@@ -3,7 +3,7 @@
 // Stdlib
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inha_masjid/ui/admin_panel_screen.dart';
+import 'package:inha_masjid/ui/admin/admin_panel_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';

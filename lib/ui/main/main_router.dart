@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 
 // 3rd party
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:inha_masjid/ui/announcements_screen.dart';
 
 // Local
 import 'package:inha_masjid/ui/main/home_screen.dart';
 import 'package:inha_masjid/ui/main/prayer_times_screen.dart';
+import 'package:inha_masjid/ui/main/announcements_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 

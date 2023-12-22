@@ -8,9 +8,9 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 // Local: UI screens
 import 'package:inha_masjid/ui/welcome_screen.dart';
-import 'package:inha_masjid/ui/donate_screen.dart';
-import 'package:inha_masjid/ui/admin_login_screen.dart';
-import 'package:inha_masjid/ui/admin_panel_screen.dart';
+import 'package:inha_masjid/ui/record_donation_screen.dart';
+import 'package:inha_masjid/ui/admin/admin_login_screen.dart';
+import 'package:inha_masjid/ui/admin/admin_panel_screen.dart';
 
 // Local: utilities
 import 'package:inha_masjid/utils/colors.dart';
@@ -71,7 +71,7 @@ class InhaMasjidApp extends StatelessWidget {
         '/main': (context) => const MainRouterWidget(),
 
         // Donation recording Screen (regular user)
-        '/donate': (context) => const DonateScreen(),
+        '/donate': (context) => const RecordDonationScreen(),
 
         // Admin login Screen (admin user)
         '/admin_login': (context) => const AdminLoginScreen(),
