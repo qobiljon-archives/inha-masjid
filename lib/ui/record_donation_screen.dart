@@ -20,6 +20,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           AppStrings.masjidBankAccountTitle,
@@ -31,7 +32,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.all(16),
+        margin: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
