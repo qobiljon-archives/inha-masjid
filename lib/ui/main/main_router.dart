@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // 3rd party
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Local
 import 'package:inha_masjid/ui/main/home_screen.dart';
@@ -58,6 +59,15 @@ class _MainRouterWidgetState extends State<MainRouterWidget> {
 
     // Initialize current tab index
     _currentTabIdx = 1; // Default to home screen (center tab)
+
+    /// Check if app is opened for the first time, and redirects to welcome screen
+    /// if so. Otherwise, widget lifecycle moves to build() method.
+    SharedPreferences.getInstance().then((prefs) {
+      final firstTime = prefs.getBool('firstTime') ?? true;
+      if (firstTime) {
+        Navigator.pushReplacementNamed(context, '/welcome');
+      }
+    });
   }
 
   @override
@@ -65,14 +75,23 @@ class _MainRouterWidgetState extends State<MainRouterWidget> {
     return Scaffold(
       body: _tabs[_currentTabIdx],
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.only(top: 0, left: 28, right: 28, bottom: 16),
+        margin: const EdgeInsets.only(
+          top: 0,
+          left: 28,
+          right: 28,
+          bottom: 16,
+        ),
         decoration: BoxDecoration(
           color: AppColors.widgetLightPrimary,
           borderRadius: BorderRadius.circular(50),
         ),
         child: Padding(
-          padding:
-              const EdgeInsets.only(top: 4, left: 29, right: 28, bottom: 4),
+          padding: const EdgeInsets.only(
+            top: 4,
+            left: 29,
+            right: 28,
+            bottom: 4,
+          ),
           child: GNav(
             backgroundColor: AppColors.widgetLightPrimary,
             color: AppColors.white,

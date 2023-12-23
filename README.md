@@ -42,3 +42,10 @@ Tailored application for Inha Masjid donations, including such features as
 * View the documentation by opening `doc/api/index.html` in your browser.
 * Run `flutter test --coverage` to generate a coverage report for the codebase.
 * Run `flutter analyze` to analyze the codebase for potential issues.
+
+
+## Notes
+* If you modify the logos, make sure to run the following commands
+* `flutter pub get` to update the image assets (e.g., app logo)
+* `dart run flutter_launcher_icons` to update the app icons
+* `dart run flutter_native_splash:create` to update the splash screen image

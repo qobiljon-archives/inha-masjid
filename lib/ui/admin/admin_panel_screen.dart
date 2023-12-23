@@ -199,7 +199,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                   child: ExpansionTile(
                     expandedAlignment: Alignment.centerLeft,
                     shape: Border.all(color: Colors.transparent),
-                    title: Text('title'),
+                    title: const Text('title'),
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
