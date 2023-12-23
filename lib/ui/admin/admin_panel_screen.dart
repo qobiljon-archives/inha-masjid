@@ -33,6 +33,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
         margin: const EdgeInsets.all(16),
         child: ListView(
           children: [
+            // Monthly expense hint text
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -45,6 +46,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 ),
               ),
             ),
+            // Monthly expense amount adjustment widget
             Card(
               color: AppColors.cardBackgroundColor,
               elevation: AppDimensions.cardElevation,
@@ -115,6 +117,8 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 ),
               ),
             ),
+
+            // Prayer times hint text
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -127,58 +131,60 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 ),
               ),
             ),
+            // Prayer times adjustment widget
             Card(
               color: AppColors.cardBackgroundColor,
               elevation: AppDimensions.cardElevation,
-              child: Wrap(
-                spacing: 22,
-                children: [
-                  for (var prayerTime in AppStrings.prayerTimes)
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        left: 22,
-                        right: 10,
-                        bottom: 10,
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            prayerTime['name']!,
-                            style: GoogleFonts.manrope(
-                              fontSize: AppDimensions.prayerTimesTextFontSize,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Container(
-                            width: 120,
-                            height: 58,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: AppColors.textSecondary,
-                                width: 2.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 22),
+                child: Center(
+                  child: Wrap(
+                    spacing: 40,
+                    runSpacing: 18,
+                    children: [
+                      for (var prayerTime in AppStrings.prayerTimes)
+                        Column(
+                          children: [
+                            Text(
+                              prayerTime['name']!,
+                              style: GoogleFonts.manrope(
+                                fontSize: AppDimensions.prayerTimesTextFontSize,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            child: Center(
-                              child: Text(
-                                prayerTime['time']!,
-                                style: GoogleFonts.manrope(
-                                  textStyle: const TextStyle(
-                                    fontSize: AppDimensions.prayerTimesFontSize,
-                                    fontWeight: FontWeight.bold,
+                            const SizedBox(height: 5),
+                            Container(
+                              width: 120,
+                              height: 58,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: AppColors.textSecondary,
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  prayerTime['time']!,
+                                  style: GoogleFonts.manrope(
+                                    textStyle: const TextStyle(
+                                      fontSize:
+                                          AppDimensions.prayerTimesFontSize,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
               ),
             ),
+
+            // Announcement hint text
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -191,74 +197,74 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                Card(
-                  color: AppColors.cardBackgroundColor,
-                  elevation: AppDimensions.cardElevation,
-                  child: ExpansionTile(
-                    expandedAlignment: Alignment.centerLeft,
-                    shape: Border.all(color: Colors.transparent),
-                    title: const Text('title'),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 0,
-                          left: 16,
-                          right: 16,
-                          bottom: 16,
-                        ),
-                        child: Text(
-                          'content',
-                          style: TextStyle(color: AppColors.cardTextColor),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.cardButtonBackgroundColor,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
+            // Announcement post text content widget
+            Card(
+              color: AppColors.cardBackgroundColor,
+              elevation: AppDimensions.cardElevation,
+              child: ExpansionTile(
+                expandedAlignment: Alignment.centerLeft,
+                shape: Border.all(color: Colors.transparent),
+                title: const Text('title'),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 0,
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
+                    ),
                     child: Text(
-                      AppStrings.adminPanelUpdatePostButtonText,
-                      style: GoogleFonts.manrope(
-                        textStyle: const TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: AppDimensions.adminLoginButtonTextSize,
-                        ),
-                      ),
+                      'content',
+                      style: TextStyle(color: AppColors.cardTextColor),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Announcement post button
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.cardButtonBackgroundColor,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  AppStrings.adminPanelUpdatePostButtonText,
+                  style: GoogleFonts.manrope(
+                    textStyle: const TextStyle(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: AppDimensions.adminLoginButtonTextSize,
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.cardButtonBackgroundColorForExit,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      AppStrings.adminPanelUpdateExitButtonText,
-                      style: GoogleFonts.manrope(
-                        textStyle: const TextStyle(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: AppDimensions.adminLoginButtonTextSize,
-                        ),
-                      ),
+              ),
+            ),
+
+            // Exit button
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.cardButtonBackgroundColorForExit,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  AppStrings.adminPanelUpdateExitButtonText,
+                  style: GoogleFonts.manrope(
+                    textStyle: const TextStyle(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: AppDimensions.adminLoginButtonTextSize,
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),
