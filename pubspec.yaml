@@ -55,7 +55,13 @@ dependencies:
 
   # Changing the app bundle id (package name) with a single command
   # Run `flutter pub run change_app_package_name:main [com.new.package.name]`
+  # NOTE that '-' not allowed in android, '_' not allowed in ios
+  # use 'uz.devs.inha.masjid' for consistency between android and ios
   change_app_package_name: ^1.1.0
+
+  # Firebase (for Firestore)
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.13.6
 
 dev_dependencies:
   flutter_test:

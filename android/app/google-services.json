@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "11586470178",
+    "project_id": "inha-masjid-app",
+    "storage_bucket": "inha-masjid-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11586470178:android:06bab0de19366c5dff257b",
+        "android_client_info": {
+          "package_name": "uz.devs.inha.masjid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBoNW6xzAwT9Ws7TJkT58jQbjn1w11VRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

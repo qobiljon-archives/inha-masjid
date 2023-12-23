@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:inha_masjid/ui/main/main_router.dart';
 
+// 3rd party
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 // Local
 import 'package:inha_masjid/ui/welcome_screen.dart';
 import 'package:inha_masjid/ui/record_donation_screen.dart';
@@ -10,7 +14,14 @@ import 'package:inha_masjid/ui/admin/admin_panel_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
-void main() {
+void main() async {
+  // Ensure that all widgets are initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Run the app
   runApp(const InhaMasjidApp());
 }
 
