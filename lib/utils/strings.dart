@@ -49,6 +49,20 @@ class AppStrings {
   static final String adminPanelUpdatePostButtonText = 'Post'.toUpperCase();
   static final String adminPanelUpdateExitButtonText = 'Exit'.toUpperCase();
 
+  static const String masjidBankAccountTitle = 'Record My Donation';
+  static const String masjidBankAccountText = 'Masjid bank account';
+  static const String masjidBankAccountType = 'Kookmin Bank';
+  static const String masjidBankAccountNumber = '64680101486242';
+  static const String masjidBankAccountDonationDetails = 'Donation details';
+  static const String donationDetailsAmount = '0 ₩';
+  static const String donatedAmountOne = '10.000 ₩';
+  static const String donatedAmountTwo = '20.000 ₩';
+  static const String donatedAmountThree = '30.000 ₩';
+  static const String donatedAmountFour = '40.000 ₩';
+  static const String recordMyDonationDonateNameText = 'Donor Name';
+  static final String recordMyDonationButtonText = 'Record'.toUpperCase();
+  static const String recordMyDonationSenderName = 'Sender name';
+
   // String lists
   static const List<String> welcomeScreenTitles = [
     'Welcome', // Welcome screen 1 title
