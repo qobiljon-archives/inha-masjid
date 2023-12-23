@@ -44,11 +44,10 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
           ),
         ),
       ),
-      body: Container(
-        margin: const EdgeInsets.all(16),
+      body: Center(
         child: Wrap(
           spacing: 22, // Adjust the spacing between prayer times
-          runSpacing: 22, // Adjust the spacing between lines
+          runSpacing: 40, // Adjust the spacing between lines
           children: [
             for (var prayerTime in AppStrings.prayerTimes)
               Column(
