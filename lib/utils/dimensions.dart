@@ -53,4 +53,10 @@ class AppDimensions {
   // Admin panel
   static const double adminPanelUpdateFontSize = 18;
   static const double adminPanelMonthlyExpenseAmountFontSize = 32;
+
+  // Record My Donation
+  static const double masjidBankAccountTitleSize = 16;
+  static const double masjidBankAccountCardFontSize = 14;
+  static const double recordMyDonationSmallFont = 12;
+  static const double recorButtonFontSize = 16;
 }
