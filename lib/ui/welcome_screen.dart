@@ -29,16 +29,14 @@ class WelcomeScreen extends StatefulWidget {
 /// - Welcome screen 3: Announcements functionality.
 /// - Welcome screen 4: Masjid administration functionality.
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  // Index of current welcome screen contents in range [0, 3]
-  // The range is derived from `AppAssets.welcomeIllustrations.length`
+  // Variables
   int _curScreenIdx = 0;
 
-  /// Switches to previous welcome screen upon clicking the previous button.
+  // Functions
   void _previousClick() {
     setState(() => _curScreenIdx--);
   }
 
-  /// Switches to next welcome screen upon clicking the next button.
   void _nextClick() {
     if (_curScreenIdx == AppAssets.welcomeIllustrations.length - 1) {
       SharedPreferences.getInstance().then((prefs) {
@@ -48,6 +46,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     } else {
       setState(() => _curScreenIdx++);
     }
+  }
+
+  // Overrides
+  @override
+  void didChangeDependencies() {
+    // Pre-load the illustration images (assets) to avoid lag when switching
+    // between welcome screens.
+    for (final img in AppAssets.welcomeIllustrations) {
+      precacheImage(AssetImage(img), context);
+    }
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -63,21 +73,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             // Logo at the top
             const FractionallySizedBox(
               widthFactor: AppDimensions.imgWelcomeLogoFactor,
-              child: Image(image: AssetImage(AppAssets.logoDark)),
+              child: Image(image: AssetImage(AppAssets.logoLight)),
             ),
-
             const Spacer(),
 
             // Square image in the middle with illustration
             FractionallySizedBox(
               widthFactor: AppDimensions.imgWelcomeIllustrationFactor,
               child: Image(
-                image: AssetImage(
-                  AppAssets.welcomeIllustrations[_curScreenIdx],
-                ),
-              ),
+                  image: AssetImage(
+                      AppAssets.welcomeIllustrations[_curScreenIdx])),
             ),
-
             const Spacer(),
 
             // Title of current welcome screen
@@ -104,7 +110,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               textAlign: TextAlign.center,
               maxLines: 3,
             ),
-
             const Spacer(flex: 3),
 
             // Dots displaying current welcome screen
@@ -127,7 +132,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
               ],
             ),
-
             const Spacer(flex: 3),
 
             // Button to go to previous or next welcome screens
@@ -204,7 +208,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ],
             ),
-
             const Spacer(),
           ],
         ),
