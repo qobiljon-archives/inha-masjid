@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:11586470178:android:06bab0de19366c5dff257b',
     messagingSenderId: '11586470178',
     projectId: 'inha-masjid-app',
+    databaseURL: 'https://inha-masjid-app-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'inha-masjid-app.appspot.com',
   );
 
@@ -62,6 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:11586470178:ios:037eeabfb4cb4d1aff257b',
     messagingSenderId: '11586470178',
     projectId: 'inha-masjid-app',
+    databaseURL: 'https://inha-masjid-app-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'inha-masjid-app.appspot.com',
     iosBundleId: 'dev.uzapp.inhaMasjid',
   );

@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:11586470178:ios:037eeabfb4cb4d1aff257b</string>
+	<key>DATABASE_URL</key>
+	<string>https://inha-masjid-app-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
 </plist>
