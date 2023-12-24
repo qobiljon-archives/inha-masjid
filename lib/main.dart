@@ -23,39 +23,6 @@ void main() async {
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Firebase auth
-  try {
-    final userCredential = await FirebaseAuth.instance.signInAnonymously();
-    print("Signed in with temporary account.");
-  } on FirebaseAuthException catch (e) {
-    switch (e.code) {
-      case "operation-not-allowed":
-        print("Anonymous auth hasn't been enabled for this project.");
-        break;
-      default:
-        print("Unknown error.");
-    }
-  }
-  try {
-    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: "inhamasjidadm@gmail.com",
-      password: "inhamasjidadm12!@",
-    );
-    print("Signed in with email and password. ${credential.user}");
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
-    }
-  }
-  // Firestore test
-  var ref = FirebaseFirestore.instance.collection('/users');
-  var userDocs = (await ref.get()).docs;
-  for (var userDoc in userDocs) {
-    print(userDoc.data());
-  }
-
   // Run the app
   runApp(const InhaMasjidApp());
 }
