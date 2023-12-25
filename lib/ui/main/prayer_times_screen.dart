@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 
 // 3rd party
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Local
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
+import 'package:inha_masjid/utils/extensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
 /// TODO write documentation for prayer times screen.
@@ -49,34 +51,56 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
           spacing: 22, // Adjust the spacing between prayer times
           runSpacing: 40, // Adjust the spacing between lines
           children: [
-            for (var prayerTime in AppStrings.prayerTimes)
+            // Prayer times
+            for (var prayerName in AppStrings.prayerNames)
               Column(
                 children: [
                   Text(
-                    prayerTime['name']!,
+                    prayerName.capitalize(),
                     style: GoogleFonts.manrope(
                       fontSize: AppDimensions.prayerTimesTextFontSize,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   Container(
-                    width: 160,
-                    height: 88,
+                    width: 140,
+                    height: 58,
                     decoration: BoxDecoration(
-                      color: AppColors.cardBackgroundColor,
                       borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Center(
-                      child: Text(
-                        prayerTime['time']!,
-                        style: GoogleFonts.manrope(
-                          textStyle: const TextStyle(
-                            fontSize: AppDimensions.prayerTimesFontSize,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      border: Border.all(
+                        color: AppColors.textSecondary,
+                        width: 2.0,
                       ),
+                    ),
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .doc('/prayertimes/$prayerName')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        var prayerTime = snapshot.data!;
+                        var hour =
+                            prayerTime['hour'].toString().padLeft(2, '0');
+                        var minute =
+                            prayerTime['minute'].toString().padLeft(2, '0');
+                        return Center(
+                          child: Text(
+                            '$hour:$minute',
+                            style: GoogleFonts.manrope(
+                              textStyle: const TextStyle(
+                                fontSize: AppDimensions.prayerTimesFontSize,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],

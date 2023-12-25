@@ -79,10 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AdminLoginScreen()));
+                      Navigator.pushReplacementNamed(context, '/admin_login');
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.white,

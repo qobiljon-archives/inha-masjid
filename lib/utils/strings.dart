@@ -10,8 +10,9 @@ class AppStrings {
   // Private constructor to prevent instances from this class
   AppStrings._();
 
-  // Strings
+  // General strings
   static const String appTitle = 'Inha Masjid';
+
   // Home screen strings
   static const String homeScreenTitle = 'Home screen';
   static const String homeScreenCardQuestion = 'Are you masjid administrator?';
@@ -27,17 +28,19 @@ class AppStrings {
   static const String transactionHistoryTitle = 'Ot****';
   static const String transactionHistoryDate = 'Monday, 11 December';
   static const String transactionHistoryTotalSent = '20.000 ₩';
+
   // Prayer times screen strings
   static const String prayerTimesScreenTitle = 'Prayer times';
   static const String announcementsScreenTitle = 'Announcements';
-  // Admin Login Screen
+
+  // Admin login screen
   static const String adminLoginScreenTitle = 'Inha Masjid Admin';
   static const String adminLoginTitle = 'Great to have you back! Login';
-  static const String adminLoginHintText = 'Username';
+  static const String adminEmailHintText = 'Email';
   static const String adminPasswordHintText = 'Password';
   static final String adminLoginButtonText = 'Login'.toUpperCase();
 
-  // Admin Panel Screen
+  // Admin panel screen
   static const String adminPanelScreenAppBarTitle = 'Inha Masjid Admin';
   static const String adminPanelUpdateMonthlyText =
       'Update Masjid’s monthly expenses';
@@ -49,6 +52,7 @@ class AppStrings {
   static final String adminPanelUpdatePostButtonText = 'Post'.toUpperCase();
   static final String adminPanelUpdateExitButtonText = 'Exit'.toUpperCase();
 
+  // Record donation screen
   static const String masjidBankAccountTitle = 'Record My Donation';
   static const String masjidBankAccountText = 'Masjid bank account';
   static const String masjidBankAccountType = 'Kookmin Bank';
@@ -99,6 +103,7 @@ class AppStrings {
     in the app.
     ''',
   ];
+
   // announcements screen default data
   static final List<Map<String, dynamic>> items = List.generate(
     3,
@@ -111,13 +116,12 @@ class AppStrings {
     },
   );
 
-  // prayer times list
-  static final List<Map<String, String>> prayerTimes = [
-    {'name': 'Fajr', 'time': '06:45'},
-    {'name': 'Sunrise', 'time': '7:39'},
-    {'name': 'Dhuhr', 'time': '1:15'},
-    {'name': 'Asr', 'time': '15:45'},
-    {'name': 'Maghrib', 'time': '17:22'},
-    {'name': 'Isha', 'time': '20:00'},
+  // Prayer names list (for admin panel and prayer times on main screen)
+  static const List<String> prayerNames = [
+    'fajr',
+    'dhuhr',
+    'asr',
+    'maghrib',
+    'isha',
   ];
 }

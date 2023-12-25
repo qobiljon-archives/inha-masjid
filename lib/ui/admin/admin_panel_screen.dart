@@ -2,9 +2,15 @@
 
 // Stdlib
 import 'package:flutter/material.dart';
+
+// 3rd party
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+// Local
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
+import 'package:inha_masjid/utils/extensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
 /// TODO: write documentation
@@ -15,8 +21,10 @@ class AdminPanelScreen extends StatefulWidget {
   State<AdminPanelScreen> createState() => _AdminPanelScreenState();
 }
 
-/// TODO: write documentation
 class _AdminPanelScreenState extends State<AdminPanelScreen> {
+  // Variables
+
+  // Overrides
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +41,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
         margin: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            // Monthly expense hint text
+            // Monthly expense card text
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -54,6 +62,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 padding: const EdgeInsets.all(22.0),
                 child: Column(
                   children: [
+                    // Monthly expense amount text field
                     Row(
                       children: [
                         Container(
@@ -93,6 +102,8 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                       ],
                     ),
                     const SizedBox(height: 20),
+
+                    // Update monthly expense button
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -118,7 +129,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
               ),
             ),
 
-            // Prayer times hint text
+            // Prayer times card title
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -136,55 +147,105 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
               color: AppColors.cardBackgroundColor,
               elevation: AppDimensions.cardElevation,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 22),
-                child: Center(
-                  child: Wrap(
-                    spacing: 40,
-                    runSpacing: 18,
-                    children: [
-                      for (var prayerTime in AppStrings.prayerTimes)
-                        Column(
-                          children: [
-                            Text(
-                              prayerTime['name']!,
-                              style: GoogleFonts.manrope(
-                                fontSize: AppDimensions.prayerTimesTextFontSize,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            Container(
-                              width: 120,
-                              height: 58,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: AppColors.textSecondary,
-                                  width: 2.0,
-                                ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  prayerTime['time']!,
+                padding: const EdgeInsets.all(22.0),
+                child: Column(
+                  children: [
+                    // Prayer times adjustment text fields
+                    Center(
+                      child: Wrap(
+                        spacing: 30,
+                        runSpacing: 18,
+                        children: [
+                          // Prayer times
+                          for (var prayerName in AppStrings.prayerNames)
+                            Column(
+                              children: [
+                                Text(
+                                  prayerName.capitalize(),
                                   style: GoogleFonts.manrope(
-                                    textStyle: const TextStyle(
-                                      fontSize:
-                                          AppDimensions.prayerTimesFontSize,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    fontSize:
+                                        AppDimensions.prayerTimesTextFontSize,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
+                                const SizedBox(height: 5),
+                                Container(
+                                  width: 140,
+                                  height: 58,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: AppColors.textSecondary,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: StreamBuilder<DocumentSnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .doc('/prayertimes/$prayerName')
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (!snapshot.hasData) {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+
+                                      var fajrTime = snapshot.data!;
+                                      var hour = fajrTime['hour']
+                                          .toString()
+                                          .padLeft(2, '0');
+                                      var minute = fajrTime['minute']
+                                          .toString()
+                                          .padLeft(2, '0');
+                                      return Center(
+                                        child: Text(
+                                          '$hour:$minute',
+                                          style: GoogleFonts.manrope(
+                                            textStyle: const TextStyle(
+                                              fontSize: AppDimensions
+                                                  .prayerTimesFontSize,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Update monthly expense button
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.cardButtonBackgroundColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          AppStrings.adminPanelButtonText,
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: AppDimensions.adminLoginButtonTextSize,
+                            ),
+                          ),
                         ),
-                    ],
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
 
-            // Announcement hint text
+            // Announcement post card title
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -233,29 +294,6 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 onPressed: () {},
                 child: Text(
                   AppStrings.adminPanelUpdatePostButtonText,
-                  style: GoogleFonts.manrope(
-                    textStyle: const TextStyle(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.adminLoginButtonTextSize,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // Exit button
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.cardButtonBackgroundColorForExit,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: TextButton(
-                onPressed: () {},
-                child: Text(
-                  AppStrings.adminPanelUpdateExitButtonText,
                   style: GoogleFonts.manrope(
                     textStyle: const TextStyle(
                       color: AppColors.white,
