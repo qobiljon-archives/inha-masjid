@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // 3rd party
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // Local
 import 'package:inha_masjid/utils/colors.dart';
@@ -14,15 +15,43 @@ import 'package:inha_masjid/utils/extensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
 /// TODO: write documentation
-class AdminPanelScreen extends StatefulWidget {
+class AdminPanelScreen extends StatelessWidget {
   const AdminPanelScreen({super.key});
 
-  @override
-  State<AdminPanelScreen> createState() => _AdminPanelScreenState();
-}
+  // Functions
+  void _onPrayerTimePressed(context, prayerName) async {
+    // Open time picker modal view
+    var selectedTime = await showTimePicker(
+      initialTime: TimeOfDay.now(),
+      context: context,
+    );
+    // If user cancels the time picker, return
+    if (selectedTime == null) return;
 
-class _AdminPanelScreenState extends State<AdminPanelScreen> {
-  // Variables
+    // Prayer time in 0:0 ~ 23:59 range
+    print(prayerName);
+    print('${selectedTime.hour}:${selectedTime.minute}');
+
+    // Update prayer time on firestore
+    var prayerTimeDoc = await FirebaseFirestore.instance.doc('/prayertimes/$prayerName');
+    try{
+      await prayerTimeDoc.update({
+        'hour': selectedTime.hour,
+        'minute': selectedTime.minute,
+      });
+      Fluttertoast.showToast(
+        msg: 'Prayer time updated',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
 
   // Overrides
   @override
@@ -81,8 +110,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                             AppStrings.adminPanelUpdateMonthlyExpenseAmount,
                             style: GoogleFonts.manrope(
                               textStyle: const TextStyle(
-                                fontSize: AppDimensions
-                                    .adminPanelMonthlyExpenseAmountFontSize,
+                                fontSize: AppDimensions.adminPanelMonthlyExpenseAmountFontSize,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -93,8 +121,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                           AppStrings.adminPanelUpdateMonthlyExpenseWonText,
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
-                              fontSize: AppDimensions
-                                  .adminPanelMonthlyExpenseAmountFontSize,
+                              fontSize: AppDimensions.adminPanelMonthlyExpenseAmountFontSize,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -150,67 +177,70 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
                 padding: const EdgeInsets.all(22.0),
                 child: Column(
                   children: [
-                    // Prayer times adjustment text fields
+                    // Prayer times adjustment buttons fields
                     Center(
                       child: Wrap(
                         spacing: 30,
                         runSpacing: 18,
                         children: [
-                          // Prayer times
                           for (var prayerName in AppStrings.prayerNames)
                             Column(
                               children: [
+                                // Prayer name text
                                 Text(
                                   prayerName.capitalize(),
                                   style: GoogleFonts.manrope(
-                                    fontSize:
-                                        AppDimensions.prayerTimesTextFontSize,
+                                    fontSize: AppDimensions.prayerTimesTextFontSize,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 5),
-                                Container(
-                                  width: 140,
-                                  height: 58,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(
-                                      color: AppColors.textSecondary,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                  child: StreamBuilder<DocumentSnapshot>(
-                                    stream: FirebaseFirestore.instance
-                                        .doc('/prayertimes/$prayerName')
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (!snapshot.hasData) {
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      }
 
-                                      var fajrTime = snapshot.data!;
-                                      var hour = fajrTime['hour']
-                                          .toString()
-                                          .padLeft(2, '0');
-                                      var minute = fajrTime['minute']
-                                          .toString()
-                                          .padLeft(2, '0');
-                                      return Center(
+                                // Prayer time button
+                                StreamBuilder<DocumentSnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .doc('/prayertimes/$prayerName')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+
+                                    var fajrTime = snapshot.data!;
+                                    var hour = fajrTime['hour'].toString().padLeft(2, '0');
+                                    var minute = fajrTime['minute'].toString().padLeft(2, '0');
+
+                                    // Widget with prayer time, when clicked opens a time picker
+                                    // (modal view) to adjust the prayer time.
+                                    return SizedBox(
+                                      width: 140,
+                                      child: TextButton(
+                                        onPressed: () => _onPrayerTimePressed(context, prayerName),
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(16),
+                                              side: const BorderSide(
+                                                color: AppColors.textSecondary,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                         child: Text(
                                           '$hour:$minute',
                                           style: GoogleFonts.manrope(
                                             textStyle: const TextStyle(
-                                              fontSize: AppDimensions
-                                                  .prayerTimesFontSize,
+                                              fontSize: AppDimensions.prayerTimesFontSize,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
