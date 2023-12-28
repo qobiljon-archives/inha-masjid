@@ -2,7 +2,7 @@
 
 <img src="lib/assets/images/logo/logo_light.png" width="100">
 
-![banner](https://github.com/uz-devs/inha-masjid/assets/22251322/ca96b523-0093-4dad-86a7-db7d1aa88a7e)
+<img src="banner.jpg">
 
 
 
