@@ -45,7 +45,7 @@ class AppStrings {
   static const String adminPanelUpdateMonthlyText =
       'Update Masjid’s monthly expenses';
   static const String adminPanelUpdatePrayerTimesText = 'Update prayer times';
-  static const String adminPanelUpdateMonthlyExpenseAmount = '2.000.000';
+  static const String adminPanelUpdateMonthlyExpenseAmount = '2.000.000 ₩';
   static const String adminPanelUpdateMonthlyExpenseWonText = '₩';
   static final String adminPanelButtonText = 'Update'.toUpperCase();
   static const String adminPanelUpdatePostText = 'Post new announcement';

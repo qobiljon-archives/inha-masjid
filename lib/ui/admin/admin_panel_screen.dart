@@ -2,6 +2,7 @@
 
 // Stdlib
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // 3rd party
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +17,10 @@ import 'package:inha_masjid/utils/strings.dart';
 
 /// TODO: write documentation
 class AdminPanelScreen extends StatelessWidget {
-  const AdminPanelScreen({super.key});
+  AdminPanelScreen({super.key});
+
+  // Variables
+  final _monthlyExpenseController = TextEditingController();
 
   // Functions
   void _onPrayerTimePressed(context, prayerName) async {
@@ -33,8 +37,9 @@ class AdminPanelScreen extends StatelessWidget {
     print('${selectedTime.hour}:${selectedTime.minute}');
 
     // Update prayer time on firestore
-    var prayerTimeDoc = await FirebaseFirestore.instance.doc('/prayertimes/$prayerName');
-    try{
+    var prayerTimeDoc =
+        await FirebaseFirestore.instance.doc('/prayertimes/$prayerName');
+    try {
       await prayerTimeDoc.update({
         'hour': selectedTime.hour,
         'minute': selectedTime.minute,
@@ -51,6 +56,19 @@ class AdminPanelScreen extends StatelessWidget {
     } catch (e) {
       print(e);
     }
+  }
+
+  //
+  void _updateMonthExpenseBtnPressed(context) {
+    // birinchi userdan amountdi ovolish kere
+    var amount = int.parse(_monthlyExpenseController.text);
+
+    // keyin amountdi olib firebase ga qo'yish kerek
+    var firestore = FirebaseFirestore.instance;
+    firestore.doc("/masjidConfigs/monthlyFee").set({
+      "amount": amount,
+      "currency": "KRW",
+    });
   }
 
   // Overrides
@@ -92,41 +110,18 @@ class AdminPanelScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     // Monthly expense amount text field
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: 35,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.textSecondary,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            AppStrings.adminPanelUpdateMonthlyExpenseAmount,
-                            style: GoogleFonts.manrope(
-                              textStyle: const TextStyle(
-                                fontSize: AppDimensions.adminPanelMonthlyExpenseAmountFontSize,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        Text(
-                          AppStrings.adminPanelUpdateMonthlyExpenseWonText,
-                          style: GoogleFonts.manrope(
-                            textStyle: const TextStyle(
-                              fontSize: AppDimensions.adminPanelMonthlyExpenseAmountFontSize,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                    TextField(
+                      inputFormatters: <TextInputFormatter>[
+                        // for below version 2 use this
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+// for version 2 and greater youcan also use this
+                        FilteringTextInputFormatter.digitsOnly
                       ],
+                      keyboardType: TextInputType.number,
+                      controller: _monthlyExpenseController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                     const SizedBox(height: 20),
 
@@ -138,7 +133,7 @@ class AdminPanelScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () => _updateMonthExpenseBtnPressed(context),
                         child: Text(
                           AppStrings.adminPanelButtonText,
                           style: GoogleFonts.manrope(
@@ -190,7 +185,8 @@ class AdminPanelScreen extends StatelessWidget {
                                 Text(
                                   prayerName.capitalize(),
                                   style: GoogleFonts.manrope(
-                                    fontSize: AppDimensions.prayerTimesTextFontSize,
+                                    fontSize:
+                                        AppDimensions.prayerTimesTextFontSize,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -209,19 +205,26 @@ class AdminPanelScreen extends StatelessWidget {
                                     }
 
                                     var fajrTime = snapshot.data!;
-                                    var hour = fajrTime['hour'].toString().padLeft(2, '0');
-                                    var minute = fajrTime['minute'].toString().padLeft(2, '0');
+                                    var hour = fajrTime['hour']
+                                        .toString()
+                                        .padLeft(2, '0');
+                                    var minute = fajrTime['minute']
+                                        .toString()
+                                        .padLeft(2, '0');
 
                                     // Widget with prayer time, when clicked opens a time picker
                                     // (modal view) to adjust the prayer time.
                                     return SizedBox(
                                       width: 140,
                                       child: TextButton(
-                                        onPressed: () => _onPrayerTimePressed(context, prayerName),
+                                        onPressed: () => _onPrayerTimePressed(
+                                            context, prayerName),
                                         style: ButtonStyle(
-                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(16),
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
                                               side: const BorderSide(
                                                 color: AppColors.textSecondary,
                                                 width: 2.0,
@@ -233,7 +236,8 @@ class AdminPanelScreen extends StatelessWidget {
                                           '$hour:$minute',
                                           style: GoogleFonts.manrope(
                                             textStyle: const TextStyle(
-                                              fontSize: AppDimensions.prayerTimesFontSize,
+                                              fontSize: AppDimensions
+                                                  .prayerTimesFontSize,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),

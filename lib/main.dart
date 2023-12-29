@@ -68,7 +68,7 @@ class InhaMasjidApp extends StatelessWidget {
         '/admin_login': (context) => AdminLoginScreen(),
 
         // Administration Screen for configuring masjid details (admin user)
-        '/admin_panel': (context) => const AdminPanelScreen(),
+        '/admin_panel': (context) => AdminPanelScreen(),
       },
     );
   }
