@@ -6,6 +6,7 @@
 // login button.
 
 // Stdlib
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inha_masjid/ui/admin/admin_login_screen.dart';
@@ -133,14 +134,64 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             ),
-                            Text(
-                              AppStrings.homeScreenTotalAmount,
-                              style: GoogleFonts.manrope(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: AppDimensions.requiredTotalAmount,
-                                ),
-                              ),
+                            // Text(
+                            //   AppStrings.homeScreenTotalAmount,
+                            //   style: GoogleFonts.manrope(
+                            //     textStyle: const TextStyle(
+                            //       fontWeight: FontWeight.bold,
+                            //       fontSize: AppDimensions.requiredTotalAmount,
+                            //     ),
+                            //   ),
+                            // ),
+                            StreamBuilder<DocumentSnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .doc("/masjidConfigs/monthlyFee")
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                }
+
+                                if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                }
+
+                                if (!snapshot.hasData ||
+                                    !snapshot.data!.exists) {
+                                  return Text('Document does not exist');
+                                }
+
+                                var amount = snapshot.data!['amount'];
+                                var currency = snapshot.data!['currency'];
+
+                                return Row(
+                                  children: [
+                                    Text(
+                                      '$amount',
+                                      style: GoogleFonts.manrope(
+                                        textStyle: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              AppDimensions.requiredTotalAmount,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      '$currency',
+                                      style: GoogleFonts.manrope(
+                                        textStyle: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              AppDimensions.requiredTotalAmount,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                           ],
                         ),

@@ -31,10 +31,12 @@ class AdminLoginScreen extends StatelessWidget {
 
     // Submit email and password to Firebase auth
     var auth = FirebaseAuth.instance;
-    auth.signInWithEmailAndPassword(
+    auth
+        .signInWithEmailAndPassword(
       email: email,
       password: password,
-    ).then((value) {
+    )
+        .then((value) {
       Fluttertoast.showToast(
         msg: 'Login successful',
         toastLength: Toast.LENGTH_SHORT,
@@ -61,7 +63,7 @@ class AdminLoginScreen extends StatelessWidget {
 
   // Overrides
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -78,7 +80,6 @@ class AdminLoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-
               // Login screen icon
               const Icon(
                 Icons.admin_panel_settings,
@@ -153,7 +154,7 @@ class AdminLoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 15),
 
               // Login button
               Container(
