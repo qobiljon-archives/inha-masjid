@@ -24,6 +24,10 @@ class AdminLoginScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
 
   // Functions
+  void _onBackBtnPressed(BuildContext context) {
+    Navigator.pop(context);
+  }
+
   void _loginBtnPressed(BuildContext context) {
     // Get email and password from input fields
     var email = _emailController.text;
@@ -46,7 +50,7 @@ class AdminLoginScreen extends StatelessWidget {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      Navigator.pushReplacementNamed(context, '/admin_panel');
+      Navigator.popAndPushNamed(context, '/admin_panel');
     }).catchError((error) {
       Fluttertoast.showToast(
         msg: 'Invalid email or password',
@@ -68,9 +72,7 @@ class AdminLoginScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // need logic
-          },
+          onPressed: () => _onBackBtnPressed(context),
         ),
         title: Text(
           AppStrings.adminLoginScreenTitle,
@@ -108,27 +110,25 @@ class AdminLoginScreen extends StatelessWidget {
               // Email input field
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: SafeArea(
-                  child: TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: AppStrings.adminEmailHintText,
-                      hintStyle: const TextStyle(
-                        color: AppColors.textSecondary,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.cardBackgroundColor,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.cardButtonBackgroundColor,
-                        ),
-                      ),
-                      fillColor: AppColors.white,
-                      filled: true,
+                child: TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    hintText: AppStrings.adminEmailHintText,
+                    hintStyle: const TextStyle(
+                      color: AppColors.textSecondary,
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.cardBackgroundColor,
+                      ),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.cardButtonBackgroundColor,
+                      ),
+                    ),
+                    fillColor: AppColors.white,
+                    filled: true,
                   ),
                 ),
               ),

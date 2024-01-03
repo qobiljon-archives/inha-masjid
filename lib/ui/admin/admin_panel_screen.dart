@@ -25,6 +25,10 @@ class AdminPanelScreen extends StatelessWidget {
   final _postNewAnnouncementContentController = TextEditingController();
 
   // Functions
+  void _onBackPressed(context) {
+    Navigator.pop(context);
+  }
+
   void _onPrayerTimePressed(context, prayerName) async {
     // Open time picker modal view
     var selectedTime = await showTimePicker(
@@ -164,9 +168,7 @@ class AdminPanelScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // need logic
-          },
+          onPressed: () => _onBackPressed(context),
         ),
         title: Text(
           AppStrings.adminPanelScreenAppBarTitle,

@@ -35,6 +35,16 @@ class HomeScreen extends StatefulWidget {
 /// button to go to admin panel, and regular users can click on the `x`
 /// button to hide the admin login button.
 class _HomeScreenState extends State<HomeScreen> {
+  // Functions
+  void _onCloseAdminCardBtnPressed() {
+    // TODO finish this
+  }
+
+  void _onOpenAdminPageBtnPressed() async {
+    await Navigator.pushNamed(context, '/admin_login');
+  }
+
+  // Override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          // TODO finish this part
-
           // Admin login button
           Card(
             margin: const EdgeInsets.all(15),
@@ -72,15 +80,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: _onCloseAdminCardBtnPressed,
                         icon: const Icon(Icons.close),
                       ),
                     ],
                   ),
                   TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/admin_login');
-                    },
+                    onPressed: _onOpenAdminPageBtnPressed,
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.white,
                       padding: const EdgeInsets.symmetric(
