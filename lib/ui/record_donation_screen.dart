@@ -150,7 +150,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountOne,
                     style: GoogleFonts.manrope(
@@ -166,7 +167,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountTwo,
                     style: GoogleFonts.manrope(
@@ -182,7 +184,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountThree,
                     style: GoogleFonts.manrope(
@@ -198,7 +201,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountFour,
                     style: GoogleFonts.manrope(

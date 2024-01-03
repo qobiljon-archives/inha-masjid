@@ -9,7 +9,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inha_masjid/ui/admin/admin_login_screen.dart';
 import 'package:inha_masjid/ui/record_donation_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
@@ -163,34 +162,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return Text('Document does not exist');
                                 }
 
+                                // Extracting data from snapshot
                                 var amount = snapshot.data!['amount'];
                                 var currency = snapshot.data!['currency'];
 
-                                return Row(
-                                  children: [
-                                    Text(
-                                      '$amount',
-                                      style: GoogleFonts.manrope(
-                                        textStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:
-                                              AppDimensions.requiredTotalAmount,
+                                // Widget for displaying amount and currency
+                                Widget amountAndCurrencyWidget() {
+                                  return Row(
+                                    children: [
+                                      Text(
+                                        '$amount',
+                                        style: GoogleFonts.manrope(
+                                          textStyle: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: AppDimensions
+                                                .requiredTotalAmount,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      '$currency',
-                                      style: GoogleFonts.manrope(
-                                        textStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:
-                                              AppDimensions.requiredTotalAmount,
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        '$currency',
+                                        style: GoogleFonts.manrope(
+                                          textStyle: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: AppDimensions
+                                                .requiredTotalAmount,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                );
+                                    ],
+                                  );
+                                }
+
+                                // Returning the widget
+                                return amountAndCurrencyWidget();
                               },
                             ),
                           ],
