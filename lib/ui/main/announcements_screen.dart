@@ -3,6 +3,7 @@
 // https://firebase.google.com/docs/firestore
 
 // Stdlib
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 // 3rd party
@@ -47,55 +48,50 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
       ),
       body: Container(
         margin: const EdgeInsets.all(16),
-        child: ListView.builder(
-          itemCount: (AppStrings.items.length),
-          itemBuilder: (_, index) {
-            final item = AppStrings.items[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 12,
-                    left: 8,
-                    right: 0,
-                    bottom: 0,
-                  ),
-                  child: Text(
-                    item['date'],
-                    style: const TextStyle(
-                      fontSize: AppDimensions.announcementsPageDateFontSize,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Card(
-                    color: AppColors.cardBackgroundColor,
-                    elevation: AppDimensions.cardElevation,
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("/announcementsCollection")
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
+
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return Text('No data found.');
+            }
+
+            return ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                var doc = snapshot.data!.docs[index];
+                var title = doc['title'];
+                var content = doc['content'];
+
+                return Card(
+                  color: AppColors.cardBackgroundColor,
+                  elevation: AppDimensions.cardElevation,
+                  child: Theme(
+                    data:
+                        ThemeData().copyWith(dividerColor: Colors.transparent),
                     child: ExpansionTile(
-                      expandedAlignment: Alignment.centerLeft,
-                      shape: Border.all(color: Colors.transparent),
-                      title: Text(item['title']),
+                      title: Text('$title'),
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(
-                            top: 0,
-                            left: 16,
-                            right: 16,
-                            bottom: 16,
-                          ),
-                          child: Text(
-                            item['content'],
-                            style: TextStyle(color: AppColors.cardTextColor),
-                          ),
+                              top: 0, left: 15, right: 15, bottom: 15),
+                          child: Text('$content'),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                );
+              },
             );
           },
         ),

@@ -105,16 +105,16 @@ class AppStrings {
   ];
 
   // announcements screen default data
-  static final List<Map<String, dynamic>> items = List.generate(
-    3,
-    (index) => {
-      "id": index,
-      "title": "Item $index",
-      "content":
-          "We regularly update you with Masjid's latest news, programs and other related announcements in this page",
-      "date": "2023-12-20", // Replace with your actual date
-    },
-  );
+  // static final List<Map<String, dynamic>> items = List.generate(
+  //   3,
+  //   (index) => {
+  //     "id": index,
+  //     "title": "Item $index",
+  //     "content":
+  //         "We regularly update you with Masjid's latest news, programs and other related announcements in this page",
+  //     "date": "2023-12-20", // Replace with your actual date
+  //   },
+  // );
 
   // Prayer names list (for admin panel and prayer times on main screen)
   static const List<String> prayerNames = [

@@ -21,6 +21,8 @@ class AdminPanelScreen extends StatelessWidget {
 
   // Variables
   final _monthlyExpenseController = TextEditingController();
+  final _postNewAnnouncementTitleController = TextEditingController();
+  final _postNewAnnouncementContentController = TextEditingController();
 
   // Functions
   void _onPrayerTimePressed(context, prayerName) async {
@@ -68,6 +70,25 @@ class AdminPanelScreen extends StatelessWidget {
     firestore.doc("/masjidConfigs/monthlyFee").set({
       "amount": amount,
       "currency": "KRW",
+    });
+  }
+
+  void _postNewAnnouncementBtnPresses(content) {
+    var firestore = FirebaseFirestore.instance;
+    var announcementsCollection =
+        firestore.collection("announcementsCollection");
+
+    // Your data to be added to the document
+    var announcementData = {
+      "title": _postNewAnnouncementTitleController.text,
+      "content": _postNewAnnouncementContentController.text,
+    };
+
+    // Add a new document with the server timestamp
+    announcementsCollection.add(announcementData).then((docRef) {
+      print("Document written with ID: ${docRef.id}");
+    }).catchError((error) {
+      print("Error adding document: $error");
     });
   }
 
@@ -296,24 +317,28 @@ class AdminPanelScreen extends StatelessWidget {
             Card(
               color: AppColors.cardBackgroundColor,
               elevation: AppDimensions.cardElevation,
-              child: ExpansionTile(
-                expandedAlignment: Alignment.centerLeft,
-                shape: Border.all(color: Colors.transparent),
-                title: const Text('title'),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 0,
-                      left: 16,
-                      right: 16,
-                      bottom: 16,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _postNewAnnouncementTitleController,
+                      decoration: const InputDecoration(
+                        labelText: 'Title',
+                        contentPadding: EdgeInsets.only(bottom: 0),
+                      ),
                     ),
-                    child: Text(
-                      'content',
-                      style: TextStyle(color: AppColors.cardTextColor),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _postNewAnnouncementContentController,
+                      decoration: const InputDecoration(
+                        labelText: 'Content',
+                        contentPadding: EdgeInsets.only(bottom: 0),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             // Announcement post button
@@ -325,7 +350,7 @@ class AdminPanelScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () => _postNewAnnouncementBtnPresses(context),
                 child: Text(
                   AppStrings.adminPanelUpdatePostButtonText,
                   style: GoogleFonts.manrope(
