@@ -62,14 +62,55 @@ class AdminPanelScreen extends StatelessWidget {
 
   //
   void _updateMonthExpenseBtnPressed(context) {
-    // birinchi userdan amountdi ovolish kere
+    // First, check if the text field is not empty
+    if (_monthlyExpenseController.text.isEmpty) {
+      // Show an error message if the amount is not provided
+      Fluttertoast.showToast(
+        msg: 'Please enter the monthly expense amount',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return; // Do not proceed further if the amount is not provided
+    }
+
+    // birinchi userdan amountni olib firebase ga qo'yish kere
     var amount = int.parse(_monthlyExpenseController.text);
 
-    // keyin amountdi olib firebase ga qo'yish kerek
+    // keyin amountni olib firebase ga qo'yish kere
     var firestore = FirebaseFirestore.instance;
     firestore.doc("/masjidConfigs/monthlyFee").set({
       "amount": amount,
       "currency": "KRW",
+    }).then((_) {
+      // Show success message
+      Fluttertoast.showToast(
+        msg: 'Monthly expense updated successfully',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red, // Change color to indicate success
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      // Clear the monthly expense text field
+      _monthlyExpenseController.clear();
+    }).catchError((error) {
+      print("Error updating monthly expense: $error");
+      // Show error message
+      Fluttertoast.showToast(
+        msg: 'Error updating monthly expense',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     });
   }
 
@@ -87,8 +128,32 @@ class AdminPanelScreen extends StatelessWidget {
     // Add a new document with the server timestamp
     announcementsCollection.add(announcementData).then((docRef) {
       print("Document written with ID: ${docRef.id}");
+      // Show success message
+      Fluttertoast.showToast(
+        msg: 'Announcement posted successfully',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red, // Change color to indicate success
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      // Clear text fields
+      _postNewAnnouncementTitleController.clear();
+      _postNewAnnouncementContentController.clear();
     }).catchError((error) {
       print("Error adding document: $error");
+      // Show error message
+      Fluttertoast.showToast(
+        msg: 'Error posting announcement',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     });
   }
 
@@ -97,6 +162,12 @@ class AdminPanelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            // need logic
+          },
+        ),
         title: Text(
           AppStrings.adminPanelScreenAppBarTitle,
           style: GoogleFonts.manrope(
@@ -142,6 +213,7 @@ class AdminPanelScreen extends StatelessWidget {
                       controller: _monthlyExpenseController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
+                        hintText: 'Enter total amount',
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -196,8 +268,8 @@ class AdminPanelScreen extends StatelessWidget {
                     // Prayer times adjustment buttons fields
                     Center(
                       child: Wrap(
-                        spacing: 30,
-                        runSpacing: 18,
+                        spacing: 10,
+                        runSpacing: 8,
                         children: [
                           for (var prayerName in AppStrings.prayerNames)
                             Column(

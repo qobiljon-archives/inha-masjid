@@ -66,6 +66,12 @@ class AdminLoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            // need logic
+          },
+        ),
         title: Text(
           AppStrings.adminLoginScreenTitle,
           style: GoogleFonts.manrope(

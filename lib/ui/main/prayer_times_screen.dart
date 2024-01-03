@@ -75,7 +75,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
         children: [
           Container(
             width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 50),
+            margin: const EdgeInsets.symmetric(horizontal: 40),
             padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
             decoration: BoxDecoration(
               color: AppColors.cardButtonBackgroundColor,
@@ -85,7 +85,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
               child: Text(
                 currentTime,
                 style: GoogleFonts.manrope(
-                  fontSize: 40,
+                  fontSize: 35,
                   color: AppColors.white,
                   fontWeight: FontWeight.bold,
                 ),
