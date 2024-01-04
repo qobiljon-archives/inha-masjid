@@ -52,7 +52,7 @@ class AdminPanelScreen extends StatelessWidget {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.green,
         textColor: Colors.white,
         fontSize: 16.0,
       );
@@ -93,7 +93,7 @@ class AdminPanelScreen extends StatelessWidget {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red, // Change color to indicate success
+        backgroundColor: Colors.green, // Change color to indicate success
         textColor: Colors.white,
         fontSize: 16.0,
       );
@@ -135,7 +135,7 @@ class AdminPanelScreen extends StatelessWidget {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red, // Change color to indicate success
+        backgroundColor: Colors.green, // Change color to indicate success
         textColor: Colors.white,
         fontSize: 16.0,
       );
@@ -408,29 +408,30 @@ class AdminPanelScreen extends StatelessWidget {
                         contentPadding: EdgeInsets.only(bottom: 0),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            // Announcement post button
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.cardButtonBackgroundColor,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: TextButton(
-                onPressed: () => _postNewAnnouncementBtnPresses(context),
-                child: Text(
-                  AppStrings.adminPanelUpdatePostButtonText,
-                  style: GoogleFonts.manrope(
-                    textStyle: const TextStyle(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.adminLoginButtonTextSize,
+                    const SizedBox(height: 16),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.cardButtonBackgroundColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextButton(
+                        onPressed: () =>
+                            _postNewAnnouncementBtnPresses(context),
+                        child: Text(
+                          AppStrings.adminPanelUpdatePostButtonText,
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: AppDimensions.adminLoginButtonTextSize,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

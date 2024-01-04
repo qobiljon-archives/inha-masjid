@@ -49,7 +49,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red, // Change color to indicate success
+        backgroundColor: Colors.green, // Change color to indicate success
         textColor: Colors.white,
         fontSize: 16.0,
       );
