@@ -1,5 +1,3 @@
-// TODO: write documentation
-
 // Stdlib
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +13,6 @@ import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/extensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
-/// TODO: write documentation
 class AdminPanelScreen extends StatelessWidget {
   AdminPanelScreen({super.key});
 
@@ -44,7 +41,7 @@ class AdminPanelScreen extends StatelessWidget {
 
     // Update prayer time on firestore
     var prayerTimeDoc =
-        await FirebaseFirestore.instance.doc('/prayertimes/$prayerName');
+        FirebaseFirestore.instance.doc('/prayertimes/$prayerName');
     try {
       await prayerTimeDoc.update({
         'hour': selectedTime.hour,

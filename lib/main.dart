@@ -20,7 +20,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase
-  // TODO replace with https://funncy.github.io/flutter/2021/03/06/firestore/
   await initFirebase();
 
   // Run the app

@@ -14,7 +14,6 @@ import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
-/// TODO write documentation
 class AnnouncementsScreen extends StatefulWidget {
   // Variables
   final VoidCallback onBackButtonPressed;
@@ -30,7 +29,6 @@ class AnnouncementsScreen extends StatefulWidget {
   State<AnnouncementsScreen> createState() => _AnnouncementsScreenState();
 }
 
-/// TODO write documentation
 class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
 
             if (snapshot.hasError) {
@@ -63,7 +61,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
             }
 
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Text('No data found.');
+              return const Text('No data found.');
             }
 
             return ListView.builder(

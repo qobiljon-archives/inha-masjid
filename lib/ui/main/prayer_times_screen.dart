@@ -18,7 +18,6 @@ import 'package:inha_masjid/utils/strings.dart';
 // Import the intl package for date formatting
 import 'package:intl/intl.dart';
 
-/// TODO write documentation for prayer times screen.
 class PrayerTimesScreen extends StatefulWidget {
   // Variables
   final VoidCallback onBackButtonPressed;

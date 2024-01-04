@@ -139,15 +139,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             ),
-                            // Text(
-                            //   AppStrings.homeScreenTotalAmount,
-                            //   style: GoogleFonts.manrope(
-                            //     textStyle: const TextStyle(
-                            //       fontWeight: FontWeight.bold,
-                            //       fontSize: AppDimensions.requiredTotalAmount,
-                            //     ),
-                            //   ),
-                            // ),
                             StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance
                                   .doc("/masjidConfigs/monthlyFee")
@@ -156,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   AsyncSnapshot<DocumentSnapshot> snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 }
 
                                 if (snapshot.hasError) {
@@ -165,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 if (!snapshot.hasData ||
                                     !snapshot.data!.exists) {
-                                  return Text('Document does not exist');
+                                  return const Text('Document does not exist');
                                 }
 
                                 // Extracting data from snapshot
@@ -299,136 +290,104 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.all(15),
-                  child: Text(
-                    'Recent Payment',
-                    style: GoogleFonts.manrope(
-                      textStyle: const TextStyle(
-                        fontSize: AppDimensions.homeScreenCardFontSize,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
                 Card(
                   margin: const EdgeInsets.all(15),
                   elevation: AppDimensions.cardElevation,
                   color: AppColors.cardBackgroundColor,
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                color: AppColors.widgetLightPrimary,
-                                borderRadius: BorderRadius.circular(
-                                  50,
-                                ), // Adjust the value as needed
-                              ),
-                              child: const Icon(
-                                Icons.person_2_outlined,
-                                color: AppColors.white,
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
+                          child: Text(
+                            AppStrings.homeScreenRecentPaymentsTitleText,
+                            style: GoogleFonts.manrope(
+                              textStyle: const TextStyle(
+                                fontSize: AppDimensions.homeScreenCardFontSize,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    AppStrings.transactionHistoryTitle,
-                                    style: GoogleFonts.manrope(
-                                      textStyle: const TextStyle(
-                                        fontSize: AppDimensions
-                                            .transactionHistoryNameFontSize,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    AppStrings.transactionHistoryDate,
-                                    style: GoogleFonts.manrope(
-                                      textStyle: const TextStyle(
-                                        fontSize: AppDimensions
-                                            .transactionHistoryDateFontSize,
-                                        color: AppColors.textSecondary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              AppStrings.transactionHistoryTotalSent,
-                              style: GoogleFonts.manrope(
-                                textStyle: const TextStyle(
-                                  fontSize: AppDimensions
-                                      .transactionHistoryNameFontSize,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
-                          ],
+                          ),
                         ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                color: AppColors.widgetLightPrimary,
-                                borderRadius: BorderRadius.circular(
-                                  50,
-                                ), // Adjust the value as needed
-                              ),
-                              child: const Icon(
-                                Icons.person_2_outlined,
-                                color: AppColors.white,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    AppStrings.transactionHistoryTitle,
-                                    style: GoogleFonts.manrope(
-                                      textStyle: const TextStyle(
-                                        fontSize: AppDimensions
-                                            .transactionHistoryNameFontSize,
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('/donations')
+                                .snapshots(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              }
+
+                              if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              }
+
+                              if (!snapshot.hasData ||
+                                  snapshot.data!.docs.isEmpty) {
+                                return const Text('No data found.');
+                              }
+
+                              var donations = snapshot.data!.docs;
+
+                              return Column(
+                                children: donations.map<Widget>(
+                                    (QueryDocumentSnapshot donation) {
+                                  var donorName = donation['donorName'];
+                                  var donationAmount =
+                                      donation['donationAmount'];
+
+                                  return Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 214, 214, 214),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Text(
-                                    AppStrings.transactionHistoryDate,
-                                    style: GoogleFonts.manrope(
-                                      textStyle: const TextStyle(
-                                        fontSize: AppDimensions
-                                            .transactionHistoryDateFontSize,
-                                        color: AppColors.textSecondary,
-                                      ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '$donorName',
+                                          style: GoogleFonts.manrope(
+                                            textStyle: const TextStyle(
+                                              fontSize: AppDimensions
+                                                  .transactionHistoryNameFontSize,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          '$donationAmount',
+                                          style: GoogleFonts.manrope(
+                                            textStyle: const TextStyle(
+                                              fontSize: AppDimensions
+                                                  .transactionHistoryNameFontSize,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              AppStrings.transactionHistoryTotalSent,
-                              style: GoogleFonts.manrope(
-                                textStyle: const TextStyle(
-                                  fontSize: AppDimensions
-                                      .transactionHistoryNameFontSize,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
-                          ],
+                                  );
+                                }).toList(),
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),

@@ -25,9 +25,7 @@ class AppStrings {
   static const String homeScreenCollectedAmount = '700.000 ₩';
   static final String homeScreenRecordDonation =
       'Record my donation'.toUpperCase();
-  static const String transactionHistoryTitle = 'Ot****';
-  static const String transactionHistoryDate = 'Monday, 11 December';
-  static const String transactionHistoryTotalSent = '20.000 ₩';
+  static const String homeScreenRecentPaymentsTitleText = 'Recent Payments';
 
   // Prayer times screen strings
   static const String prayerTimesScreenTitle = 'Prayer times';
@@ -55,8 +53,6 @@ class AppStrings {
   // Record donation screen
   static const String masjidBankAccountTitle = 'Record My Donation';
   static const String masjidBankAccountText = 'Masjid bank account';
-  static const String masjidBankAccountType = 'Kookmin Bank';
-  static const String masjidBankAccountNumber = '64680101486242';
   static const String masjidBankAccountDonationDetails = 'Donation details';
   static const String donationDetailsAmount = '0 ₩';
   static const String donatedAmountOne = '10.000 ₩';
