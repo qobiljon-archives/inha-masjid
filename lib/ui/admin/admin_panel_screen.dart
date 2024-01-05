@@ -117,6 +117,20 @@ class AdminPanelScreen extends StatelessWidget {
   }
 
   void _postNewAnnouncementBtnPresses(content) {
+    if (_postNewAnnouncementTitleController.text.isEmpty ||
+        _postNewAnnouncementContentController.text.isEmpty) {
+      // Show an error message if the amount is not provided
+      Fluttertoast.showToast(
+        msg: 'Please enter the bank name and number',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return; // Do not proceed further if the amount is not provided
+    }
     var firestore = FirebaseFirestore.instance;
     var announcementsCollection =
         firestore.collection("announcementsCollection");
@@ -160,7 +174,7 @@ class AdminPanelScreen extends StatelessWidget {
   }
 
   void _updateBankAccountBtnPressed(context) {
-    if (_masjidBankNameController.text.isEmpty &&
+    if (_masjidBankNameController.text.isEmpty ||
         _masjidBankNumberController.text.isEmpty) {
       // Show an error message if the amount is not provided
       Fluttertoast.showToast(
@@ -186,7 +200,7 @@ class AdminPanelScreen extends StatelessWidget {
     }).then((_) {
       // Show success message
       Fluttertoast.showToast(
-        msg: 'Monthly expense updated successfully',
+        msg: 'Masjid Bank account & name updated successfully',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
