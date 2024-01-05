@@ -63,6 +63,12 @@ class AppStrings {
   static final String recordMyDonationButtonText = 'Record'.toUpperCase();
   static const String recordMyDonationSenderName = 'Sender name';
 
+  // Update Masjid bank account title
+  static const String updateMasjidBankAccountTitle =
+      'Update Masjid\'s bank account';
+  static final String updateMasjidBankAccountButtonText =
+      'Update'.toUpperCase();
+
   // String lists
   static const List<String> welcomeScreenTitles = [
     'Welcome', // Welcome screen 1 title

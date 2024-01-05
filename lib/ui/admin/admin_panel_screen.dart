@@ -20,6 +20,8 @@ class AdminPanelScreen extends StatelessWidget {
   final _monthlyExpenseController = TextEditingController();
   final _postNewAnnouncementTitleController = TextEditingController();
   final _postNewAnnouncementContentController = TextEditingController();
+  final _masjidBankNameController = TextEditingController();
+  final _masjidBankNumberController = TextEditingController();
 
   // Functions
   void _onBackPressed(context) {
@@ -61,7 +63,6 @@ class AdminPanelScreen extends StatelessWidget {
     }
   }
 
-  //
   void _updateMonthExpenseBtnPressed(context) {
     // First, check if the text field is not empty
     if (_monthlyExpenseController.text.isEmpty) {
@@ -148,6 +149,60 @@ class AdminPanelScreen extends StatelessWidget {
       // Show error message
       Fluttertoast.showToast(
         msg: 'Error posting announcement',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    });
+  }
+
+  void _updateBankAccountBtnPressed(context) {
+    if (_masjidBankNameController.text.isEmpty &&
+        _masjidBankNumberController.text.isEmpty) {
+      // Show an error message if the amount is not provided
+      Fluttertoast.showToast(
+        msg: 'Please enter the bank name and number',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return; // Do not proceed further if the amount is not provided
+    }
+
+    var accountNumber = int.parse(_masjidBankNumberController.text);
+    var bankName = _masjidBankNameController.text;
+
+    // keyin amountni olib firebase ga qo'yish kere
+    var firestore = FirebaseFirestore.instance;
+    firestore.doc("/masjidConfigs/bankAccount").set({
+      "bankName": bankName,
+      "accountNumber": accountNumber,
+    }).then((_) {
+      // Show success message
+      Fluttertoast.showToast(
+        msg: 'Monthly expense updated successfully',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green, // Change color to indicate success
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      // Clear the monthly expense text field
+      _masjidBankNameController.clear();
+      _masjidBankNumberController.clear();
+    }).catchError((error) {
+      print("Error updating bank account: $error");
+      // Show error message
+      Fluttertoast.showToast(
+        msg: 'Error updating bank account name or number',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
@@ -343,29 +398,6 @@ class AdminPanelScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
-
-                    // Update monthly expense button
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: AppColors.cardButtonBackgroundColor,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          AppStrings.adminPanelButtonText,
-                          style: GoogleFonts.manrope(
-                            textStyle: const TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: AppDimensions.adminLoginButtonTextSize,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -421,6 +453,68 @@ class AdminPanelScreen extends StatelessWidget {
                             _postNewAnnouncementBtnPresses(context),
                         child: Text(
                           AppStrings.adminPanelUpdatePostButtonText,
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: AppDimensions.adminLoginButtonTextSize,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Masjid Bank Account Updatte post card title
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                AppStrings.updateMasjidBankAccountTitle,
+                style: GoogleFonts.manrope(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: AppDimensions.adminPanelUpdateFontSize,
+                  ),
+                ),
+              ),
+            ),
+            Card(
+              color: AppColors.cardBackgroundColor,
+              elevation: AppDimensions.cardElevation,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _masjidBankNameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Bank Name',
+                        contentPadding: EdgeInsets.only(bottom: 0),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _masjidBankNumberController,
+                      decoration: const InputDecoration(
+                        labelText: 'Bank number',
+                        contentPadding: EdgeInsets.only(bottom: 0),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.cardButtonBackgroundColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextButton(
+                        onPressed: () => _updateBankAccountBtnPressed(context),
+                        child: Text(
+                          AppStrings.updateMasjidBankAccountButtonText,
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
                               color: AppColors.white,
