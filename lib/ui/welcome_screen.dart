@@ -73,6 +73,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             // Logo at the top
             const FractionallySizedBox(
               widthFactor: AppDimensions.imgWelcomeLogoFactor,
+              // heightFactor: AppDimensions.imgWelcomeLogoFactor,
               child: Image(image: AssetImage(AppAssets.logoLight)),
             ),
             const Spacer(),

@@ -64,6 +64,10 @@ dependencies:
   cloud_firestore: ^4.13.6
   firebase_auth: ^4.15.3
 
+  # Toast messages
+  fluttertoast: ^8.2.4
+  intl: ^0.19.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

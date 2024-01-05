@@ -12,9 +12,6 @@ import 'package:flutter_test/flutter_test.dart';
 // Local
 import 'package:inha_masjid/main.dart';
 
-// TODO: thoroughly test the application here with unit tests
-//       (e.g. navigation, state, etc.)
-//       https://flutter.dev/docs/cookbook/testing/widget/introduction
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.

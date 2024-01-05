@@ -1,13 +1,13 @@
-// TODO: write documentation
-
 // Stdlib
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
+import 'package:flutter/services.dart';
 
-/// TODO: write documentation
 class RecordDonationScreen extends StatefulWidget {
   const RecordDonationScreen({super.key});
 
@@ -15,8 +15,64 @@ class RecordDonationScreen extends StatefulWidget {
   State<RecordDonationScreen> createState() => _RecordDonationScreenState();
 }
 
-/// TODO: write documentation
 class _RecordDonationScreenState extends State<RecordDonationScreen> {
+  // Variables
+  final _amountPaidController = TextEditingController();
+  final _donarNameController = TextEditingController();
+
+  // Functions
+  void _recordMyDonationBtnPressed() {
+    var firestore = FirebaseFirestore.instance;
+    var donations = firestore.collection("donations");
+    var donationsData = {
+      'donorName': _donarNameController.text,
+      'donationAmount': _amountPaidController.text,
+    };
+    if (_donarNameController.text.isEmpty ||
+        _amountPaidController.text.isEmpty) {
+      // Show a message to the user indicating that both fields are required
+      Fluttertoast.showToast(
+        msg: 'Donor name and donation amount are required',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return; // Exit the method without proceeding to Firestore
+    }
+    donations.add(donationsData).then((docRef) {
+      print("Document written with ID: ${docRef.id}");
+      Fluttertoast.showToast(
+        msg: 'Announcement posted successfully',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green, // Change color to indicate success
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      // Clear text fields
+      _donarNameController.clear();
+      _amountPaidController.clear();
+    }).catchError((error) {
+      print("Error adding document: $error");
+      // Show error message
+      Fluttertoast.showToast(
+        msg: 'Error posting announcement',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    });
+  }
+
+  String accountNumber = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,31 +110,55 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
               elevation: AppDimensions.cardElevation,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'lib/assets/images/bank_logo/kookmin.png',
-                      width: 52,
-                    ),
-                    Text(
-                      AppStrings.masjidBankAccountType,
-                      style: GoogleFonts.manrope(
-                        textStyle: const TextStyle(
-                          fontSize: AppDimensions.masjidBankAccountCardFontSize,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('/masjidConfigs')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return const Text('No data found.');
+                    }
+
+                    // Access the first document in the collection (you may need to adjust this)
+                    var document = snapshot.data!.docs[0];
+
+                    // Access the fields 'accountNumber' and 'bankName' from the document
+                    var accountNumber = document['accountNumber'];
+                    var bankName = document['bankName'];
+
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '$accountNumber',
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              fontSize:
+                                  AppDimensions.masjidBankAccountCardFontSize,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 50),
-                    Text(
-                      AppStrings.masjidBankAccountNumber,
-                      style: GoogleFonts.manrope(
-                        textStyle: const TextStyle(
-                          fontSize: AppDimensions.masjidBankAccountCardFontSize,
+                        Text(
+                          '$bankName',
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              fontSize:
+                                  AppDimensions.masjidBankAccountCardFontSize,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -92,7 +172,16 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: accountNumber));
+
+                      // Optionally, you can show a snackbar or any other feedback to the user
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Account Number copied to clipboard'),
+                        ),
+                      );
+                    },
                     child: Text(
                       'Copy Account Number',
                       style: GoogleFonts.manrope(
@@ -121,6 +210,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: TextField(
+                controller: _amountPaidController,
                 decoration: InputDecoration(
                   hintText: AppStrings.donationDetailsAmount,
                   hintStyle: GoogleFonts.manrope(
@@ -150,7 +240,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountOne,
                     style: GoogleFonts.manrope(
@@ -166,7 +257,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountTwo,
                     style: GoogleFonts.manrope(
@@ -182,7 +274,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountThree,
                     style: GoogleFonts.manrope(
@@ -198,7 +291,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountFour,
                     style: GoogleFonts.manrope(
@@ -227,6 +321,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: TextField(
+                controller: _donarNameController,
                 decoration: InputDecoration(
                   hintText: AppStrings.recordMyDonationDonateNameText,
                   hintStyle: GoogleFonts.manrope(
@@ -257,7 +352,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                 borderRadius: BorderRadius.circular(30),
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () => _recordMyDonationBtnPressed(),
                 child: Text(
                   AppStrings.recordMyDonationButtonText,
                   style: GoogleFonts.manrope(

@@ -6,7 +6,6 @@ import 'package:inha_masjid/ui/main/main_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Local
 import 'package:inha_masjid/ui/welcome_screen.dart';
@@ -21,10 +20,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initFirebase();
 
   // Run the app
   runApp(const InhaMasjidApp());
+}
+
+Future<void> initFirebase() async {
+  // Initialize Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Firebase auth -- anonymous sign-in for both admin and regular users
+  await FirebaseAuth.instance.signInAnonymously();
 }
 
 class InhaMasjidApp extends StatelessWidget {
@@ -57,10 +64,10 @@ class InhaMasjidApp extends StatelessWidget {
         '/donate': (context) => const RecordDonationScreen(),
 
         // Admin login Screen (admin user)
-        '/admin_login': (context) => const AdminLoginScreen(),
+        '/admin_login': (context) => AdminLoginScreen(),
 
         // Administration Screen for configuring masjid details (admin user)
-        '/admin_panel': (context) => const AdminPanelScreen(),
+        '/admin_panel': (context) => AdminPanelScreen(),
       },
     );
   }

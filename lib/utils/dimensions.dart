@@ -11,9 +11,6 @@ class AppDimensions {
   // Dimensions (primarily taken from Figma prototype)
   // ref: https://www.figma.com/file/sflifKnmkstz8j02emIXMS/Inha-Masjid-draft-(work-on-this)?type=design&node-id=0%3A1&mode=design&t=UmlmHZfCo964xBvV-1
 
-  // ref Figma prototype: 172x80 logo in 393x852 container
-  static const double imgSplashLogoFactor = 172 / 393;
-
   // ref Figma prototype: 48.8x60.22 logo in 393x852 container
   static const double imgWelcomeLogoFactor = 48.8 / 393;
 

@@ -10,8 +10,9 @@ class AppStrings {
   // Private constructor to prevent instances from this class
   AppStrings._();
 
-  // Strings
+  // General strings
   static const String appTitle = 'Inha Masjid';
+
   // Home screen strings
   static const String homeScreenTitle = 'Home screen';
   static const String homeScreenCardQuestion = 'Are you masjid administrator?';
@@ -24,35 +25,34 @@ class AppStrings {
   static const String homeScreenCollectedAmount = '700.000 ₩';
   static final String homeScreenRecordDonation =
       'Record my donation'.toUpperCase();
-  static const String transactionHistoryTitle = 'Ot****';
-  static const String transactionHistoryDate = 'Monday, 11 December';
-  static const String transactionHistoryTotalSent = '20.000 ₩';
+  static const String homeScreenRecentPaymentsTitleText = 'Recent Payments';
+
   // Prayer times screen strings
   static const String prayerTimesScreenTitle = 'Prayer times';
   static const String announcementsScreenTitle = 'Announcements';
-  // Admin Login Screen
+
+  // Admin login screen
   static const String adminLoginScreenTitle = 'Inha Masjid Admin';
   static const String adminLoginTitle = 'Great to have you back! Login';
-  static const String adminLoginHintText = 'Username';
+  static const String adminEmailHintText = 'Email';
   static const String adminPasswordHintText = 'Password';
   static final String adminLoginButtonText = 'Login'.toUpperCase();
 
-  // Admin Panel Screen
+  // Admin panel screen
   static const String adminPanelScreenAppBarTitle = 'Inha Masjid Admin';
   static const String adminPanelUpdateMonthlyText =
       'Update Masjid’s monthly expenses';
   static const String adminPanelUpdatePrayerTimesText = 'Update prayer times';
-  static const String adminPanelUpdateMonthlyExpenseAmount = '2.000.000';
+  static const String adminPanelUpdateMonthlyExpenseAmount = '2.000.000 ₩';
   static const String adminPanelUpdateMonthlyExpenseWonText = '₩';
   static final String adminPanelButtonText = 'Update'.toUpperCase();
   static const String adminPanelUpdatePostText = 'Post new announcement';
   static final String adminPanelUpdatePostButtonText = 'Post'.toUpperCase();
   static final String adminPanelUpdateExitButtonText = 'Exit'.toUpperCase();
 
+  // Record donation screen
   static const String masjidBankAccountTitle = 'Record My Donation';
   static const String masjidBankAccountText = 'Masjid bank account';
-  static const String masjidBankAccountType = 'Kookmin Bank';
-  static const String masjidBankAccountNumber = '64680101486242';
   static const String masjidBankAccountDonationDetails = 'Donation details';
   static const String donationDetailsAmount = '0 ₩';
   static const String donatedAmountOne = '10.000 ₩';
@@ -62,6 +62,12 @@ class AppStrings {
   static const String recordMyDonationDonateNameText = 'Donor Name';
   static final String recordMyDonationButtonText = 'Record'.toUpperCase();
   static const String recordMyDonationSenderName = 'Sender name';
+
+  // Update Masjid bank account title
+  static const String updateMasjidBankAccountTitle =
+      'Update Masjid\'s bank account';
+  static final String updateMasjidBankAccountButtonText =
+      'Update'.toUpperCase();
 
   // String lists
   static const List<String> welcomeScreenTitles = [
@@ -99,25 +105,25 @@ class AppStrings {
     in the app.
     ''',
   ];
-  // announcements screen default data
-  static final List<Map<String, dynamic>> items = List.generate(
-    3,
-    (index) => {
-      "id": index,
-      "title": "Item $index",
-      "content":
-          "We regularly update you with Masjid's latest news, programs and other related announcements in this page",
-      "date": "2023-12-20", // Replace with your actual date
-    },
-  );
 
-  // prayer times list
-  static final List<Map<String, String>> prayerTimes = [
-    {'name': 'Fajr', 'time': '06:45'},
-    {'name': 'Sunrise', 'time': '7:39'},
-    {'name': 'Dhuhr', 'time': '1:15'},
-    {'name': 'Asr', 'time': '15:45'},
-    {'name': 'Maghrib', 'time': '17:22'},
-    {'name': 'Isha', 'time': '20:00'},
+  // announcements screen default data
+  // static final List<Map<String, dynamic>> items = List.generate(
+  //   3,
+  //   (index) => {
+  //     "id": index,
+  //     "title": "Item $index",
+  //     "content":
+  //         "We regularly update you with Masjid's latest news, programs and other related announcements in this page",
+  //     "date": "2023-12-20", // Replace with your actual date
+  //   },
+  // );
+
+  // Prayer names list (for admin panel and prayer times on main screen)
+  static const List<String> prayerNames = [
+    'fajr',
+    'dhuhr',
+    'asr',
+    'maghrib',
+    'isha',
   ];
 }
