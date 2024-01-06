@@ -35,6 +35,19 @@ class HomeScreen extends StatefulWidget {
 /// button to go to admin panel, and regular users can click on the `x`
 /// button to hide the admin login button.
 class _HomeScreenState extends State<HomeScreen> {
+  // Variables
+  late Stream<QuerySnapshot> _donationStream;
+
+  // Lifecycle
+  @override
+  void initState() {
+    super.initState();
+
+    // Donation stream
+    _donationStream =
+        FirebaseFirestore.instance.collection('/donations').snapshots();
+  }
+
   // Functions
   void _onCloseAdminCardBtnPressed() {
     // TODO finish this
@@ -42,6 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onOpenAdminPageBtnPressed() async {
     await Navigator.pushNamed(context, '/admin_login');
+  }
+
+  void _donateBtnPressed() async {
+    await Navigator.pushNamed(context, '/donate');
   }
 
   // Override
@@ -73,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        AppStrings.homeScreenCardQuestion,
+                        AppStrings.areYouAdmin,
                         style: TextStyle(
                           fontSize: AppDimensions.homeScreenCardFontSize,
                           fontWeight: FontWeight.bold,
@@ -100,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       backgroundColor: AppColors.cardButtonBackgroundColor,
                     ),
                     child: Text(
-                      AppStrings.homeScreenCardTextButton,
+                      AppStrings.goToAdmin,
                       style: GoogleFonts.manrope(
                         textStyle: const TextStyle(
                           fontSize: AppDimensions.homeScreenCardFontSize,
@@ -118,6 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: ListView(
               children: [
+                // Donation progress bar and record donation button
                 Card(
                   margin: const EdgeInsets.all(15),
                   elevation: AppDimensions.cardElevation,
@@ -127,18 +145,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Required amount
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          child: Text(
+                            AppStrings.masjidNeededAmount,
+                            style: GoogleFonts.manrope(
+                              textStyle: const TextStyle(
+                                fontSize: AppDimensions.homeScreenCardFontSize,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              AppStrings.homeScreenRequiredAvarageAmount,
-                              style: GoogleFonts.manrope(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: AppDimensions.cardAmountText,
-                                ),
-                              ),
-                            ),
                             StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance
                                   .doc("/masjidConfigs/monthlyFee")
@@ -201,31 +223,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         const SizedBox(height: 20),
 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppStrings.homeScreenCollectedAmountText,
-                              style: GoogleFonts.manrope(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: AppDimensions.cardAmountText,
-                                ),
-                              ),
+                        Text(
+                          '0 KRW raised ',
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
                             ),
-                            Text(
-                              AppStrings.homeScreenCollectedAmount,
-                              style: GoogleFonts.manrope(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: AppDimensions.collectedAmount,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-
-                        const SizedBox(height: 20),
 
                         // Progress Bar
                         LinearProgressIndicator(
@@ -242,19 +248,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Expanded(
                               child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RecordDonationScreen(),
-                                    ),
-                                  );
-                                },
+                                onPressed: _donateBtnPressed,
                                 style: TextButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal:
-                                        16, // Adjust this value as needed
+                                    horizontal: 16,
                                     vertical: 17,
                                   ),
                                   backgroundColor:
@@ -270,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
-                                      AppStrings.homeScreenRecordDonation,
+                                      AppStrings.donate,
                                       style: GoogleFonts.manrope(
                                         textStyle: const TextStyle(
                                           color: AppColors.white,
@@ -290,13 +287,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+
+                // Donation records
                 Card(
                   margin: const EdgeInsets.all(15),
                   elevation: AppDimensions.cardElevation,
                   color: AppColors.cardBackgroundColor,
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -304,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 5),
                           child: Text(
-                            AppStrings.homeScreenRecentPaymentsTitleText,
+                            AppStrings.activityFeed,
                             style: GoogleFonts.manrope(
                               textStyle: const TextStyle(
                                 fontSize: AppDimensions.homeScreenCardFontSize,
@@ -314,77 +312,48 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 0),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('/donations')
-                                .snapshots(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
+                            stream: _donationStream,
+                            builder: (context, snapshot) {
+                              // Loading
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 return const CircularProgressIndicator();
                               }
 
+                              // Error
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               }
 
+                              // Empty (no data)
                               if (!snapshot.hasData ||
                                   snapshot.data!.docs.isEmpty) {
-                                return const Text('No data found.');
+                                return Container();
                               }
 
-                              var donations = snapshot.data!.docs;
-
-                              return Column(
-                                children: donations.map<Widget>(
-                                    (QueryDocumentSnapshot donation) {
+                              // Data exists
+                              var donationDocs = snapshot.data!.docs;
+                              return ListView.builder(
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (context, idx) {
+                                  var donation = donationDocs[idx];
                                   var donorName = donation['donorName'];
                                   var donationAmount =
                                       donation['donationAmount'];
-
-                                  return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 214, 214, 214),
-                                        ),
+                                  print('$donorName donated $donationAmount');
+                                  return Text(
+                                    '$donorName donated $donationAmount',
+                                    style: GoogleFonts.manrope(
+                                      textStyle: const TextStyle(
+                                        fontSize: AppDimensions
+                                            .transactionHistoryNameFontSize,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '$donorName',
-                                          style: GoogleFonts.manrope(
-                                            textStyle: const TextStyle(
-                                              fontSize: AppDimensions
-                                                  .transactionHistoryNameFontSize,
-                                            ),
-                                          ),
-                                        ),
-                                        Text(
-                                          '$donationAmount',
-                                          style: GoogleFonts.manrope(
-                                            textStyle: const TextStyle(
-                                              fontSize: AppDimensions
-                                                  .transactionHistoryNameFontSize,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                   );
-                                }).toList(),
+                                },
                               );
                             },
                           ),

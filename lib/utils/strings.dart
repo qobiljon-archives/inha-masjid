@@ -15,17 +15,14 @@ class AppStrings {
 
   // Home screen strings
   static const String homeScreenTitle = 'Home screen';
-  static const String homeScreenCardQuestion = 'Are you masjid administrator?';
-  static final String homeScreenCardTextButton =
-      'Go to admin page'.toUpperCase();
-  static const String homeScreenRequiredAvarageAmount =
-      'Required average amount';
-  static const String homeScreenTotalAmount = '2.000.000 ₩';
-  static const String homeScreenCollectedAmountText = 'Collected amount';
+  static const String areYouAdmin = 'Are you masjid administrator?';
+  static final String goToAdmin = 'Go to admin page'.toUpperCase();
+  static const String masjidNeededAmount =
+      'Inha Masjid\'s needs for coming month';
+  static const String donationProgress = 'Collected amount';
   static const String homeScreenCollectedAmount = '700.000 ₩';
-  static final String homeScreenRecordDonation =
-      'Record my donation'.toUpperCase();
-  static const String homeScreenRecentPaymentsTitleText = 'Recent Payments';
+  static final String donate = 'Donate'.toUpperCase();
+  static const String activityFeed = 'Activity feed';
 
   // Prayer times screen strings
   static const String prayerTimesScreenTitle = 'Prayer times';
