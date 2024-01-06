@@ -24,13 +24,15 @@ class AppDimensions {
   // Font sizes
   // Screen titles (app bar text)
   static const double screenTitleFontSize = 24;
-  static const double homeScreenCardFontSize = 16;
+  static const double cardTitleFontSize = 24;
+  static const double cardTitleContentSize = 18;
 
   // Card Text sizes
   static const double cardElevation = 0;
   static const double cardAmountText = 10;
   static const double requiredTotalAmount = 32;
   static const double collectedAmount = 24;
+  static const double donateButtonHeight = 50;
   static const double transactionHistoryNameFontSize = 14;
   static const double transactionHistoryDateFontSize = 12;
   static const double bottomNavigationBarIconSize = 24;

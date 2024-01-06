@@ -62,7 +62,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
           onPressed: widget.onBackButtonPressed,
         ),
         title: Text(
-          AppStrings.prayerTimesScreenTitle,
+          AppStrings.prayerTimes,
           style: GoogleFonts.manrope(
             fontSize: AppDimensions.screenTitleFontSize,
             fontWeight: FontWeight.bold,

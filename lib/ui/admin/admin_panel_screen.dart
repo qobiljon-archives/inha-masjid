@@ -237,7 +237,7 @@ class AdminPanelScreen extends StatelessWidget {
           onPressed: () => _onBackPressed(context),
         ),
         title: Text(
-          AppStrings.adminPanelScreenAppBarTitle,
+          AppStrings.inhaMasjidAdmin,
           style: GoogleFonts.manrope(
             fontSize: AppDimensions.screenTitleFontSize,
             fontWeight: FontWeight.bold,
@@ -252,7 +252,7 @@ class AdminPanelScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                AppStrings.adminPanelUpdateMonthlyText,
+                AppStrings.updateMonthlyExpenseAmount,
                 style: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -296,7 +296,7 @@ class AdminPanelScreen extends StatelessWidget {
                       child: TextButton(
                         onPressed: () => _updateMonthExpenseBtnPressed(context),
                         child: Text(
-                          AppStrings.adminPanelButtonText,
+                          AppStrings.update.toUpperCase(),
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
                               color: AppColors.white,
@@ -316,7 +316,7 @@ class AdminPanelScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                AppStrings.adminPanelUpdatePrayerTimesText,
+                AppStrings.updatePrayerTimes,
                 style: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -421,7 +421,7 @@ class AdminPanelScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                AppStrings.adminPanelUpdatePostText,
+                AppStrings.postNewAnnouncement,
                 style: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -466,7 +466,7 @@ class AdminPanelScreen extends StatelessWidget {
                         onPressed: () =>
                             _postNewAnnouncementBtnPresses(context),
                         child: Text(
-                          AppStrings.adminPanelUpdatePostButtonText,
+                          AppStrings.adminPanelUpdatePostButtonText.toUpperCase(),
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
                               color: AppColors.white,

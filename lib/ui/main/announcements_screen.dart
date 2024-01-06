@@ -37,7 +37,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
         centerTitle: false,
         leading: BackButton(onPressed: widget.onBackButtonPressed),
         title: Text(
-          AppStrings.announcementsScreenTitle,
+          AppStrings.announcements,
           style: GoogleFonts.manrope(
             fontSize: AppDimensions.screenTitleFontSize,
             fontWeight: FontWeight.bold,

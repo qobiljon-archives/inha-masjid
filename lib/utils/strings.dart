@@ -4,53 +4,83 @@
 // in the entire app screens. This is also useful for adopting localization in
 // the future (https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization).
 
+// Stdlib
+import 'package:intl/intl.dart';
+
 /// Class for streamlining the UI strings used in the app (for consistency and
 /// easier localization in the future).
 class AppStrings {
   // Private constructor to prevent instances from this class
   AppStrings._();
 
+  // Formatters
+  static final _numberFmt = NumberFormat("###,###", "en_US");
+
   // General strings
   static const String appTitle = 'Inha Masjid';
+  static const String inhaMasjidAdmin = 'Inha Masjid Admin';
 
   // Home screen strings
-  static const String homeScreenTitle = 'Home screen';
+  static const String home = 'Home';
   static const String areYouAdmin = 'Are you masjid administrator?';
-  static final String goToAdmin = 'Go to admin page'.toUpperCase();
-  static const String masjidNeededAmount =
-      'Inha Masjid\'s needs for coming month';
-  static const String donationProgress = 'Collected amount';
-  static const String homeScreenCollectedAmount = '700.000 ₩';
-  static final String donate = 'Donate'.toUpperCase();
+  static const String goToAdmin = 'Go to admin page';
+  static const String goal = 'Goal';
+  static const String donate = 'Donate';
   static const String activityFeed = 'Activity feed';
+  static const String currentProgress = 'Current progress';
+
+  static String raisedAmount(int amount, String currency) {
+    // Raised amount: 12,345 KRW
+    return 'Raised ${_numberFmt.format(amount)} ${currency.toUpperCase()}';
+  }
+
+  static String requiredAmount(int amount, String currency) {
+
+    // Construct the amount part
+    var ans = 'out of ';
+    if (amount >= 1000000) {
+      // 1.2m
+      ans += '${amount ~/ 1000000}m';
+    } else if (amount >= 1000) {
+      // 900k
+      ans += '${amount ~/ 1000}k';
+    } else {
+      // 100
+      ans += '$amount';
+    }
+
+    // Attach the currency
+    ans += ' ${currency.toUpperCase()}';
+
+    // Return the string: "out of 1.2m KRW"
+    return ans;
+  }
+
+  static String donationForMonth(int month, int year) {
+    return "For Inha Masjid's monthly rent for $month, $year.";
+  }
 
   // Prayer times screen strings
-  static const String prayerTimesScreenTitle = 'Prayer times';
-  static const String announcementsScreenTitle = 'Announcements';
+  static const String prayerTimes = 'Prayer times';
+  static const String announcements = 'Announcements';
 
   // Admin login screen
-  static const String adminLoginScreenTitle = 'Inha Masjid Admin';
-  static const String adminLoginTitle = 'Great to have you back! Login';
-  static const String adminEmailHintText = 'Email';
-  static const String adminPasswordHintText = 'Password';
-  static final String adminLoginButtonText = 'Login'.toUpperCase();
+  static const String loginPrompt = 'Great to have you back! Login';
+  static const String email = 'Email';
+  static const String password = 'Password';
+  static const String login = 'Login';
 
   // Admin panel screen
-  static const String adminPanelScreenAppBarTitle = 'Inha Masjid Admin';
-  static const String adminPanelUpdateMonthlyText =
-      'Update Masjid’s monthly expenses';
-  static const String adminPanelUpdatePrayerTimesText = 'Update prayer times';
-  static const String adminPanelUpdateMonthlyExpenseAmount = '2.000.000 ₩';
-  static const String adminPanelUpdateMonthlyExpenseWonText = '₩';
-  static final String adminPanelButtonText = 'Update'.toUpperCase();
-  static const String adminPanelUpdatePostText = 'Post new announcement';
-  static final String adminPanelUpdatePostButtonText = 'Post'.toUpperCase();
-  static final String adminPanelUpdateExitButtonText = 'Exit'.toUpperCase();
+  static const String updateMonthlyExpenseAmount = 'Update Masjid’s monthly expenses';
+  static const String updatePrayerTimes = 'Update prayer times';
+  static const String update = 'Update';
+  static const String postNewAnnouncement = 'Post new announcement';
+  static const String adminPanelUpdatePostButtonText = 'Post';
 
   // Record donation screen
-  static const String masjidBankAccountTitle = 'Record My Donation';
-  static const String masjidBankAccountText = 'Masjid bank account';
-  static const String masjidBankAccountDonationDetails = 'Donation details';
+  static const String recordMyDonation = 'Record my donation';
+  static const String bankAccountNumber = 'Masjid bank account';
+  static const String donationDetails = 'Donation details';
   static const String donationDetailsAmount = '0 ₩';
   static const String donatedAmountOne = '10.000 ₩';
   static const String donatedAmountTwo = '20.000 ₩';
@@ -61,10 +91,8 @@ class AppStrings {
   static const String recordMyDonationSenderName = 'Sender name';
 
   // Update Masjid bank account title
-  static const String updateMasjidBankAccountTitle =
-      'Update Masjid\'s bank account';
-  static final String updateMasjidBankAccountButtonText =
-      'Update'.toUpperCase();
+  static const String updateMasjidBankAccountTitle = 'Update Masjid\'s bank account';
+  static final String updateMasjidBankAccountButtonText = 'Update'.toUpperCase();
 
   // String lists
   static const List<String> welcomeScreenTitles = [

@@ -75,7 +75,7 @@ class AdminLoginScreen extends StatelessWidget {
           onPressed: () => _onBackBtnPressed(context),
         ),
         title: Text(
-          AppStrings.adminLoginScreenTitle,
+          AppStrings.inhaMasjidAdmin,
           style: GoogleFonts.manrope(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
@@ -98,7 +98,7 @@ class AdminLoginScreen extends StatelessWidget {
 
               // Login screen subtitle
               Text(
-                AppStrings.adminLoginTitle,
+                AppStrings.loginPrompt,
                 style: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                     color: AppColors.textSecondary,
@@ -113,7 +113,7 @@ class AdminLoginScreen extends StatelessWidget {
                 child: TextField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    hintText: AppStrings.adminEmailHintText,
+                    hintText: AppStrings.email,
                     hintStyle: const TextStyle(
                       color: AppColors.textSecondary,
                     ),
@@ -141,7 +141,7 @@ class AdminLoginScreen extends StatelessWidget {
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    hintText: AppStrings.adminPasswordHintText,
+                    hintText: AppStrings.password,
                     hintStyle: const TextStyle(
                       color: AppColors.textSecondary,
                     ),
@@ -174,7 +174,7 @@ class AdminLoginScreen extends StatelessWidget {
                         .cardButtonBackgroundColor, // Set background color
                   ),
                   child: Text(
-                    AppStrings.adminLoginButtonText,
+                    AppStrings.login.toUpperCase(),
                     style: GoogleFonts.manrope(
                       color: AppColors.white,
                       fontWeight: FontWeight.bold,

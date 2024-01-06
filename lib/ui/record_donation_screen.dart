@@ -79,7 +79,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          AppStrings.masjidBankAccountTitle,
+          AppStrings.recordMyDonation,
           style: GoogleFonts.manrope(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Text(
-                AppStrings.masjidBankAccountText,
+                AppStrings.bankAccountNumber,
                 style: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -197,7 +197,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Text(
-                AppStrings.masjidBankAccountDonationDetails,
+                AppStrings.donationDetails,
                 style: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
