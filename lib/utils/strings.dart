@@ -28,16 +28,28 @@ class AppStrings {
   static const String donate = 'Donate';
   static const String activityFeed = 'Activity feed';
   static const String currentProgress = 'Current progress';
+  static const String noDonations =
+      'No donations yet. Make the difference by making a donation now!';
+  static const String rentUpdatedMessage = 'Monthly rent amount updated successfully';
+  static const String rentUpdateFailedMessage = 'Monthly rent amount must be a number (e.g., 1000000)';
+  static const String prayerTimeUpdateCanceledMessage = 'Prayer time update canceled';
 
-  static String raisedAmount(int amount, String currency) {
-    // Raised amount: 12,345 KRW
-    return 'Raised ${_numberFmt.format(amount)} ${currency.toUpperCase()}';
+  static String prayerTimeUpdatedMessage(String prayerName) =>
+      '$prayerName prayer time  updated successfully';
+
+  static String raisedAmount(int amount, {bool addCurrency = false}) {
+    var ans = 'raised ${_numberFmt.format(amount)}';
+
+    if (addCurrency) {
+      ans += ' ₩';
+    }
+
+    return ans; // e.g., "Raised amount: 12,345"
   }
 
-  static String requiredAmount(int amount, String currency) {
-
-    // Construct the amount part
+  static String requiredAmount(int amount, {bool addCurrency = false}) {
     var ans = 'out of ';
+
     if (amount >= 1000000) {
       // 1.2m
       ans += '${amount ~/ 1000000}m';
@@ -49,11 +61,11 @@ class AppStrings {
       ans += '$amount';
     }
 
-    // Attach the currency
-    ans += ' ${currency.toUpperCase()}';
+    if (addCurrency) {
+      ans += ' ₩';
+    }
 
-    // Return the string: "out of 1.2m KRW"
-    return ans;
+    return ans; // e.g., "out of 1.2m ₩"
   }
 
   static String donationForMonth(int month, int year) {
@@ -69,6 +81,10 @@ class AppStrings {
   static const String email = 'Email';
   static const String password = 'Password';
   static const String login = 'Login';
+  static const String announcementTitle = 'Title';
+  static const String announcementTitleTooltip = 'e.g., Taraweeh prayer tonight at 8:30pm';
+  static const String announcementBody = 'Body';
+  static const String announcementBodyTooltip = 'e.g., Dear brothers, we will be having Taraweeh prayer tonight at 8:30pm. Please join us.';
 
   // Admin panel screen
   static const String updateMonthlyExpenseAmount = 'Update Masjid’s monthly expenses';
@@ -151,4 +167,16 @@ class AppStrings {
     'maghrib',
     'isha',
   ];
+}
+
+class FirestorePaths {
+  // Documents
+  static const String bankAccountDoc = '/masjidConfigs/bankAccount';
+  static const String monthlyRentDoc = '/masjidConfigs/monthlyRent';
+
+  static String prayerTimeDoc(String prayerName) => '/prayerTimes/$prayerName';
+
+  // Collections
+  static const String announcementsCol = '/announcements';
+  static const String donationsCol = '/donations';
 }

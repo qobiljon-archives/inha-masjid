@@ -48,7 +48,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
         margin: const EdgeInsets.all(16),
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
-              .collection("/announcementsCollection")
+              .collection(FirestorePaths.announcementsCol)
               .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

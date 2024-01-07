@@ -23,7 +23,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
   // Functions
   void _recordMyDonationBtnPressed() {
     var firestore = FirebaseFirestore.instance;
-    var donations = firestore.collection("donations");
+    var donations = firestore.collection(FirestorePaths.donationsCol);
     var donationsData = {
       'donorName': _donarNameController.text,
       'donationAmount': _amountPaidController.text,
@@ -110,12 +110,11 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
               elevation: AppDimensions.cardElevation,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: StreamBuilder<QuerySnapshot>(
+                child: StreamBuilder<DocumentSnapshot>(
                   stream: FirebaseFirestore.instance
-                      .collection('/masjidConfigs')
+                      .doc(FirestorePaths.bankAccountDoc)
                       .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                  builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
                     }
@@ -124,12 +123,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                       return Text('Error: ${snapshot.error}');
                     }
 
-                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return const Text('No data found.');
-                    }
-
                     // Access the first document in the collection (you may need to adjust this)
-                    var document = snapshot.data!.docs[0];
+                    var document = snapshot.data!;
 
                     // Access the fields 'accountNumber' and 'bankName' from the document
                     var accountNumber = document['accountNumber'];

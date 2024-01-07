@@ -29,6 +29,11 @@ class AdminLoginScreen extends StatelessWidget {
   }
 
   void _loginBtnPressed(BuildContext context) {
+
+    // TODO remove these two lines
+    Navigator.popAndPushNamed(context, '/admin_panel');
+    return;
+
     // Get email and password from input fields
     var email = _emailController.text;
     var password = _passwordController.text;
@@ -86,31 +91,32 @@ class AdminLoginScreen extends StatelessWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Login screen icon
-              const Icon(
-                Icons.admin_panel_settings,
-                size: AppDimensions.adminLoginIconFontSize,
-                color: AppColors.widgetPrimary,
-              ),
-              const SizedBox(height: 50),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Column(
+              children: [
 
-              // Login screen subtitle
-              Text(
-                AppStrings.loginPrompt,
-                style: GoogleFonts.manrope(
-                  textStyle: const TextStyle(
-                    color: AppColors.textSecondary,
+                // Login screen icon on top
+                const Icon(
+                  Icons.admin_panel_settings,
+                  size: AppDimensions.adminLoginIconFontSize,
+                  color: AppColors.widgetPrimary,
+                ),
+                const SizedBox(height: 50),
+
+                // Subtitle e.g., "Great to have you back!"
+                Text(
+                  AppStrings.loginPrompt,
+                  style: GoogleFonts.manrope(
+                    textStyle: const TextStyle(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 25),
+                const SizedBox(height: 25),
 
-              // Email input field
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
+                // Email input field (editable)
+                TextField(
                   controller: _emailController,
                   decoration: InputDecoration(
                     hintText: AppStrings.email,
@@ -131,13 +137,10 @@ class AdminLoginScreen extends StatelessWidget {
                     filled: true,
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-              // Password input field
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
+                // Password input field (editable)
+                TextField(
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
@@ -159,33 +162,28 @@ class AdminLoginScreen extends StatelessWidget {
                     filled: true,
                   ),
                 ),
-              ),
-              const SizedBox(height: 15),
+                const SizedBox(height: 15),
 
-              // Login button
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextButton(
+                // Login button
+                ElevatedButton.icon(
                   onPressed: () => _loginBtnPressed(context),
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(18.0), // Add padding
-                    backgroundColor: AppColors
-                        .cardButtonBackgroundColor, // Set background color
-                  ),
-                  child: Text(
+                  icon: const Icon(Icons.login, color: AppColors.white),
+                  label: Text(
                     AppStrings.login.toUpperCase(),
-                    style: GoogleFonts.manrope(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.adminLoginButtonTextSize,
+                    style: const TextStyle(color: AppColors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.cardButtonBackgroundColor,
+                    minimumSize: const Size(
+                      double.infinity,
+                      AppDimensions.donateButtonHeight,
                     ),
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 100),
-            ],
+                const SizedBox(height: 100),
+              ],
+            ),
           ),
         ),
       ),

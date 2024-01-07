@@ -45,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     // Donation stream
-    _donationStream = FirebaseFirestore.instance.collection('/donations').snapshots();
+    var fs = FirebaseFirestore.instance;
+    _donationStream = fs.collection(FirestorePaths.donationsCol).snapshots();
   }
 
   // Functions
@@ -78,15 +79,16 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+
             // Admin panel
             Card(
-              margin: const EdgeInsets.all(15),
               color: AppColors.cardBackgroundColor,
               elevation: AppDimensions.cardElevation,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
+
                     // Card title and close button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // Donate
             Card(
-              margin: const EdgeInsets.all(15),
               elevation: AppDimensions.cardElevation,
               color: AppColors.cardBackgroundColor,
               child: Padding(
@@ -123,14 +124,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Current progress title (donation collection progress)
-                    Text(
-                      AppStrings.currentProgress,
-                      style: GoogleFonts.manrope(
-                        textStyle: const TextStyle(
-                          fontSize: AppDimensions.cardTitleFontSize,
-                          fontWeight: FontWeight.bold,
+                    // Row used to make Card full width (couldn't find other way)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppStrings.currentProgress,
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              fontSize: AppDimensions.cardTitleFontSize,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     const SizedBox(height: 16),
 
@@ -141,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         // Raised amount
                         Text(
-                          AppStrings.raisedAmount(12345, 'krw'),
+                          AppStrings.raisedAmount(12345).capitalize(),
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
                               fontSize: AppDimensions.cardTitleContentSize,
@@ -153,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         // Total amount
                         StreamBuilder<DocumentSnapshot>(
                           stream: FirebaseFirestore.instance
-                              .doc("/masjidConfigs/monthlyFee")
+                              .doc(FirestorePaths.monthlyRentDoc)
                               .snapshots(),
                           builder:
                               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -171,11 +178,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             // Extracting data from snapshot
                             var amount = snapshot.data!['amount'];
-                            var currency = snapshot.data!['currency'];
 
                             // Returning the widget
                             return Text(
-                              AppStrings.requiredAmount(amount, currency),
+                              AppStrings.requiredAmount(amount),
                               style: GoogleFonts.manrope(
                                 textStyle: const TextStyle(
                                   fontSize: AppDimensions.cardTitleContentSize,
@@ -197,7 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       minHeight: 16,
                       borderRadius: BorderRadius.circular(20),
                     ),
-
                     const SizedBox(height: 20),
 
                     // Donate button (opens record donation screen)
@@ -223,7 +228,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // Activity feed (donations)
             Card(
-              margin: const EdgeInsets.all(15),
               elevation: AppDimensions.cardElevation,
               color: AppColors.cardBackgroundColor,
               child: Padding(
@@ -248,6 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Activity feed list
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
+                      width: 200,
+                      height: 200,
                       child: StreamBuilder<QuerySnapshot>(
                         stream: _donationStream,
                         builder: (context, snapshot) {
@@ -263,20 +269,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           // Empty (no data)
                           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                            return Container();
+                            return const Text(AppStrings.noDonations);
                           }
 
-                          // Data exists
-                          var donationDocs = snapshot.data!.docs;
+                          // Donation docs list
+                          var docs = snapshot.data!.docs;
+
+                          // Returning the widget
                           return ListView.builder(
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, idx) {
-                              var donation = donationDocs[idx];
-                              var donorName = donation['donorName'];
-                              var donationAmount = donation['donationAmount'];
-                              print('$donorName donated $donationAmount');
+                              var timestamp = docs[idx]['timestamp'];
+                              var donorName = docs[idx]['donorName'];
+                              var amount = docs[idx]['amount'];
+
                               return Text(
-                                '$donorName donated $donationAmount',
+                                '$donorName donated $amount ($timestamp)',
                                 style: GoogleFonts.manrope(
                                   textStyle: const TextStyle(
                                     fontSize: AppDimensions.transactionHistoryNameFontSize,
