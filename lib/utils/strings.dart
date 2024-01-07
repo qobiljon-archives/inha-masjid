@@ -5,16 +5,13 @@
 // the future (https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization).
 
 // Stdlib
-import 'package:intl/intl.dart';
+import 'package:inha_masjid/utils/extensions.dart';
 
 /// Class for streamlining the UI strings used in the app (for consistency and
 /// easier localization in the future).
 class AppStrings {
   // Private constructor to prevent instances from this class
   AppStrings._();
-
-  // Formatters
-  static final _numberFmt = NumberFormat("###,###", "en_US");
 
   // General strings
   static const String appTitle = 'Inha Masjid';
@@ -31,14 +28,15 @@ class AppStrings {
   static const String noDonations =
       'No donations yet. Make the difference by making a donation now!';
   static const String rentUpdatedMessage = 'Monthly rent amount updated successfully';
-  static const String rentUpdateFailedMessage = 'Monthly rent amount must be a number (e.g., 1000000)';
+  static const String rentUpdateFailedMessage =
+      'Monthly rent amount must be a number (e.g., 1000000)';
   static const String prayerTimeUpdateCanceledMessage = 'Prayer time update canceled';
 
   static String prayerTimeUpdatedMessage(String prayerName) =>
       '$prayerName prayer time  updated successfully';
 
   static String raisedAmount(int amount, {bool addCurrency = false}) {
-    var ans = 'raised ${_numberFmt.format(amount)}';
+    var ans = 'raised ${amount.commaSeparated()}';
 
     if (addCurrency) {
       ans += ' ₩';
@@ -51,14 +49,11 @@ class AppStrings {
     var ans = 'out of ';
 
     if (amount >= 1000000) {
-      // 1.2m
-      ans += '${amount ~/ 1000000}m';
+      ans += '${amount ~/ 1000000}M'; // e.g., "1.2M"
     } else if (amount >= 1000) {
-      // 900k
-      ans += '${amount ~/ 1000}k';
+      ans += '${amount ~/ 1000}K'; // e.g., "1.2K"
     } else {
-      // 100
-      ans += '$amount';
+      ans += amount.commaSeparated(); // e.g., "1,234"
     }
 
     if (addCurrency) {
@@ -84,7 +79,8 @@ class AppStrings {
   static const String announcementTitle = 'Title';
   static const String announcementTitleTooltip = 'e.g., Taraweeh prayer tonight at 8:30pm';
   static const String announcementBody = 'Body';
-  static const String announcementBodyTooltip = 'e.g., Dear brothers, we will be having Taraweeh prayer tonight at 8:30pm. Please join us.';
+  static const String announcementBodyTooltip =
+      'e.g., Dear brothers, we will be having Taraweeh prayer tonight at 8:30pm. Please join us.';
 
   // Admin panel screen
   static const String updateMonthlyExpenseAmount = 'Update Masjid’s monthly expenses';

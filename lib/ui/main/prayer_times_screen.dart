@@ -121,7 +121,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                         ),
                         child: StreamBuilder<DocumentSnapshot>(
                           stream: FirebaseFirestore.instance
-                              .doc('/prayertimes/$prayerName')
+                              .doc(FirestorePaths.prayerTimeDoc(prayerName))
                               .snapshots(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {

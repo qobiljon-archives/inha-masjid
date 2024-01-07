@@ -14,6 +14,8 @@ import 'package:inha_masjid/utils/extensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
 class AdminPanelScreen extends StatelessWidget {
+
+  // Constructor
   AdminPanelScreen({super.key});
 
   // Variables
