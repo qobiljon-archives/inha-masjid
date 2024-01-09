@@ -23,27 +23,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
 
   // Functions
   void _recordMyDonationBtnPressed() {
-    // Verify that both fields are not empty
-    if (_donorNameController.text.isEmpty || _donationAmountController.text.isEmpty) {
-      // Show a message to the user indicating that both fields are required
-      Fluttertoast.showToast(
-        msg: 'Donor name and donation amount are required',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      return; // Exit the method without proceeding to Firestore
-    }
-
-    // Donation details
-    Timestamp ts = Timestamp.now();
-    String donorName = _donorNameController.text;
+    // Verify that donation amount is a valid integer
     int? amount = int.tryParse(_donationAmountController.text);
-
-    // Verify that the amount is a number
     if (amount == null) {
       Fluttertoast.showToast(
         msg: 'Donation amount must be a number (e.g., 1000000)',
@@ -56,6 +37,15 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
         fontSize: 16.0,
       );
       return; // Exit the method without proceeding to Firestore
+    }
+
+    // Donation details
+    Timestamp ts = Timestamp.now();
+    String donorName = _donorNameController.text;
+
+    // If donor name is empty, set it to 'Anonymous'
+    if (donorName.isEmpty) {
+      donorName = 'Anonymous';
     }
 
     // Add the donation to Firestore
