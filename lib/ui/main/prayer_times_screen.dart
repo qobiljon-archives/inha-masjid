@@ -34,27 +34,40 @@ class PrayerTimesScreen extends StatefulWidget {
 }
 
 class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
-  String currentTime = DateFormat('HH:mm:ss').format(DateTime.now());
+  // Variables
   late Timer _timer;
+  final DateFormat _dateFormat = DateFormat('HH:mm:ss');
+  DateTime _now = DateTime.now();
 
+  // Overrides
   @override
   void initState() {
     super.initState();
+
+    // Update the current time every second
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       setState(() {
-        currentTime = DateFormat('HH:mm:ss').format(DateTime.now());
+        _now = DateTime.now();
       });
     });
   }
 
   @override
   void dispose() {
+    // Cancel the timer when the widget is disposed
     _timer.cancel();
+
+    // Dispose the widget
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Prepare current time and highlight next prayer time
+    DateTime now = DateTime.now();
+    String timeStr = _dateFormat.format(now);
+    String nextPrayerName;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -70,8 +83,9 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          // Current time
           Container(
             width: double.infinity,
             margin: const EdgeInsets.symmetric(horizontal: 40),
@@ -82,7 +96,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
             ),
             child: Center(
               child: Text(
-                currentTime,
+                timeStr,
                 style: GoogleFonts.manrope(
                   fontSize: 35,
                   color: AppColors.white,
@@ -91,13 +105,14 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 30),
+
+          // Prayer times
           Center(
             child: Wrap(
               spacing: 22, // Adjust the spacing between prayer times
               runSpacing: 40, // Adjust the spacing between lines
               children: [
-                // Prayer times
+                // Each individual prayer time
                 for (var prayerName in AppStrings.prayerNames)
                   Column(
                     children: [
@@ -130,18 +145,26 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                               );
                             }
 
-                            var prayerTime = snapshot.data!;
-                            var hour =
-                                prayerTime['hour'].toString().padLeft(2, '0');
-                            var minute =
-                                prayerTime['minute'].toString().padLeft(2, '0');
+                            // Prayer time details
+                            var doc = snapshot.data!;
+                            int hour = doc['hour'];
+                            int minute = doc['minute'];
+
+                            // Highlight if within next 1 hour
+                            int deltaMinutes = (hour - now.hour) * 60 + (minute - now.minute);
+                            bool nextPrayer = deltaMinutes >= 0 && deltaMinutes <= 60;
+
+                            // Return the prayer time widget
                             return Center(
                               child: Text(
-                                '$hour:$minute',
+                                '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}',
                                 style: GoogleFonts.manrope(
-                                  textStyle: const TextStyle(
+                                  textStyle: TextStyle(
                                     fontSize: AppDimensions.prayerTimesFontSize,
                                     fontWeight: FontWeight.bold,
+                                    color: nextPrayer
+                                        ? AppColors.cardPrimaryButtonColor
+                                        : AppColors.textPrimary,
                                   ),
                                 ),
                               ),
