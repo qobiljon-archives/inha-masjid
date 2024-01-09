@@ -24,8 +24,9 @@ class AppDimensions {
   // Font sizes
   // Screen titles (app bar text)
   static const double screenTitleFontSize = 24;
-  static const double cardTitleFontSize = 24;
-  static const double cardTitleContentSize = 18;
+  static const double cardTitleFontSize = 20;
+  static const double cardContentSize = 16;
+  static const double cardContentSmallSize = 12;
 
   // Card Text sizes
   static const double cardElevation = 0;
@@ -54,8 +55,9 @@ class AppDimensions {
   static const double adminPanelMonthlyExpenseAmountFontSize = 32;
 
   // Record My Donation
-  static const double masjidBankAccountTitleSize = 16;
-  static const double masjidBankAccountCardFontSize = 14;
-  static const double recordMyDonationSmallFont = 12;
-  static const double recorButtonFontSize = 16;
+  static const double titleFontSize = 16.0;
+  static const double subtitleFontSize = 12.0;
+  static const double cardContentFontSize = 14.0;
+  static const double helperBtnFontSize = 12.0;
+  static const double mainBtnFontSize = 16.0;
 }

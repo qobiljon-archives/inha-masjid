@@ -17,19 +17,14 @@ class RecordDonationScreen extends StatefulWidget {
 
 class _RecordDonationScreenState extends State<RecordDonationScreen> {
   // Variables
-  final _amountPaidController = TextEditingController();
-  final _donarNameController = TextEditingController();
+  final _donationAmountController = TextEditingController();
+  final _donorNameController = TextEditingController();
+  final String _accountNumber = '';
 
   // Functions
   void _recordMyDonationBtnPressed() {
-    var firestore = FirebaseFirestore.instance;
-    var donations = firestore.collection(FirestorePaths.donationsCol);
-    var donationsData = {
-      'donorName': _donarNameController.text,
-      'donationAmount': _amountPaidController.text,
-    };
-    if (_donarNameController.text.isEmpty ||
-        _amountPaidController.text.isEmpty) {
+    // Verify that both fields are not empty
+    if (_donorNameController.text.isEmpty || _donationAmountController.text.isEmpty) {
       // Show a message to the user indicating that both fields are required
       Fluttertoast.showToast(
         msg: 'Donor name and donation amount are required',
@@ -42,6 +37,35 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
       );
       return; // Exit the method without proceeding to Firestore
     }
+
+    // Donation details
+    Timestamp ts = Timestamp.now();
+    String donorName = _donorNameController.text;
+    int? amount = int.tryParse(_donationAmountController.text);
+
+    // Verify that the amount is a number
+    if (amount == null) {
+      Fluttertoast.showToast(
+        msg: 'Donation amount must be a number (e.g., 1000000)',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        // Change color to indicate error
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return; // Exit the method without proceeding to Firestore
+    }
+
+    // Add the donation to Firestore
+    var firestore = FirebaseFirestore.instance;
+    var donations = firestore.collection(FirestorePaths.donationsCol);
+    var donationsData = {
+      'timestamp': ts,
+      'donorName': donorName,
+      'amount': amount,
+    };
     donations.add(donationsData).then((docRef) {
       print("Document written with ID: ${docRef.id}");
       Fluttertoast.showToast(
@@ -49,14 +73,15 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green, // Change color to indicate success
+        backgroundColor: Colors.green,
+        // Change color to indicate success
         textColor: Colors.white,
         fontSize: 16.0,
       );
 
       // Clear text fields
-      _donarNameController.clear();
-      _amountPaidController.clear();
+      _donorNameController.clear();
+      _donationAmountController.clear();
     }).catchError((error) {
       print("Error adding document: $error");
       // Show error message
@@ -72,14 +97,13 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
     });
   }
 
-  String accountNumber = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          AppStrings.recordMyDonation,
+          AppStrings.donate,
           style: GoogleFonts.manrope(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
@@ -99,7 +123,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                 style: GoogleFonts.manrope(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: AppDimensions.masjidBankAccountTitleSize,
+                    fontSize: AppDimensions.titleFontSize,
                   ),
                 ),
               ),
@@ -111,9 +135,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: StreamBuilder<DocumentSnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .doc(FirestorePaths.bankAccountDoc)
-                      .snapshots(),
+                  stream: FirebaseFirestore.instance.doc(FirestorePaths.bankAccountDoc).snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
@@ -137,8 +159,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                           '$accountNumber',
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
-                              fontSize:
-                                  AppDimensions.masjidBankAccountCardFontSize,
+                              fontSize: AppDimensions.cardContentFontSize,
                             ),
                           ),
                         ),
@@ -146,8 +167,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                           '$bankName',
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
-                              fontSize:
-                                  AppDimensions.masjidBankAccountCardFontSize,
+                              fontSize: AppDimensions.cardContentFontSize,
                             ),
                           ),
                         ),
@@ -168,7 +188,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: accountNumber));
+                      Clipboard.setData(ClipboardData(text: _accountNumber));
 
                       // Optionally, you can show a snackbar or any other feedback to the user
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -180,7 +200,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     child: Text(
                       'Copy Account Number',
                       style: GoogleFonts.manrope(
-                        fontSize: AppDimensions.recordMyDonationSmallFont,
+                        fontSize: AppDimensions.helperBtnFontSize,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -189,60 +209,52 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text(
-                AppStrings.donationDetails,
-                style: GoogleFonts.manrope(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: AppDimensions.masjidBankAccountTitleSize,
-                  ),
+            Text(
+              AppStrings.donationAmount,
+              style: GoogleFonts.manrope(
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: AppDimensions.titleFontSize,
                 ),
               ),
             ),
             const SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: TextField(
-                controller: _amountPaidController,
-                decoration: InputDecoration(
-                  hintText: AppStrings.donationDetailsAmount,
-                  hintStyle: GoogleFonts.manrope(
-                    textStyle: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.masjidBankAccountCardFontSize,
-                    ),
+            TextField(
+              controller: _donationAmountController,
+              decoration: InputDecoration(
+                hintText: AppStrings.donationAmountTooltip,
+                hintStyle: GoogleFonts.manrope(
+                  textStyle: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: AppDimensions.cardContentFontSize,
                   ),
-                  filled: true,
-                  fillColor: AppColors.cardBackgroundColor,
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
+                ),
+                filled: true,
+                fillColor: AppColors.cardBackgroundColor,
+                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),
             const SizedBox(height: 5),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountOne,
                     style: GoogleFonts.manrope(
                       color: AppColors.widgetLightPrimary,
                       fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.recordMyDonationSmallFont,
+                      fontSize: AppDimensions.helperBtnFontSize,
                     ),
                   ),
                 ),
@@ -252,14 +264,13 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountTwo,
                     style: GoogleFonts.manrope(
                       color: AppColors.widgetLightPrimary,
                       fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.recordMyDonationSmallFont,
+                      fontSize: AppDimensions.helperBtnFontSize,
                     ),
                   ),
                 ),
@@ -269,14 +280,13 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountThree,
                     style: GoogleFonts.manrope(
                       color: AppColors.widgetLightPrimary,
                       fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.recordMyDonationSmallFont,
+                      fontSize: AppDimensions.helperBtnFontSize,
                     ),
                   ),
                 ),
@@ -286,54 +296,56 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountFour,
                     style: GoogleFonts.manrope(
                       color: AppColors.widgetLightPrimary,
                       fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.recordMyDonationSmallFont,
+                      fontSize: AppDimensions.helperBtnFontSize,
                     ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text(
-                AppStrings.recordMyDonationSenderName,
-                style: GoogleFonts.manrope(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: AppDimensions.masjidBankAccountTitleSize,
-                  ),
+            Text(
+              AppStrings.donorName,
+              style: GoogleFonts.manrope(
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: AppDimensions.titleFontSize,
+                ),
+              ),
+            ),
+            Text(
+              AppStrings.donorNameSub,
+              style: GoogleFonts.manrope(
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textSecondary,
+                  fontSize: AppDimensions.subtitleFontSize,
                 ),
               ),
             ),
             const SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: TextField(
-                controller: _donarNameController,
-                decoration: InputDecoration(
-                  hintText: AppStrings.recordMyDonationDonateNameText,
-                  hintStyle: GoogleFonts.manrope(
-                    textStyle: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.masjidBankAccountCardFontSize,
-                    ),
+            TextField(
+              controller: _donorNameController,
+              decoration: InputDecoration(
+                hintText: AppStrings.donorNameTooltip,
+                hintStyle: GoogleFonts.manrope(
+                  textStyle: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: AppDimensions.cardContentFontSize,
                   ),
-                  filled: true,
-                  fillColor: AppColors.cardBackgroundColor,
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
+                ),
+                filled: true,
+                fillColor: AppColors.cardBackgroundColor,
+                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),
@@ -354,7 +366,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     textStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: AppColors.white,
-                      fontSize: AppDimensions.recorButtonFontSize,
+                      fontSize: AppDimensions.mainBtnFontSize,
                     ),
                   ),
                 ),

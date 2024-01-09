@@ -9,8 +9,8 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // Local
-import 'package:inha_masjid/ui/welcome_screen.dart';
-import 'package:inha_masjid/ui/record_donation_screen.dart';
+import 'package:inha_masjid/ui/welcome/welcome_screen.dart';
+import 'package:inha_masjid/ui/donate/record_donation_screen.dart';
 import 'package:inha_masjid/ui/admin/admin_login_screen.dart';
 import 'package:inha_masjid/ui/admin/admin_panel_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
