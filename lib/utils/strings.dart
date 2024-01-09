@@ -27,10 +27,12 @@ class AppStrings {
   static const String currentProgress = 'Current progress';
   static const String noDonations =
       'No donations yet. Make the difference by making a donation now!';
-  static const String rentUpdatedMessage = 'Monthly rent amount updated successfully';
+  static const String rentUpdatedMessage =
+      'Monthly rent amount updated successfully';
   static const String rentUpdateFailedMessage =
       'Monthly rent amount must be a number (e.g., 1000000)';
-  static const String prayerTimeUpdateCanceledMessage = 'Prayer time update canceled';
+  static const String prayerTimeUpdateCanceledMessage =
+      'Prayer time update canceled';
 
   static String prayerTimeUpdatedMessage(String prayerName) =>
       '$prayerName prayer time  updated successfully';
@@ -77,17 +79,25 @@ class AppStrings {
   static const String password = 'Password';
   static const String login = 'Login';
   static const String announcementTitle = 'Title';
-  static const String announcementTitleTooltip = 'e.g., Taraweeh prayer tonight at 8:30pm';
+  static const String announcementTitleTooltip =
+      'e.g., Taraweeh prayer tonight at 8:30pm';
   static const String announcementBody = 'Body';
   static const String announcementBodyTooltip =
       'e.g., Dear brothers, we will be having Taraweeh prayer tonight at 8:30pm. Please join us.';
 
   // Admin panel screen
-  static const String updateMonthlyExpenseAmount = 'Update Masjid’s monthly expenses';
+  static const String updateMonthlyExpenseAmount =
+      'Update Masjid’s monthly expenses';
   static const String updatePrayerTimes = 'Update prayer times';
   static const String update = 'Update';
   static const String postNewAnnouncement = 'Post new announcement';
   static const String adminPanelUpdatePostButtonText = 'Post';
+  static const String amount = 'Amount';
+  static const String amountTooltip = 'e.g., 1000000';
+  static const String bankName = 'Bank name';
+  static const String bankNameTooltip = 'e.g., Hana';
+  static const String bankNumber = 'Bank number';
+  static const String bankNumberTooltip = 'e.g., 748123123123123';
 
   // Record donation screen
   static const String recordMyDonation = 'Record my donation';
@@ -103,8 +113,10 @@ class AppStrings {
   static const String recordMyDonationSenderName = 'Sender name';
 
   // Update Masjid bank account title
-  static const String updateMasjidBankAccountTitle = 'Update Masjid\'s bank account';
-  static final String updateMasjidBankAccountButtonText = 'Update'.toUpperCase();
+  static const String updateMasjidBankAccountTitle =
+      'Update Masjid\'s bank account';
+  static final String updateMasjidBankAccountButtonText =
+      'Update'.toUpperCase();
 
   // String lists
   static const List<String> welcomeScreenTitles = [
