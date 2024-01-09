@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:inha_masjid/utils/assets.dart';
 
 // Local
 import 'package:inha_masjid/utils/colors.dart';
@@ -79,7 +80,7 @@ class AdminLoginScreen extends StatelessWidget {
           onPressed: () => _onBackBtnPressed(context),
         ),
         title: Text(
-          AppStrings.inhaMasjidAdmin,
+          AppStrings.adminLoginTitle,
           style: GoogleFonts.manrope(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
@@ -94,24 +95,26 @@ class AdminLoginScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
               children: [
-                // Login screen icon on top
-                const Icon(
-                  Icons.person,
-                  size: AppDimensions.adminLoginIconFontSize,
-                  color: AppColors.widgetLightPrimary,
-                ),
-                const SizedBox(height: 20),
 
                 // Subtitle e.g., "Great to have you back!"
                 Text(
-                  AppStrings.loginPrompt,
+                  AppStrings.welcomeLogin,
                   style: GoogleFonts.manrope(
                     textStyle: const TextStyle(
-                      color: AppColors.textSecondary,
+                      // color: AppColors.textSecondary,
+                      fontSize: AppDimensions.adminLoginSubtitleFontSize,
                     ),
                   ),
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 30),
+
+                // Login screen icon on top
+                const FractionallySizedBox(
+                  widthFactor: AppDimensions.imgAdminWidthFactor,
+                  child: Image(image: AssetImage(AppAssets.admin)),
+                ),
+                const SizedBox(height: 60),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -166,7 +169,6 @@ class AdminLoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 100),
               ],
             ),

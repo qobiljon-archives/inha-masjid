@@ -120,6 +120,8 @@ flutter:
     - lib/assets/images/welcome_illustrations/2.png
     - lib/assets/images/welcome_illustrations/3.png
     - lib/assets/images/welcome_illustrations/4.png
+    # Other assets
+    - lib/assets/images/admin.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

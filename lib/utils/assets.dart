@@ -6,8 +6,6 @@ class AppAssets {
   // Private constructor to prevent instances from this class
   AppAssets._();
 
-  // region Image asset paths
-
   // Application logo
   static const String logoLight = 'lib/assets/images/logo/logo_light.png';
   static const String logoDark = 'lib/assets/images/logo/logo_dark.png';
@@ -22,16 +20,14 @@ class AppAssets {
   static const String welcomeIllustration4 =
       'lib/assets/images/welcome_illustrations/4.png';
 
-  // endregion
+  // Admin screen images
+  static const String admin = 'lib/assets/images/admin.png';
 
-  // region Image asset groups
-
+  // Image asset groups
   static const List<String> welcomeIllustrations = [
     welcomeIllustration1,
     welcomeIllustration2,
     welcomeIllustration3,
     welcomeIllustration4,
   ];
-
-// endregion
 }

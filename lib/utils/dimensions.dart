@@ -38,17 +38,18 @@ class AppDimensions {
   static const double transactionHistoryDateFontSize = 12;
   static const double bottomNavigationBarIconSize = 24;
 
-  // announcements page card font sizes
+  // Announcements page card font sizes
   static const double announcementsPageDateFontSize = 14;
 
-  // prayer times font sizes
-
+  // Prayer times font sizes
   static const double prayerTimesTextFontSize = 16;
   static const double prayerTimesFontSize = 32;
 
   // Admin login
+  static const double imgAdminWidthFactor = 0.4;
   static const double adminLoginIconFontSize = 130;
   static const double adminLoginButtonTextSize = 16;
+  static const double adminLoginSubtitleFontSize = 24;
 
   // Admin panel
   static const double adminPanelUpdateFontSize = 18;

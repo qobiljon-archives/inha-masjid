@@ -16,7 +16,6 @@ class AppStrings {
 
   // General strings
   static const String appTitle = 'Inha Masjid';
-  static const String inhaMasjidAdmin = 'Inha Masjid Admin';
 
   // Home screen strings
   static const String home = 'Home';
@@ -83,7 +82,8 @@ class AppStrings {
   static const String announcements = 'Announcements';
 
   // Admin login screen
-  static const String loginPrompt = 'Great to have you back! Login';
+  static const String adminLoginTitle = 'Admin login';
+  static const String welcomeLogin = 'Great to have you back!';
   static const String email = 'Email';
   static const String password = 'Password';
   static const String login = 'Login';

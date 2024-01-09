@@ -235,7 +235,7 @@ class AdminPanelScreen extends StatelessWidget {
           onPressed: () => _onBackBtnPressed(context),
         ),
         title: Text(
-          AppStrings.inhaMasjidAdmin,
+          AppStrings.adminLoginTitle,
           style: GoogleFonts.manrope(
             fontSize: AppDimensions.screenTitleFontSize,
             fontWeight: FontWeight.bold,

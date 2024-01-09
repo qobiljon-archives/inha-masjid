@@ -52,10 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Functions
-  void _onCloseAdminCardBtnPressed() {
-    // TODO finish this
-  }
-
   void _onOpenAdminPageBtnPressed() async {
     await Navigator.pushNamed(context, '/admin_login');
   }
@@ -86,20 +82,21 @@ class _HomeScreenState extends State<HomeScreen> {
               color: AppColors.cardBackgroundColor,
               elevation: AppDimensions.cardElevation,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
                 child: Column(
                   children: [
                     // Card title and close button
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Question prompt: Are you admin?
-                        const Text(AppStrings.areYouAdmin),
-
-                        // Close button
-                        IconButton(
-                          onPressed: _onCloseAdminCardBtnPressed,
-                          icon: const Icon(Icons.close),
+                        Text(
+                          AppStrings.areYouAdmin,
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              fontSize: AppDimensions.cardTitleFontSize,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ],
                     ),
