@@ -77,7 +77,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
             margin: const EdgeInsets.symmetric(horizontal: 40),
             padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
             decoration: BoxDecoration(
-              color: AppColors.cardButtonBackgroundColor,
+              color: AppColors.cardPrimaryButtonColor,
               borderRadius: BorderRadius.circular(50),
             ),
             child: Center(

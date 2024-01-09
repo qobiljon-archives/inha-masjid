@@ -46,7 +46,7 @@ class AppDimensions {
   static const double prayerTimesFontSize = 32;
 
   // Admin login
-  static const double adminLoginIconFontSize = 100;
+  static const double adminLoginIconFontSize = 130;
   static const double adminLoginButtonTextSize = 16;
 
   // Admin panel

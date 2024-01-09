@@ -29,7 +29,6 @@ class AdminLoginScreen extends StatelessWidget {
   }
 
   void _loginBtnPressed(BuildContext context) {
-
     // TODO remove these two lines
     Navigator.popAndPushNamed(context, '/admin_panel');
     return;
@@ -95,14 +94,13 @@ class AdminLoginScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
               children: [
-
                 // Login screen icon on top
                 const Icon(
-                  Icons.admin_panel_settings,
+                  Icons.person,
                   size: AppDimensions.adminLoginIconFontSize,
-                  color: AppColors.widgetPrimary,
+                  color: AppColors.widgetLightPrimary,
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
 
                 // Subtitle e.g., "Great to have you back!"
                 Text(
@@ -114,55 +112,43 @@ class AdminLoginScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 25),
-
-                // Email input field (editable)
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    hintText: AppStrings.email,
-                    hintStyle: const TextStyle(
-                      color: AppColors.textSecondary,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.cardBackgroundColor,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Email'),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: 'e.g., example123@gmail.com',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondary,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppColors
+                                  .cardPrimaryButtonColor), // Change the color as needed
+                        ),
                       ),
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.cardButtonBackgroundColor,
+                    const SizedBox(height: 10),
+                    const Text('Password'),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        labelText: 'e.g., ex123456789',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondary,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppColors
+                                  .cardPrimaryButtonColor), // Change the color as needed
+                        ),
                       ),
                     ),
-                    fillColor: AppColors.white,
-                    filled: true,
-                  ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-
-                // Password input field (editable)
-                TextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: AppStrings.password,
-                    hintStyle: const TextStyle(
-                      color: AppColors.textSecondary,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.cardBackgroundColor,
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.cardButtonBackgroundColor,
-                      ),
-                    ),
-                    fillColor: AppColors.white,
-                    filled: true,
-                  ),
-                ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 30),
 
                 // Login button
                 ElevatedButton.icon(
@@ -173,7 +159,7 @@ class AdminLoginScreen extends StatelessWidget {
                     style: const TextStyle(color: AppColors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.cardButtonBackgroundColor,
+                    backgroundColor: AppColors.cardPrimaryButtonColor,
                     minimumSize: const Size(
                       double.infinity,
                       AppDimensions.donateButtonHeight,

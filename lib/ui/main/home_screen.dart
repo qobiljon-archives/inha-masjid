@@ -146,7 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           // Raised amount
                           Text(
-                            AppStrings.raisedAmount(12345, addCurrency: true).capitalize(),
+                            AppStrings.raisedAmount(12345, addCurrency: true)
+                                .capitalize(),
                             style: GoogleFonts.manrope(
                               textStyle: const TextStyle(
                                 fontSize: AppDimensions.cardTitleContentSize,
@@ -160,9 +161,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             stream: FirebaseFirestore.instance
                                 .doc(FirestorePaths.monthlyRentDoc)
                                 .snapshots(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
+                            builder: (BuildContext context,
+                                AsyncSnapshot<DocumentSnapshot> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
                                 return const CircularProgressIndicator();
                               }
 
@@ -179,10 +181,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
                               // Returning the widget
                               return Text(
-                                AppStrings.requiredAmount(amount, addCurrency: true),
+                                AppStrings.requiredAmount(amount,
+                                    addCurrency: true),
                                 style: GoogleFonts.manrope(
                                   textStyle: const TextStyle(
-                                    fontSize: AppDimensions.cardTitleContentSize,
+                                    fontSize:
+                                        AppDimensions.cardTitleContentSize,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -197,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       LinearProgressIndicator(
                         value: 0.5,
                         backgroundColor: AppColors.white,
-                        color: AppColors.cardButtonBackgroundColor,
+                        color: AppColors.cardPrimaryButtonColor,
                         minHeight: 16,
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -206,13 +210,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Donate button (opens record donation screen)
                       ElevatedButton.icon(
                         onPressed: _donateBtnPressed,
-                        icon: const Icon(Icons.monetization_on, color: AppColors.white),
+                        icon: const Icon(Icons.monetization_on,
+                            color: AppColors.white),
                         label: Text(
                           AppStrings.donate.toUpperCase(),
                           style: const TextStyle(color: AppColors.white),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.cardButtonBackgroundColor,
+                          backgroundColor: AppColors.cardPrimaryButtonColor,
                           minimumSize: const Size(
                             double.infinity,
                             AppDimensions.donateButtonHeight,
@@ -253,7 +258,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         stream: _donationStream,
                         builder: (context, snapshot) {
                           // Loading
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return const CircularProgressIndicator();
                           }
 
@@ -263,7 +269,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
 
                           // Empty (no data)
-                          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                          if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
                             return const Text(AppStrings.noDonations);
                           }
 
@@ -279,7 +286,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               int amount = doc['amount'];
 
                               return Container(
-                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 8),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -287,12 +295,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       '• $donorName donated ${amount.commaSeparated()} ₩',
                                       style: GoogleFonts.manrope(
                                         textStyle: const TextStyle(
-                                          fontSize: AppDimensions.transactionHistoryNameFontSize,
+                                          fontSize: AppDimensions
+                                              .transactionHistoryNameFontSize,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
-                                    Text('    ${DateFormat.yMMMMd().format(timestamp.toDate())}'),
+                                    Text(
+                                        '    ${DateFormat.yMMMMd().format(timestamp.toDate())}'),
                                     const SizedBox(height: 4),
                                   ],
                                 ),

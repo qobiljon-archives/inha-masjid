@@ -293,7 +293,7 @@ class AdminPanelScreen extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColors.cardButtonBackgroundColor,
+                        color: AppColors.cardPrimaryButtonColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextButton(
@@ -477,7 +477,7 @@ class AdminPanelScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 10),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColors.cardButtonBackgroundColor,
+                        color: AppColors.cardPrimaryButtonColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextButton(
@@ -551,7 +551,7 @@ class AdminPanelScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 10),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColors.cardButtonBackgroundColor,
+                        color: AppColors.cardPrimaryButtonColor,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextButton(

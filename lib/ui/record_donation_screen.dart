@@ -343,7 +343,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
               width: double.infinity,
               height: 55,
               decoration: BoxDecoration(
-                color: AppColors.cardButtonBackgroundColor,
+                color: AppColors.cardPrimaryButtonColor,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: TextButton(
