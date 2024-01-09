@@ -46,7 +46,7 @@ class InhaMasjidApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       title: AppStrings.appTitle,
       theme: ThemeData(
         colorSchemeSeed: AppColors.widgetPrimary,
