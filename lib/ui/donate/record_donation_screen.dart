@@ -106,98 +106,111 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text(
-                AppStrings.bankAccountNumber,
-                style: GoogleFonts.manrope(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: AppDimensions.titleFontSize,
-                  ),
+            Text(
+              AppStrings.bankAccountNumber,
+              style: GoogleFonts.manrope(
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: AppDimensions.titleFontSize,
                 ),
               ),
             ),
             const SizedBox(height: 10),
-            Card(
-              color: AppColors.cardBackgroundColor,
-              elevation: AppDimensions.cardElevation,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: StreamBuilder<DocumentSnapshot>(
-                  stream: FirebaseFirestore.instance.doc(FirestorePaths.bankAccountDoc).snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    }
+            GestureDetector(
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: _accountNumber));
 
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    }
+                // Optionally, you can show a snackbar or any other feedback to the user
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Account Number copied to clipboard'),
+                  ),
+                );
+              },
+              child: Card(
+                margin: const EdgeInsets.all(0),
+                color: AppColors.cardBackgroundColor,
+                elevation: AppDimensions.cardElevation,
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: StreamBuilder<DocumentSnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .doc(FirestorePaths.bankAccountDoc)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
 
-                    // Access the first document in the collection (you may need to adjust this)
-                    var document = snapshot.data!;
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
 
-                    // Access the fields 'accountNumber' and 'bankName' from the document
-                    var accountNumber = document['accountNumber'];
-                    var bankName = document['bankName'];
+                      // Access the first document in the collection (you may need to adjust this)
+                      var document = snapshot.data!;
 
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '$accountNumber',
-                          style: GoogleFonts.manrope(
-                            textStyle: const TextStyle(
-                              fontSize: AppDimensions.cardContentFontSize,
+                      // Access the fields 'accountNumber' and 'bankName' from the document
+                      var accountNumber = document['accountNumber'];
+                      var bankName = document['bankName'];
+
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '$accountNumber',
+                            style: GoogleFonts.manrope(
+                              textStyle: const TextStyle(
+                                fontSize: AppDimensions.cardContentFontSize,
+                              ),
                             ),
                           ),
-                        ),
-                        Text(
-                          '$bankName',
-                          style: GoogleFonts.manrope(
-                            textStyle: const TextStyle(
-                              fontSize: AppDimensions.cardContentFontSize,
+                          Text(
+                            '$bankName',
+                            style: GoogleFonts.manrope(
+                              textStyle: const TextStyle(
+                                fontSize: AppDimensions.cardContentFontSize,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    );
-                  },
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  height: 35,
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: _accountNumber));
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     Container(
+            //       height: 30,
+            //       decoration: BoxDecoration(
+            //         color: AppColors.cardPrimaryButtonColor,
+            //         borderRadius: BorderRadius.circular(15),
+            //       ),
+            //       child: TextButton(
+            //         onPressed: () {
+            //           Clipboard.setData(ClipboardData(text: _accountNumber));
 
-                      // Optionally, you can show a snackbar or any other feedback to the user
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Account Number copied to clipboard'),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Copy Account Number',
-                      style: GoogleFonts.manrope(
-                        fontSize: AppDimensions.helperBtnFontSize,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            //           // Optionally, you can show a snackbar or any other feedback to the user
+            //           ScaffoldMessenger.of(context).showSnackBar(
+            //             const SnackBar(
+            //               content: Text('Account Number copied to clipboard'),
+            //             ),
+            //           );
+            //         },
+            //         child: Text(
+            //           AppStrings.copy,
+            //           style: GoogleFonts.manrope(
+            //             fontSize: AppDimensions.helperBtnFontSize,
+            //             fontWeight: FontWeight.bold,
+            //             color: AppColors.white,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
             const SizedBox(height: 20),
             Text(
               AppStrings.donationAmount,
@@ -209,27 +222,21 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
               ),
             ),
             const SizedBox(height: 5),
-            TextField(
+            TextFormField(
               controller: _donationAmountController,
-              decoration: InputDecoration(
-                hintText: AppStrings.donationAmountTooltip,
-                hintStyle: GoogleFonts.manrope(
-                  textStyle: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: AppDimensions.cardContentFontSize,
-                  ),
+              decoration: const InputDecoration(
+                labelText: AppStrings.donationAmountTooltip,
+                labelStyle: TextStyle(
+                  color: AppColors.textSecondary,
                 ),
-                filled: true,
-                fillColor: AppColors.cardBackgroundColor,
-                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.cardPrimaryButtonColor,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -238,7 +245,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountOne,
                     style: GoogleFonts.manrope(
@@ -254,7 +262,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountTwo,
                     style: GoogleFonts.manrope(
@@ -270,7 +279,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountThree,
                     style: GoogleFonts.manrope(
@@ -286,7 +296,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                     color: AppColors.cardBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                   child: Text(
                     AppStrings.donatedAmountFour,
                     style: GoogleFonts.manrope(
@@ -312,30 +323,23 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
               AppStrings.donorNameSub,
               style: GoogleFonts.manrope(
                 textStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
                   color: AppColors.textSecondary,
                   fontSize: AppDimensions.subtitleFontSize,
                 ),
               ),
             ),
             const SizedBox(height: 5),
-            TextField(
+            TextFormField(
               controller: _donorNameController,
-              decoration: InputDecoration(
-                hintText: AppStrings.donorNameTooltip,
-                hintStyle: GoogleFonts.manrope(
-                  textStyle: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: AppDimensions.cardContentFontSize,
-                  ),
+              decoration: const InputDecoration(
+                labelText: AppStrings.donorNameTooltip,
+                labelStyle: TextStyle(
+                  color: AppColors.textSecondary,
                 ),
-                filled: true,
-                fillColor: AppColors.cardBackgroundColor,
-                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.cardPrimaryButtonColor,
+                  ),
                 ),
               ),
             ),
