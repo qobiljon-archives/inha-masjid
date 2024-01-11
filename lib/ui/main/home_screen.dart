@@ -16,6 +16,7 @@ import 'package:inha_masjid/utils/extensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 /// Home screen shown to both regular and admin users.
 class HomeScreen extends StatefulWidget {
@@ -143,7 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         // Raised amount
                         Text(
-                          AppStrings.raisedAmount(12345, addCurrency: true).capitalize(),
+                          AppStrings.raisedAmount(12345, addCurrency: true)
+                              .capitalize(),
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
                               fontSize: AppDimensions.cardContentSize,
@@ -159,7 +161,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               .snapshots(),
                           builder: (context, snapshot) {
                             // Loading
-                            if (snapshot.connectionState == ConnectionState.waiting) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
                               return const CircularProgressIndicator();
                             }
 
@@ -179,7 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             // Returning the widget
                             return Text(
-                              AppStrings.requiredAmount(amount, addCurrency: true),
+                              AppStrings.requiredAmount(amount,
+                                  addCurrency: true),
                               style: GoogleFonts.manrope(
                                 textStyle: const TextStyle(
                                   fontSize: AppDimensions.cardContentSmallSize,
@@ -203,25 +207,36 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 20),
 
-                    Row(
+                    Column(
                       children: [
-                        Text(
-                            '"Charity does not decrease wealth"',
-                            style: GoogleFonts.nanumMyeongjo(
-                              textStyle: const TextStyle(
-                                fontSize: AppDimensions.cardTitleFontSize,
-                                fontWeight: FontWeight.bold,
+                        AnimatedTextKit(
+                          pause: const Duration(milliseconds: 3000),
+                          repeatForever: true,
+                          animatedTexts: [
+                            TyperAnimatedText(
+                              '"Charity does not decrease wealth"',
+                              textStyle: GoogleFonts.nanumMyeongjo(
+                                textStyle: const TextStyle(
+                                  fontSize: AppDimensions.cardTitleFontSize,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
+                              speed: const Duration(
+                                  milliseconds:
+                                      100), // Adjust the speed as needed
                             ),
+                          ],
                         ),
                       ],
                     ),
+
                     Row(
                       children: [
                         const Text('  - Sahih Muslim 2588'),
                         GestureDetector(
                           onTap: () async {
-                            await launchUrl(Uri.parse('https://sunnah.com/muslim:2588'));
+                            await launchUrl(
+                                Uri.parse('https://sunnah.com/muslim:2588'));
                           },
                           child: const Text(
                             ' (sunnah.com)',
@@ -237,7 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Donate button (opens record donation screen)
                     ElevatedButton.icon(
                       onPressed: _donateBtnPressed,
-                      icon: const Icon(Icons.mosque_rounded, color: AppColors.white),
+                      icon: const Icon(Icons.mosque_rounded,
+                          color: AppColors.white),
                       label: Text(
                         AppStrings.donate.toUpperCase(),
                         style: const TextStyle(color: AppColors.white),
@@ -285,7 +301,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       stream: _donationStream,
                       builder: (context, snapshot) {
                         // Loading
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return const CircularProgressIndicator();
                         }
 
@@ -317,7 +334,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '• $donorName donated ${amount.commaSeparated()}원',
                                 style: GoogleFonts.manrope(
                                   textStyle: const TextStyle(
-                                    fontSize: AppDimensions.transactionHistoryNameFontSize,
+                                    fontSize: AppDimensions
+                                        .transactionHistoryNameFontSize,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -326,7 +344,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ' (${DateFormat.yMMMMd().format(ts.toDate())})',
                                 style: GoogleFonts.manrope(
                                   textStyle: const TextStyle(
-                                    fontSize: AppDimensions.transactionHistoryNameFontSize,
+                                    fontSize: AppDimensions
+                                        .transactionHistoryNameFontSize,
                                     fontWeight: FontWeight.normal,
                                     color: AppColors.textSecondary,
                                   ),

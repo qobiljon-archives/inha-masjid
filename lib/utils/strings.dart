@@ -21,7 +21,6 @@ class AppStrings {
   static const String home = 'Home';
   static const String areYouAdmin = 'Are you masjid administrator?';
   static const String goToAdmin = 'Go to admin page';
-  static const String goal = 'Goal';
   static const String donate = 'Donate to Inha Masjid';
   static const String activityFeed = 'Activity feed';
   static const String noDonations =

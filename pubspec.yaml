@@ -70,6 +70,7 @@ dependencies:
 
   # url launcher
   url_launcher: ^6.2.3
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:
