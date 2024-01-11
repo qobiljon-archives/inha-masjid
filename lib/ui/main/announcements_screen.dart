@@ -44,56 +44,54 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
           ),
         ),
       ),
-      body: Container(
-        margin: const EdgeInsets.all(16),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection(FirestorePaths.announcementsCol)
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection(FirestorePaths.announcementsCol)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
 
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
 
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return const Text('No data found.');
-            }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Text('No data found.');
+          }
 
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                var doc = snapshot.data!.docs[index];
-                var timestamp = doc['timestamp'];
-                var title = doc['title'];
-                var body = doc['body'];
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              var doc = snapshot.data!.docs[index];
+              var timestamp = doc['timestamp'];
+              var title = doc['title'];
+              var body = doc['body'];
 
-                return Card(
-                  color: AppColors.cardBackgroundColor,
-                  elevation: AppDimensions.cardElevation,
-                  child: Theme(
-                    data:
-                        ThemeData().copyWith(dividerColor: Colors.transparent),
-                    child: ExpansionTile(
-                      title: Text('$title'),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 0, left: 15, right: 15, bottom: 15),
-                          child: Text(body),
+              return Card(
+                color: AppColors.cardBackgroundColor,
+                elevation: AppDimensions.cardElevation,
+                child: Theme(
+                  data: ThemeData().copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    title: Text('$title'),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 0, left: 15, right: 15, bottom: 15),
+                        child: Text(
+                          '$body',
+                          textAlign: TextAlign.start,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            );
-          },
-        ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
