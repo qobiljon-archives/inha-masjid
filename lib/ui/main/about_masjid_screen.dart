@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -151,9 +152,15 @@ class _AboutMasjidState extends State<AboutMasjid> {
                 ),
               ),
               const SizedBox(height: 5),
-              Text(
-                AppStrings.address,
-                style: GoogleFonts.manrope(),
+              GestureDetector(
+                onTap: () {
+                  Clipboard.setData(
+                      const ClipboardData(text: AppStrings.address));
+                },
+                child: Text(
+                  AppStrings.address,
+                  style: GoogleFonts.manrope(),
+                ),
               ),
               const SizedBox(height: 20),
               SizedBox(
