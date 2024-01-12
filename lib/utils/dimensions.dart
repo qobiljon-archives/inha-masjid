@@ -24,36 +24,41 @@ class AppDimensions {
   // Font sizes
   // Screen titles (app bar text)
   static const double screenTitleFontSize = 24;
-  static const double homeScreenCardFontSize = 16;
+  static const double cardTitleFontSize = 20;
+  static const double cardContentSize = 16;
+  static const double cardContentSmallSize = 12;
 
   // Card Text sizes
   static const double cardElevation = 0;
   static const double cardAmountText = 10;
   static const double requiredTotalAmount = 32;
   static const double collectedAmount = 24;
+  static const double donateButtonHeight = 50;
   static const double transactionHistoryNameFontSize = 14;
   static const double transactionHistoryDateFontSize = 12;
   static const double bottomNavigationBarIconSize = 24;
 
-  // announcements page card font sizes
+  // Announcements page card font sizes
   static const double announcementsPageDateFontSize = 14;
 
-  // prayer times font sizes
-
+  // Prayer times font sizes
   static const double prayerTimesTextFontSize = 16;
   static const double prayerTimesFontSize = 32;
 
   // Admin login
-  static const double adminLoginIconFontSize = 100;
+  static const double imgAdminWidthFactor = 0.4;
+  static const double adminLoginIconFontSize = 130;
   static const double adminLoginButtonTextSize = 16;
+  static const double adminLoginSubtitleFontSize = 24;
 
   // Admin panel
   static const double adminPanelUpdateFontSize = 18;
   static const double adminPanelMonthlyExpenseAmountFontSize = 32;
 
   // Record My Donation
-  static const double masjidBankAccountTitleSize = 16;
-  static const double masjidBankAccountCardFontSize = 14;
-  static const double recordMyDonationSmallFont = 12;
-  static const double recorButtonFontSize = 16;
+  static const double titleFontSize = 16.0;
+  static const double subtitleFontSize = 12.0;
+  static const double cardContentFontSize = 14.0;
+  static const double helperBtnFontSize = 12.0;
+  static const double mainBtnFontSize = 16.0;
 }

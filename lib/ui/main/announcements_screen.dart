@@ -8,11 +8,13 @@ import 'package:flutter/material.dart';
 
 // 3rd party
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inha_masjid/data/announcement.dart';
 
 // Local
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
+import 'package:intl/intl.dart';
 
 class AnnouncementsScreen extends StatefulWidget {
   // Variables
@@ -30,6 +32,36 @@ class AnnouncementsScreen extends StatefulWidget {
 }
 
 class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
+  // Variables
+  late Stream<QuerySnapshot> _announcementStream;
+  late List<Announcement> _announcements;
+
+  // Overrides
+  @override
+  void initState() {
+    super.initState();
+
+    // Set empty values before fetching data
+    _announcements = [];
+
+    // Set up announcement stream
+    var fs = FirebaseFirestore.instance;
+    _announcementStream = fs.collection(FirestorePaths.announcementsCol).snapshots();
+
+    // Parse announcements from stream
+    _announcementStream.listen((event) {
+      // Load and parse announcements from stream
+      List<Announcement> tmp = event.docs.map((e) => Announcement.fromDocument(e)).toList();
+      tmp.sort((a, b) => -a.timestamp.compareTo(b.timestamp));
+
+      // Set announcements
+      _announcements.clear();
+      setState(() {
+        _announcements.addAll(tmp);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,62 +69,50 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
         centerTitle: false,
         leading: BackButton(onPressed: widget.onBackButtonPressed),
         title: Text(
-          AppStrings.announcementsScreenTitle,
+          AppStrings.announcements,
           style: GoogleFonts.manrope(
             fontSize: AppDimensions.screenTitleFontSize,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
-      body: Container(
-        margin: const EdgeInsets.all(16),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("/announcementsCollection")
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            }
-
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return const Text('No data found.');
-            }
-
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                var doc = snapshot.data!.docs[index];
-                var title = doc['title'];
-                var content = doc['content'];
-
-                return Card(
-                  color: AppColors.cardBackgroundColor,
-                  elevation: AppDimensions.cardElevation,
-                  child: Theme(
-                    data:
-                        ThemeData().copyWith(dividerColor: Colors.transparent),
-                    child: ExpansionTile(
-                      title: Text('$title'),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 0, left: 15, right: 15, bottom: 15),
-                          child: Text('$content'),
+      body: ListView.builder(
+        itemCount: _announcements.length,
+        itemBuilder: (context, idx) {
+          var announcement = _announcements[idx];
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(DateFormat('dd,MM,yyyy').format(announcement.timestamp.toDate()))),
+              Card(
+                color: AppColors.cardBackgroundColor,
+                elevation: AppDimensions.cardElevation,
+                child: Theme(
+                  data: ThemeData().copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    title: Text(announcement.title),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 0,
+                          left: 15,
+                          right: 15,
+                          bottom: 15,
                         ),
-                      ],
-                    ),
+                        child: Text(
+                          announcement.body,
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            );
-          },
-        ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

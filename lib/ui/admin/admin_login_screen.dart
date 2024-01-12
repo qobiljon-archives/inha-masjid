@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:inha_masjid/utils/assets.dart';
 
 // Local
 import 'package:inha_masjid/utils/colors.dart';
@@ -29,6 +30,10 @@ class AdminLoginScreen extends StatelessWidget {
   }
 
   void _loginBtnPressed(BuildContext context) {
+    // TODO remove these two lines
+    Navigator.popAndPushNamed(context, '/admin_panel');
+    return;
+
     // Get email and password from input fields
     var email = _emailController.text;
     var password = _passwordController.text;
@@ -75,7 +80,7 @@ class AdminLoginScreen extends StatelessWidget {
           onPressed: () => _onBackBtnPressed(context),
         ),
         title: Text(
-          AppStrings.adminLoginScreenTitle,
+          AppStrings.adminLoginTitle,
           style: GoogleFonts.manrope(
             textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
@@ -86,106 +91,87 @@ class AdminLoginScreen extends StatelessWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Login screen icon
-              const Icon(
-                Icons.admin_panel_settings,
-                size: AppDimensions.adminLoginIconFontSize,
-                color: AppColors.widgetPrimary,
-              ),
-              const SizedBox(height: 50),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Column(
+              children: [
 
-              // Login screen subtitle
-              Text(
-                AppStrings.adminLoginTitle,
-                style: GoogleFonts.manrope(
-                  textStyle: const TextStyle(
-                    color: AppColors.textSecondary,
+                // Subtitle e.g., "Great to have you back!"
+                Text(
+                  AppStrings.welcomeLogin,
+                  style: GoogleFonts.manrope(
+                    textStyle: const TextStyle(
+                      // color: AppColors.textSecondary,
+                      fontSize: AppDimensions.adminLoginSubtitleFontSize,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 25),
+                const SizedBox(height: 30),
 
-              // Email input field
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    hintText: AppStrings.adminEmailHintText,
-                    hintStyle: const TextStyle(
-                      color: AppColors.textSecondary,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.cardBackgroundColor,
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.cardButtonBackgroundColor,
-                      ),
-                    ),
-                    fillColor: AppColors.white,
-                    filled: true,
-                  ),
+                // Login screen icon on top
+                const FractionallySizedBox(
+                  widthFactor: AppDimensions.imgAdminWidthFactor,
+                  child: Image(image: AssetImage(AppAssets.admin)),
                 ),
-              ),
-              const SizedBox(height: 10),
+                const SizedBox(height: 60),
 
-              // Password input field
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: AppStrings.adminPasswordHintText,
-                    hintStyle: const TextStyle(
-                      color: AppColors.textSecondary,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.cardBackgroundColor,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Email'),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: 'e.g., example123@gmail.com',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondary,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppColors
+                                  .cardPrimaryButtonColor), // Change the color as needed
+                        ),
                       ),
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.cardButtonBackgroundColor,
+                    const SizedBox(height: 10),
+                    const Text('Password'),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        labelText: 'e.g., ex123456789',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondary,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppColors
+                                  .cardPrimaryButtonColor), // Change the color as needed
+                        ),
                       ),
                     ),
-                    fillColor: AppColors.white,
-                    filled: true,
-                  ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 15),
+                const SizedBox(height: 30),
 
-              // Login button
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: TextButton(
+                // Login button
+                ElevatedButton.icon(
                   onPressed: () => _loginBtnPressed(context),
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(18.0), // Add padding
-                    backgroundColor: AppColors
-                        .cardButtonBackgroundColor, // Set background color
+                  icon: const Icon(Icons.login, color: AppColors.white),
+                  label: Text(
+                    AppStrings.login.toUpperCase(),
+                    style: const TextStyle(color: AppColors.white),
                   ),
-                  child: Text(
-                    AppStrings.adminLoginButtonText,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.adminLoginButtonTextSize,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.cardPrimaryButtonColor,
+                    minimumSize: const Size(
+                      double.infinity,
+                      AppDimensions.donateButtonHeight,
                     ),
                   ),
                 ),
-              ),
-
-              const SizedBox(height: 100),
-            ],
+                const SizedBox(height: 100),
+              ],
+            ),
           ),
         ),
       ),
