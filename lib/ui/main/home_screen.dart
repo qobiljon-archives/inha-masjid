@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Parse donation records from stream
     _donationStream.listen((event) {
+      // Load and parse donation records from stream
       List<DonationRecord> tmp = event.docs.map((e) => DonationRecord.fromDocument(e)).toList();
       tmp.sort((a, b) => -a.timestamp.compareTo(b.timestamp));
 
