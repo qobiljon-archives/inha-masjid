@@ -124,6 +124,18 @@ class AppStrings {
   static final String recordMyDonationButtonText =
       'Record my donation'.toUpperCase();
 
+  // About Inha Masjid screen
+  static const String aboutInhaMasjid = 'About Inha Masjid';
+  static const String aboutInhaMasjidDescription =
+      'Welcome to Inha Masjid, a place of worship nestled in the vibrant city of Incheon, South Korea. Situated in close proximity to Inha University.';
+  static const String masjidImages = 'Masjid Images';
+  static const String contactInformation = 'Contact';
+  static const String muftiAsim = 'Mufti Asim: 010-8242-5481';
+  static const String qobiljon = 'Qobiljon: 010-5034-2705';
+  static const String otabek = 'Otabek: 010-5605-9499';
+  static const String location = 'Location';
+  static const String address = '인천 미추홀 용현동 172-19';
+
   // Update Masjid bank account title
   static const String updateMasjidBankAccountTitle =
       'Update Masjid\'s bank account';

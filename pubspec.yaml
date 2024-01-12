@@ -72,6 +72,7 @@ dependencies:
   url_launcher: ^6.2.3
   animated_text_kit: ^4.2.2
   analog_clock: ^0.1.1
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -124,6 +125,11 @@ flutter:
     - lib/assets/images/welcome_illustrations/4.png
     # Other assets
     - lib/assets/images/admin.png
+    # Masjid images
+    - lib/assets/images/masjid_images/1.jpeg
+    - lib/assets/images/masjid_images/2.jpeg
+    - lib/assets/images/masjid_images/3.jpeg
+    - lib/assets/images/masjid_images/4.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

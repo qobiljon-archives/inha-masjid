@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inha_masjid/ui/donate/record_donation_screen.dart';
+import 'package:inha_masjid/ui/main/about_masjid_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/extensions.dart';
@@ -61,6 +62,14 @@ class _HomeScreenState extends State<HomeScreen> {
     await Navigator.pushNamed(context, '/donate');
   }
 
+  void _openAboutMasjidOverlay() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => AboutMasjid(),
+    );
+  }
+
   // Override
   @override
   Widget build(BuildContext context) {
@@ -74,6 +83,12 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: _openAboutMasjidOverlay,
+            icon: const Icon(Icons.info_outline),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
