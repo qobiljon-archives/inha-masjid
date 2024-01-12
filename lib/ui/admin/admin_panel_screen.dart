@@ -135,8 +135,9 @@ class AdminPanelScreen extends StatelessWidget {
 
     // Your data to be added to the document
     var announcementData = {
-      "title": _postNewAnnouncementTitleController.text,
-      "content": _postNewAnnouncementBodyController.text,
+      "timestamp": timestamp,
+      "title": title,
+      "body": body,
     };
 
     // Add a new document with the server timestamp

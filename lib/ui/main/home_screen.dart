@@ -9,7 +9,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inha_masjid/ui/donate/record_donation_screen.dart';
+import 'package:inha_masjid/data/donation_record.dart';
 import 'package:inha_masjid/ui/main/about_masjid_screen.dart';
 import 'package:inha_masjid/utils/colors.dart';
 import 'package:inha_masjid/utils/dimensions.dart';
@@ -42,15 +42,59 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // Variables
   late Stream<QuerySnapshot> _donationStream;
+  late Stream<DocumentSnapshot> _monthlyRentStream;
+  late List<DonationRecord> _donationRecords;
+  late int _totalAmount;
+  late int _raisedAmount;
 
   // Lifecycle
   @override
   void initState() {
     super.initState();
 
-    // Donation stream
+    // Set empty values before fetching data
+    _donationRecords = [];
+    _totalAmount = 0;
+    _raisedAmount = 0;
+
+    // Set up donation stream
     var fs = FirebaseFirestore.instance;
     _donationStream = fs.collection(FirestorePaths.donationsCol).snapshots();
+    _monthlyRentStream = fs.doc(FirestorePaths.monthlyRentDoc).snapshots();
+
+    // Parse donation records from stream
+    _donationStream.listen((event) {
+      List<DonationRecord> tmp = event.docs.map((e) => DonationRecord.fromDocument(e)).toList();
+      tmp.sort((a, b) => -a.timestamp.compareTo(b.timestamp));
+
+      // Set donation records
+      _donationRecords.clear();
+      setState(() {
+        _donationRecords.addAll(tmp);
+      });
+
+      // Calculate raised amount
+      // Get start and end DateTimes for current month for filtering donation records
+      DateTime now = DateTime.now();
+      Timestamp start = Timestamp.fromDate(
+          DateTime(now.year, now.month).subtract(const Duration(microseconds: 1)));
+      Timestamp end = Timestamp.fromDate(DateTime(now.year, now.month + 1));
+      int tmpRaisedAmount = 0;
+      for (var d in _donationRecords) {
+        if (d.timestamp.compareTo(start) == 1 && d.timestamp.compareTo(end) == -1) {
+          tmpRaisedAmount += d.amount;
+        }
+      }
+      setState(() {
+        _raisedAmount = tmpRaisedAmount;
+      });
+    });
+    _monthlyRentStream.listen((event) {
+      int amount = event.get('amount');
+      setState(() {
+        _totalAmount = amount;
+      });
+    });
   }
 
   // Functions
@@ -153,14 +197,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Raised and total amount
+                    // Raised and total amounts
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Raised amount
                         Text(
-                          AppStrings.raisedAmount(12345, addCurrency: true)
-                              .capitalize(),
+                          AppStrings.raisedAmount(_raisedAmount, addCurrency: true).capitalize(),
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
                               fontSize: AppDimensions.cardContentSize,
@@ -170,43 +213,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
 
                         // Total amount
-                        StreamBuilder<DocumentSnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .doc(FirestorePaths.monthlyRentDoc)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            // Loading
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            }
-
-                            // Error
-                            if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            }
-
-                            // Empty (no data)
-                            if (!snapshot.hasData || !snapshot.data!.exists) {
-                              return Container();
-                            }
-
-                            // Extracting data from snapshot
-                            var doc = snapshot.data!;
-                            int amount = doc['amount'];
-
-                            // Returning the widget
-                            return Text(
-                              AppStrings.requiredAmount(amount,
-                                  addCurrency: true),
-                              style: GoogleFonts.manrope(
-                                textStyle: const TextStyle(
-                                  fontSize: AppDimensions.cardContentSmallSize,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            );
-                          },
+                        Text(
+                          AppStrings.requiredAmount(_totalAmount, addCurrency: true),
+                          style: GoogleFonts.manrope(
+                            textStyle: const TextStyle(
+                              fontSize: AppDimensions.cardContentSmallSize,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -214,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // Progress Bar
                     LinearProgressIndicator(
-                      value: 0.5,
+                      value: _totalAmount == 0 ? 1 : _raisedAmount / _totalAmount,
                       backgroundColor: AppColors.white,
                       color: AppColors.cardPrimaryButtonColor,
                       minHeight: 16,
@@ -236,9 +250,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              speed: const Duration(
-                                  milliseconds:
-                                      100), // Adjust the speed as needed
+                              speed:
+                                  const Duration(milliseconds: 100), // Adjust the speed as needed
                             ),
                           ],
                         ),
@@ -250,8 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Text('  - Sahih Muslim 2588'),
                         GestureDetector(
                           onTap: () async {
-                            await launchUrl(
-                                Uri.parse('https://sunnah.com/muslim:2588'));
+                            await launchUrl(Uri.parse('https://sunnah.com/muslim:2588'));
                           },
                           child: const Text(
                             ' (sunnah.com)',
@@ -267,8 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Donate button (opens record donation screen)
                     ElevatedButton.icon(
                       onPressed: _donateBtnPressed,
-                      icon: const Icon(Icons.mosque_rounded,
-                          color: AppColors.white),
+                      icon: const Icon(Icons.mosque_rounded, color: AppColors.white),
                       label: Text(
                         AppStrings.donate.toUpperCase(),
                         style: const TextStyle(color: AppColors.white),
@@ -312,78 +323,40 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 16),
 
                     // Activity feed list
-                    StreamBuilder<QuerySnapshot>(
-                      stream: _donationStream,
-                      builder: (context, snapshot) {
-                        // Loading
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        }
-
-                        // Error
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-
-                        // Empty (no data)
-                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                          return const Text(AppStrings.noDonations);
-                        }
-
-                        // Donation docs list
-                        var docs = snapshot.data!.docs;
-
-                        // Make children list
-                        var children = <Widget>[];
-                        for (var doc in docs) {
-                          // Donation details
-                          Timestamp ts = doc['timestamp'];
-                          String donorName = doc['donorName'];
-                          int amount = doc['amount'];
-
-                          // Adding the widgets
-                          children.add(
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  flex: 2,
-                                  child: Text(
-                                    '• $donorName donated ${amount.commaSeparated()}원',
-                                    style: GoogleFonts.manrope(
-                                      textStyle: const TextStyle(
-                                        fontSize: AppDimensions
-                                            .transactionHistoryNameFontSize,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                    Column(children: [
+                      for (var d in _donationRecords)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              flex: 2,
+                              child: Text(
+                                '• ${d.donorName} donated ${d.amount.commaSeparated()}원',
+                                style: GoogleFonts.manrope(
+                                  textStyle: const TextStyle(
+                                    fontSize: AppDimensions.transactionHistoryNameFontSize,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Flexible(
-                                  flex: 1,
-                                  child: Text(
-                                    ' (${DateFormat('dd,MM,yyyy').format(ts.toDate())})',
-                                    // Use 'dd,MM,yyyy' for day, month, year format
-                                    style: GoogleFonts.manrope(
-                                      textStyle: const TextStyle(
-                                        fontSize: AppDimensions
-                                            .transactionHistoryNameFontSize,
-                                        fontWeight: FontWeight.normal,
-                                        color: AppColors.textSecondary,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          );
-                        }
-
-                        // Adding the widgets
-                        return Column(children: children);
-                      },
-                    ),
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                ' (${DateFormat('dd,MM,yyyy').format(d.timestamp.toDate())})',
+                                // Use 'dd,MM,yyyy' for day, month, year format
+                                style: GoogleFonts.manrope(
+                                  textStyle: const TextStyle(
+                                    fontSize: AppDimensions.transactionHistoryNameFontSize,
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                    ]),
                   ],
                 ),
               ),
