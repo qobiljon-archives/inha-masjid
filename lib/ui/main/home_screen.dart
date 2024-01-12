@@ -328,31 +328,41 @@ class _HomeScreenState extends State<HomeScreen> {
                           int amount = doc['amount'];
 
                           // Adding the widgets
-                          children.add(Row(
-                            children: [
-                              Text(
-                                '• $donorName donated ${amount.commaSeparated()}원',
-                                style: GoogleFonts.manrope(
-                                  textStyle: const TextStyle(
-                                    fontSize: AppDimensions
-                                        .transactionHistoryNameFontSize,
-                                    fontWeight: FontWeight.bold,
+                          children.add(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  flex: 2,
+                                  child: Text(
+                                    '• $donorName donated ${amount.commaSeparated()}원',
+                                    style: GoogleFonts.manrope(
+                                      textStyle: const TextStyle(
+                                        fontSize: AppDimensions
+                                            .transactionHistoryNameFontSize,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                ' (${DateFormat.yMMMMd().format(ts.toDate())})',
-                                style: GoogleFonts.manrope(
-                                  textStyle: const TextStyle(
-                                    fontSize: AppDimensions
-                                        .transactionHistoryNameFontSize,
-                                    fontWeight: FontWeight.normal,
-                                    color: AppColors.textSecondary,
+                                Flexible(
+                                  flex: 1,
+                                  child: Text(
+                                    ' (${DateFormat('dd,MM,yyyy').format(ts.toDate())})',
+                                    // Use 'dd,MM,yyyy' for day, month, year format
+                                    style: GoogleFonts.manrope(
+                                      textStyle: const TextStyle(
+                                        fontSize: AppDimensions
+                                            .transactionHistoryNameFontSize,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ));
+                              ],
+                            ),
+                          );
                         }
 
                         // Adding the widgets

@@ -96,7 +96,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
           Expanded(
             child: Center(
               child: Wrap(
-                spacing: 22, // Adjust the spacing between prayer times
+                spacing: 32, // Adjust the spacing between prayer times
                 runSpacing: 10, // Adjust the spacing between lines
                 children: [
                   // Each individual prayer time
