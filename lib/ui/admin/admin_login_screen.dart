@@ -31,8 +31,8 @@ class AdminLoginScreen extends StatelessWidget {
 
   void _loginBtnPressed(BuildContext context) {
     // TODO remove these two lines
-    Navigator.popAndPushNamed(context, '/admin_panel');
-    return;
+    // Navigator.popAndPushNamed(context, '/admin_panel');
+    // return;
 
     // Get email and password from input fields
     var email = _emailController.text;
@@ -95,7 +95,6 @@ class AdminLoginScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
               children: [
-
                 // Subtitle e.g., "Great to have you back!"
                 Text(
                   AppStrings.welcomeLogin,

@@ -65,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // Parse donation records from stream
     _donationStream.listen((event) {
       // Load and parse donation records from stream
-      List<DonationRecord> tmp = event.docs.map((e) => DonationRecord.fromDocument(e)).toList();
+      List<DonationRecord> tmp =
+          event.docs.map((e) => DonationRecord.fromDocument(e)).toList();
       tmp.sort((a, b) => -a.timestamp.compareTo(b.timestamp));
 
       // Set donation records
@@ -77,12 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
       // Calculate raised amount
       // Get start and end DateTimes for current month for filtering donation records
       DateTime now = DateTime.now();
-      Timestamp start = Timestamp.fromDate(
-          DateTime(now.year, now.month).subtract(const Duration(microseconds: 1)));
+      Timestamp start = Timestamp.fromDate(DateTime(now.year, now.month)
+          .subtract(const Duration(microseconds: 1)));
       Timestamp end = Timestamp.fromDate(DateTime(now.year, now.month + 1));
       int tmpRaisedAmount = 0;
       for (var d in _donationRecords) {
-        if (d.timestamp.compareTo(start) == 1 && d.timestamp.compareTo(end) == -1) {
+        if (d.timestamp.compareTo(start) == 1 &&
+            d.timestamp.compareTo(end) == -1) {
           tmpRaisedAmount += d.amount;
         }
       }
@@ -111,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (ctx) => AboutMasjid(),
+      builder: (ctx) => const AboutMasjid(),
     );
   }
 
@@ -204,7 +206,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         // Raised amount
                         Text(
-                          AppStrings.raisedAmount(_raisedAmount, addCurrency: true).capitalize(),
+                          AppStrings.raisedAmount(_raisedAmount,
+                                  addCurrency: true)
+                              .capitalize(),
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
                               fontSize: AppDimensions.cardContentSize,
@@ -215,7 +219,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         // Total amount
                         Text(
-                          AppStrings.requiredAmount(_totalAmount, addCurrency: true),
+                          AppStrings.requiredAmount(_totalAmount,
+                              addCurrency: true),
                           style: GoogleFonts.manrope(
                             textStyle: const TextStyle(
                               fontSize: AppDimensions.cardContentSmallSize,
@@ -229,7 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // Progress Bar
                     LinearProgressIndicator(
-                      value: _totalAmount == 0 ? 1 : _raisedAmount / _totalAmount,
+                      value:
+                          _totalAmount == 0 ? 1 : _raisedAmount / _totalAmount,
                       backgroundColor: AppColors.white,
                       color: AppColors.cardPrimaryButtonColor,
                       minHeight: 16,
@@ -251,8 +257,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              speed:
-                                  const Duration(milliseconds: 100), // Adjust the speed as needed
+                              speed: const Duration(
+                                  milliseconds:
+                                      100), // Adjust the speed as needed
                             ),
                           ],
                         ),
@@ -264,7 +271,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Text('  - Sahih Muslim 2588'),
                         GestureDetector(
                           onTap: () async {
-                            await launchUrl(Uri.parse('https://sunnah.com/muslim:2588'));
+                            await launchUrl(
+                                Uri.parse('https://sunnah.com/muslim:2588'));
                           },
                           child: const Text(
                             ' (sunnah.com)',
@@ -280,7 +288,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Donate button (opens record donation screen)
                     ElevatedButton.icon(
                       onPressed: _donateBtnPressed,
-                      icon: const Icon(Icons.mosque_rounded, color: AppColors.white),
+                      icon: const Icon(Icons.mosque_rounded,
+                          color: AppColors.white),
                       label: Text(
                         AppStrings.donate.toUpperCase(),
                         style: const TextStyle(color: AppColors.white),
@@ -335,7 +344,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '• ${d.donorName} donated ${d.amount.commaSeparated()}원',
                                 style: GoogleFonts.manrope(
                                   textStyle: const TextStyle(
-                                    fontSize: AppDimensions.transactionHistoryNameFontSize,
+                                    fontSize: AppDimensions
+                                        .transactionHistoryNameFontSize,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -348,7 +358,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // Use 'dd,MM,yyyy' for day, month, year format
                                 style: GoogleFonts.manrope(
                                   textStyle: const TextStyle(
-                                    fontSize: AppDimensions.transactionHistoryNameFontSize,
+                                    fontSize: AppDimensions
+                                        .transactionHistoryNameFontSize,
                                     fontWeight: FontWeight.normal,
                                     color: AppColors.textSecondary,
                                   ),
