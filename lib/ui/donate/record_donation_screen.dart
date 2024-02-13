@@ -19,7 +19,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
   // Variables
   final _donationAmountController = TextEditingController();
   final _donorNameController = TextEditingController();
-  final String _accountNumber = '';
+  int _accountNumber = -1;
 
   // Functions
   void _recordMyDonationBtnPressed() {
@@ -118,7 +118,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
             const SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                Clipboard.setData(ClipboardData(text: _accountNumber));
+                Clipboard.setData(
+                    ClipboardData(text: _accountNumber.toString()));
 
                 // Optionally, you can show a snackbar or any other feedback to the user
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -151,6 +152,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
 
                       // Access the fields 'accountNumber' and 'bankName' from the document
                       var accountNumber = document['accountNumber'];
+                      _accountNumber = accountNumber;
                       var bankName = document['bankName'];
 
                       return Row(
@@ -235,79 +237,6 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Text(
-                    AppStrings.donatedAmountOne,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.widgetLightPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.helperBtnFontSize,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Text(
-                    AppStrings.donatedAmountTwo,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.widgetLightPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.helperBtnFontSize,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Text(
-                    AppStrings.donatedAmountThree,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.widgetLightPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.helperBtnFontSize,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Text(
-                    AppStrings.donatedAmountFour,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.widgetLightPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.helperBtnFontSize,
-                    ),
-                  ),
-                ),
-              ],
             ),
             const SizedBox(height: 20),
             Text(

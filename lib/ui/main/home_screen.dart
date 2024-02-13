@@ -130,12 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: _openAboutMasjidOverlay,
-            icon: const Icon(Icons.info_outline),
-          )
-        ],
+        actions: [button()],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -376,6 +371,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget button() {
+    return IconButton(
+      onPressed: _openAboutMasjidOverlay,
+      icon: const Icon(Icons.info_outline),
     );
   }
 }
