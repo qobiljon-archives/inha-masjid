@@ -31,8 +31,8 @@ class AdminLoginScreen extends StatelessWidget {
 
   void _loginBtnPressed(BuildContext context) {
     // TODO remove these two lines
-    Navigator.popAndPushNamed(context, '/admin_panel');
-    return;
+    // Navigator.popAndPushNamed(context, '/admin_panel');
+    // return;
 
     // Get email and password from input fields
     var email = _emailController.text;
@@ -95,7 +95,6 @@ class AdminLoginScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Column(
               children: [
-
                 // Subtitle e.g., "Great to have you back!"
                 Text(
                   AppStrings.welcomeLogin,
@@ -115,9 +114,11 @@ class AdminLoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 60),
 
+                // Email and password input fields
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Email input field
                     const Text('Email'),
                     TextFormField(
                       controller: _emailController,
@@ -134,9 +135,12 @@ class AdminLoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
+
+                    // Password input field
                     const Text('Password'),
                     TextFormField(
                       controller: _passwordController,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         labelText: 'e.g., ex123456789',
                         labelStyle: TextStyle(
@@ -144,8 +148,7 @@ class AdminLoginScreen extends StatelessWidget {
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                              color: AppColors
-                                  .cardPrimaryButtonColor), // Change the color as needed
+                              color: AppColors.cardPrimaryButtonColor), // Change the color as needed
                         ),
                       ),
                     ),

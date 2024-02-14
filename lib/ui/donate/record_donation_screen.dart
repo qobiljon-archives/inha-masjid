@@ -19,74 +19,98 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
   // Variables
   final _donationAmountController = TextEditingController();
   final _donorNameController = TextEditingController();
-  final String _accountNumber = '';
+  int _accountNumber = -1;
 
   // Functions
   void _recordMyDonationBtnPressed() {
-    // Verify that donation amount is a valid integer
-    int? amount = int.tryParse(_donationAmountController.text);
-    if (amount == null) {
-      Fluttertoast.showToast(
-        msg: 'Donation amount must be a number (e.g., 1000000)',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        // Change color to indicate error
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      return; // Exit the method without proceeding to Firestore
-    }
+    // Set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text(AppStrings.manualTransferRequired),
+      content: const Text(AppStrings.manualTransferRequiredDetailed),
+      actions: [
+        TextButton(
+          child: const Text(AppStrings.cancel),
+          onPressed: () => Navigator.pop(context),
+        ),
+        TextButton(
+            child: const Text(AppStrings.continue_),
+            onPressed: () {
+              // Verify that donation amount is a valid integer
+              int? amount = int.tryParse(_donationAmountController.text);
+              if (amount == null) {
+                Fluttertoast.showToast(
+                  msg: 'Donation amount must be a number (e.g., 1000000)',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  // Change color to indicate error
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+                return; // Exit the method without proceeding to Firestore
+              }
 
-    // Donation details
-    Timestamp ts = Timestamp.now();
-    String donorName = _donorNameController.text;
+              // Donation details
+              Timestamp ts = Timestamp.now();
+              String donorName = _donorNameController.text;
 
-    // If donor name is empty, set it to 'Anonymous'
-    if (donorName.isEmpty) {
-      donorName = 'Anonymous';
-    }
+              // If donor name is empty, set it to 'Anonymous'
+              if (donorName.isEmpty) {
+                donorName = 'Anonymous';
+              }
 
-    // Add the donation to Firestore
-    var firestore = FirebaseFirestore.instance;
-    var donations = firestore.collection(FirestorePaths.donationsCol);
-    var donationsData = {
-      'timestamp': ts,
-      'donorName': donorName,
-      'amount': amount,
-    };
-    donations.add(donationsData).then((docRef) {
-      print("Document written with ID: ${docRef.id}");
-      Fluttertoast.showToast(
-        msg: 'Announcement posted successfully',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        // Change color to indicate success
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+              // Add the donation to Firestore
+              var firestore = FirebaseFirestore.instance;
+              var donations = firestore.collection(FirestorePaths.donationsCol);
+              var donationsData = {
+                'timestamp': ts,
+                'donorName': donorName,
+                'amount': amount,
+              };
+              donations.add(donationsData).then((docRef) {
+                print("Document written with ID: ${docRef.id}");
+                Fluttertoast.showToast(
+                  msg: 'Announcement posted successfully',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.green,
+                  // Change color to indicate success
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+                Navigator.pop(context);
 
-      // Clear text fields
-      _donorNameController.clear();
-      _donationAmountController.clear();
-    }).catchError((error) {
-      print("Error adding document: $error");
-      // Show error message
-      Fluttertoast.showToast(
-        msg: 'Error posting announcement',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    });
+                // Clear text fields
+                _donorNameController.clear();
+                _donationAmountController.clear();
+              }).catchError((error) {
+                print("Error adding document: $error");
+                // Show error message
+                Fluttertoast.showToast(
+                  msg: 'Error posting announcement',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+                Navigator.pop(context);
+              });
+            }),
+      ],
+    );
+
+    // Show the confirmation dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => alert,
+    );
   }
 
+  // Overrides
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +142,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
             const SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                Clipboard.setData(ClipboardData(text: _accountNumber));
+                Clipboard.setData(ClipboardData(text: _accountNumber.toString()));
 
                 // Optionally, you can show a snackbar or any other feedback to the user
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -134,9 +158,8 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .doc(FirestorePaths.bankAccountDoc)
-                        .snapshots(),
+                    stream:
+                        FirebaseFirestore.instance.doc(FirestorePaths.bankAccountDoc).snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
@@ -151,6 +174,7 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
 
                       // Access the fields 'accountNumber' and 'bankName' from the document
                       var accountNumber = document['accountNumber'];
+                      _accountNumber = accountNumber;
                       var bankName = document['bankName'];
 
                       return Row(
@@ -179,38 +203,6 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                 ),
               ),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     Container(
-            //       height: 30,
-            //       decoration: BoxDecoration(
-            //         color: AppColors.cardPrimaryButtonColor,
-            //         borderRadius: BorderRadius.circular(15),
-            //       ),
-            //       child: TextButton(
-            //         onPressed: () {
-            //           Clipboard.setData(ClipboardData(text: _accountNumber));
-
-            //           // Optionally, you can show a snackbar or any other feedback to the user
-            //           ScaffoldMessenger.of(context).showSnackBar(
-            //             const SnackBar(
-            //               content: Text('Account Number copied to clipboard'),
-            //             ),
-            //           );
-            //         },
-            //         child: Text(
-            //           AppStrings.copy,
-            //           style: GoogleFonts.manrope(
-            //             fontSize: AppDimensions.helperBtnFontSize,
-            //             fontWeight: FontWeight.bold,
-            //             color: AppColors.white,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
             const SizedBox(height: 20),
             Text(
               AppStrings.donationAmount,
@@ -235,79 +227,6 @@ class _RecordDonationScreenState extends State<RecordDonationScreen> {
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Text(
-                    AppStrings.donatedAmountOne,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.widgetLightPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.helperBtnFontSize,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Text(
-                    AppStrings.donatedAmountTwo,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.widgetLightPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.helperBtnFontSize,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Text(
-                    AppStrings.donatedAmountThree,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.widgetLightPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.helperBtnFontSize,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackgroundColor,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                  child: Text(
-                    AppStrings.donatedAmountFour,
-                    style: GoogleFonts.manrope(
-                      color: AppColors.widgetLightPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: AppDimensions.helperBtnFontSize,
-                    ),
-                  ),
-                ),
-              ],
             ),
             const SizedBox(height: 20),
             Text(

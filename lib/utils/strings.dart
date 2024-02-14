@@ -25,12 +25,10 @@ class AppStrings {
   static const String activityFeed = 'Activity feed';
   static const String noDonations =
       'No donations yet. Make the difference by making a donation now!';
-  static const String rentUpdatedMessage =
-      'Monthly rent amount updated successfully';
+  static const String rentUpdatedMessage = 'Monthly rent amount updated successfully';
   static const String rentUpdateFailedMessage =
       'Monthly rent amount must be a number (e.g., 1000000)';
-  static const String prayerTimeUpdateCanceledMessage =
-      'Prayer time update canceled';
+  static const String prayerTimeUpdateCanceledMessage = 'Prayer time update canceled';
 
   static get currentProgress {
     String ans = 'Raising for ';
@@ -89,21 +87,19 @@ class AppStrings {
   static const String password = 'Password';
   static const String login = 'Login';
   static const String announcementTitle = 'Title';
-  static const String announcementTitleTooltip =
-      'e.g., Taraweeh prayer tonight at 8:30pm';
+  static const String announcementTitleTooltip = 'e.g., Taraweeh prayer tonight at 8:30pm';
   static const String announcementBody = 'Body';
   static const String announcementBodyTooltip =
       'e.g., Dear brothers, we will be having Taraweeh prayer tonight at 8:30pm. Please join us.';
 
   // Admin panel screen
-  static const String updateMonthlyExpenseAmount =
-      'Update Masjid’s monthly expenses';
+  static const String updateMonthlyRentAmount = 'Update Masjid’s monthly rent amount';
   static const String updatePrayerTimes = 'Update prayer times';
   static const String update = 'Update';
   static const String postNewAnnouncement = 'Post new announcement';
   static const String adminPanelUpdatePostButtonText = 'Post';
-  static const String amount = 'Amount';
-  static const String amountTooltip = 'e.g., 1000000';
+  static const String monthlyRentAmount = 'Monthly rent amount (in Korean Won)';
+  static const String amountTooltip = 'e.g., 1000000원';
   static const String bankName = 'Bank name';
   static const String bankNameTooltip = 'e.g., Hana';
   static const String bankNumber = 'Bank number';
@@ -121,8 +117,12 @@ class AppStrings {
   static const String donorName = 'Who is donating';
   static const String donorNameSub = '(leave blank to stay anonymous)';
   static const String donorNameTooltip = 'e.g., Bilal Ahmed';
-  static final String recordMyDonationButtonText =
-      'Record my donation'.toUpperCase();
+  static final String recordMyDonationButtonText = 'Record my donation'.toUpperCase();
+  static const String cancel = "Cancel";
+  static const String continue_ = "Continue";
+  static const String manualTransferRequired = "Manual Transfer Required";
+  static const String manualTransferRequiredDetailed =
+      "This app currently allows you to record your donation only. To complete the donation, you'll need to transfer the funds manually using your banking application. Do you confirm your donation?";
 
   // About Inha Masjid screen
   static const String aboutInhaMasjid = 'About Inha Masjid';
@@ -137,10 +137,8 @@ class AppStrings {
   static const String address = '인천 미추홀 용현동 172-19';
 
   // Update Masjid bank account title
-  static const String updateMasjidBankAccountTitle =
-      'Update Masjid\'s bank account';
-  static final String updateMasjidBankAccountButtonText =
-      'Update'.toUpperCase();
+  static const String updateMasjidBankAccountTitle = 'Update Masjid\'s bank account';
+  static final String updateMasjidBankAccountButtonText = 'Update'.toUpperCase();
 
   // String lists
   static const List<String> welcomeScreenTitles = [
