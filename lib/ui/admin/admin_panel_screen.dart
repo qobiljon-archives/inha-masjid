@@ -13,12 +13,17 @@ import 'package:inha_masjid/utils/dimensions.dart';
 import 'package:inha_masjid/utils/extensions.dart';
 import 'package:inha_masjid/utils/strings.dart';
 
-class AdminPanelScreen extends StatelessWidget {
+class AdminPanelScreen extends StatefulWidget {
   // Constructor
-  AdminPanelScreen({super.key});
+  const AdminPanelScreen({super.key});
 
+  @override
+  State<AdminPanelScreen> createState() => _AdminPanelScreenState();
+}
+
+class _AdminPanelScreenState extends State<AdminPanelScreen> {
   // Variables
-  final _monthlyExpenseController = TextEditingController();
+  final _monthlyRentController = TextEditingController();
   final _postNewAnnouncementTitleController = TextEditingController();
   final _postNewAnnouncementBodyController = TextEditingController();
   final _masjidBankNameController = TextEditingController();
@@ -72,7 +77,7 @@ class AdminPanelScreen extends StatelessWidget {
 
   void _updateMonthlyRentBtnPressed(context) async {
     // Try to convert inputted amount to int
-    var newMonthlyRentAmount = int.tryParse(_monthlyExpenseController.text);
+    var newMonthlyRentAmount = int.tryParse(_monthlyRentController.text);
 
     // Couldn't parse to int
     if (newMonthlyRentAmount == null) {
@@ -105,7 +110,7 @@ class AdminPanelScreen extends StatelessWidget {
     );
 
     // Clear the monthly expense text field
-    _monthlyExpenseController.clear();
+    _monthlyRentController.clear();
   }
 
   void _postNewAnnouncementBtnPresses(content) {
@@ -113,7 +118,7 @@ class AdminPanelScreen extends StatelessWidget {
     var timestamp = DateTime.now();
     var title = _postNewAnnouncementTitleController.text;
     var body = _postNewAnnouncementBodyController.text;
-    var newMonthlyRentAmount = int.tryParse(_monthlyExpenseController.text);
+    var newMonthlyRentAmount = int.tryParse(_monthlyRentController.text);
 
     if (_postNewAnnouncementTitleController.text.isEmpty ||
         _postNewAnnouncementBodyController.text.isEmpty) {
@@ -130,8 +135,7 @@ class AdminPanelScreen extends StatelessWidget {
       return; // Do not proceed further if the amount is not provided
     }
     var fs = FirebaseFirestore.instance;
-    var announcementsCollection =
-        fs.collection(FirestorePaths.announcementsCol);
+    var announcementsCollection = fs.collection(FirestorePaths.announcementsCol);
 
     // Your data to be added to the document
     var announcementData = {
@@ -174,8 +178,7 @@ class AdminPanelScreen extends StatelessWidget {
   }
 
   void _updateBankAccountBtnPressed(context) {
-    if (_masjidBankNameController.text.isEmpty ||
-        _masjidBankNumberController.text.isEmpty) {
+    if (_masjidBankNameController.text.isEmpty || _masjidBankNumberController.text.isEmpty) {
       // Show an error message if the amount is not provided
       Fluttertoast.showToast(
         msg: 'Please enter the bank name and number',
@@ -230,6 +233,23 @@ class AdminPanelScreen extends StatelessWidget {
 
   // Overrides
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Retrieve data from firestore
+    final fs = FirebaseFirestore.instance;
+    // (1) monthly expense amount
+    FirebaseFirestore.instance.doc(FirestorePaths.monthlyRentDoc).get().then((doc) {
+      _monthlyRentController.text = doc['amount'].toString();
+    });
+    // (2) bank account details
+    FirebaseFirestore.instance.doc(FirestorePaths.bankAccountDoc).get().then((doc) {
+      _masjidBankNameController.text = doc['bankName'];
+      _masjidBankNumberController.text = doc['accountNumber'].toString();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -251,7 +271,7 @@ class AdminPanelScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              AppStrings.updateMonthlyExpenseAmount,
+              AppStrings.updateMonthlyRentAmount,
               style: GoogleFonts.manrope(
                 textStyle: const TextStyle(
                   fontWeight: FontWeight.bold,
@@ -269,14 +289,14 @@ class AdminPanelScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(AppStrings.amount),
+                  const Text(AppStrings.monthlyRentAmount),
                   TextFormField(
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       FilteringTextInputFormatter.digitsOnly
                     ],
                     keyboardType: TextInputType.number,
-                    controller: _monthlyExpenseController,
+                    controller: _monthlyRentController,
                     decoration: const InputDecoration(
                       labelText: AppStrings.amountTooltip,
                       labelStyle: TextStyle(
@@ -346,8 +366,7 @@ class AdminPanelScreen extends StatelessWidget {
                               Text(
                                 prayerName.capitalize(),
                                 style: GoogleFonts.manrope(
-                                  fontSize:
-                                      AppDimensions.prayerTimesTextFontSize,
+                                  fontSize: AppDimensions.prayerTimesTextFontSize,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -356,8 +375,7 @@ class AdminPanelScreen extends StatelessWidget {
                               // Prayer time button
                               StreamBuilder<DocumentSnapshot>(
                                 stream: FirebaseFirestore.instance
-                                    .doc(FirestorePaths.prayerTimeDoc(
-                                        prayerName))
+                                    .doc(FirestorePaths.prayerTimeDoc(prayerName))
                                     .snapshots(),
                                 builder: (context, snapshot) {
                                   if (!snapshot.hasData) {
@@ -366,23 +384,18 @@ class AdminPanelScreen extends StatelessWidget {
 
                                   // Get prayer time from firestore
                                   var doc = snapshot.data!;
-                                  var hour =
-                                      doc['hour'].toString().padLeft(2, '0');
-                                  var minute =
-                                      doc['minute'].toString().padLeft(2, '0');
+                                  var hour = doc['hour'].toString().padLeft(2, '0');
+                                  var minute = doc['minute'].toString().padLeft(2, '0');
 
                                   // Widget with prayer time, when clicked opens a time picker (modal view) to adjust the prayer time.
                                   return SizedBox(
                                     width: 140,
                                     child: TextButton(
-                                      onPressed: () => _onPrayerTimePressed(
-                                          context, prayerName),
+                                      onPressed: () => _onPrayerTimePressed(context, prayerName),
                                       style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(16),
+                                            borderRadius: BorderRadius.circular(16),
                                             side: const BorderSide(
                                               color: AppColors.textSecondary,
                                               width: 2.0,
@@ -394,8 +407,7 @@ class AdminPanelScreen extends StatelessWidget {
                                         '$hour:$minute',
                                         style: GoogleFonts.manrope(
                                           textStyle: const TextStyle(
-                                            fontSize: AppDimensions
-                                                .prayerTimesFontSize,
+                                            fontSize: AppDimensions.prayerTimesFontSize,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),

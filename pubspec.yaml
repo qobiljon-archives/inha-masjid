@@ -74,6 +74,9 @@ dependencies:
   analog_clock: ^0.1.1
   carousel_slider: ^4.2.1
 
+  # reCAPTCHA >v18.4.0 (because of warning on Google Play store)
+  recaptcha_enterprise_flutter: ^18.4.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -114,9 +114,11 @@ class AdminLoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 60),
 
+                // Email and password input fields
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Email input field
                     const Text('Email'),
                     TextFormField(
                       controller: _emailController,
@@ -133,9 +135,12 @@ class AdminLoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
+
+                    // Password input field
                     const Text('Password'),
                     TextFormField(
                       controller: _passwordController,
+                      obscureText: true,
                       decoration: const InputDecoration(
                         labelText: 'e.g., ex123456789',
                         labelStyle: TextStyle(
@@ -143,8 +148,7 @@ class AdminLoginScreen extends StatelessWidget {
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                              color: AppColors
-                                  .cardPrimaryButtonColor), // Change the color as needed
+                              color: AppColors.cardPrimaryButtonColor), // Change the color as needed
                         ),
                       ),
                     ),
